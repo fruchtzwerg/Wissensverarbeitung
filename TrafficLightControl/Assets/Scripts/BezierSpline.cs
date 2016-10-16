@@ -29,7 +29,7 @@ public class BezierSpline : MonoBehaviour
 
     internal Quaternion GetRotation(float t)
     {
-        return Quaternion.LookRotation(GetDirection(t));
+        return Quaternion.LookRotation(GetDirection(t), Vector3.up);
     }
 
     [SerializeField]
@@ -208,8 +208,8 @@ public class BezierSpline : MonoBehaviour
             t -= i;
             i *= 3;
         }
-        return transform.TransformPoint(Bezier.GetVelocity(
-            points[i], points[i + 1], points[i + 2], points[i + 3], t)) - transform.position;
+        return (Bezier.GetVelocity(
+            points[i], points[i + 1], points[i + 2], points[i + 3], t));
     }
 
 
