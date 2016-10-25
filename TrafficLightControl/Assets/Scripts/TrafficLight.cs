@@ -59,44 +59,48 @@ public class TrafficLight : MonoBehaviour {
 
     void switchOnLight() {
 
+        if (oldState != state) {
+            oldState = state;
+            //switch emissioncolor of gameobjects
+            switch (state) {
+                case States.red:
+                    rendRed.material.SetColor("_EmissionColor", red);
+                    rendOrange.material.SetColor("_EmissionColor", black);
+                    rendGreen.material.SetColor("_EmissionColor", black);
+                    break;
+                case States.orange:
+                    rendRed.material.SetColor("_EmissionColor", black);
+                    rendOrange.material.SetColor("_EmissionColor", orange);
+                    rendGreen.material.SetColor("_EmissionColor", black);
+                    break;
+                case States.green:
+                    rendRed.material.SetColor("_EmissionColor", black);
+                    rendOrange.material.SetColor("_EmissionColor", black);
+                    rendGreen.material.SetColor("_EmissionColor", green);
+                    break;
+                case States.greenAndOrange:
+                    rendRed.material.SetColor("_EmissionColor", black);
+                    rendOrange.material.SetColor("_EmissionColor", orange);
+                    rendGreen.material.SetColor("_EmissionColor", green);
+                    break;
+                case States.redAndOrange:
+                    rendRed.material.SetColor("_EmissionColor", red);
+                    rendOrange.material.SetColor("_EmissionColor", orange);
+                    rendGreen.material.SetColor("_EmissionColor", black);
+                    break;
+                case States.on:
+                    rendRed.material.SetColor("_EmissionColor", red);
+                    rendOrange.material.SetColor("_EmissionColor", orange);
+                    rendGreen.material.SetColor("_EmissionColor", green);
+                    break;
+                default:
+                    rendRed.material.SetColor("_EmissionColor", black);
+                    rendOrange.material.SetColor("_EmissionColor", black);
+                    rendGreen.material.SetColor("_EmissionColor", black);
+                    break;
+            }
 
-        //switch emissioncolor of gameobjects
-        switch (state) {
-            case States.red:
-                rendRed.material.SetColor("_EmissionColor", red);
-                rendOrange.material.SetColor("_EmissionColor", black);
-                rendGreen.material.SetColor("_EmissionColor", black);
-                break;
-            case States.orange:
-                rendRed.material.SetColor("_EmissionColor", black);
-                rendOrange.material.SetColor("_EmissionColor", orange);
-                rendGreen.material.SetColor("_EmissionColor", black);
-                break;
-            case States.green:
-                rendRed.material.SetColor("_EmissionColor", black);
-                rendOrange.material.SetColor("_EmissionColor", black);
-                rendGreen.material.SetColor("_EmissionColor", green);
-                break;
-            case States.greenAndOrange:
-                rendRed.material.SetColor("_EmissionColor", black);
-                rendOrange.material.SetColor("_EmissionColor", orange);
-                rendGreen.material.SetColor("_EmissionColor", green);
-                break;
-            case States.redAndOrange:
-                rendRed.material.SetColor("_EmissionColor", red);
-                rendOrange.material.SetColor("_EmissionColor", orange);
-                rendGreen.material.SetColor("_EmissionColor", black);
-                break;
-            case States.on:
-                rendRed.material.SetColor("_EmissionColor", red);
-                rendOrange.material.SetColor("_EmissionColor", orange);
-                rendGreen.material.SetColor("_EmissionColor", green);
-                break;
-            default:
-                rendRed.material.SetColor("_EmissionColor", black);
-                rendOrange.material.SetColor("_EmissionColor", black);
-                rendGreen.material.SetColor("_EmissionColor", black);
-                break;
-        }        
+        }
+        
     }
 }
