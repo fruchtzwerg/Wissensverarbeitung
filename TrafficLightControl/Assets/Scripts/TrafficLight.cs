@@ -41,14 +41,17 @@ public class TrafficLight : MonoBehaviour {
 
         rendRed = RedLight.GetComponent<Renderer>();
         rendRed.material = new Material(shader);
+        rendRed.material.EnableKeyword("_EMISSION");
         rendRed.material.color = red;
 
         rendOrange = OrangeLight.GetComponent<Renderer>();
         rendOrange.material = new Material(shader);
+        rendOrange.material.EnableKeyword("_EMISSION");
         rendOrange.material.color = orange;
 
         rendGreen = GreenLight.GetComponent<Renderer>();
         rendGreen.material = new Material(shader);
+        rendGreen.material.EnableKeyword("_EMISSION");
         rendGreen.material.color = green;
     }
 	
