@@ -19,7 +19,7 @@ public class PrologInterface : MonoBehaviour {
     void Prolog() {
         print("Let's test...");
 
-
+        /*
         //Environment.SetEnvironmentVariable("SWI_HOME_DIR", @"the_PATH_to_boot32.prc");  // or boot64.prc
         if (!PlEngine.IsInitialized) {
             
@@ -44,6 +44,6 @@ public class PrologInterface : MonoBehaviour {
             }
             PlEngine.PlCleanup();
             print("finshed!");
-        }
+        }*/
     }
 }
