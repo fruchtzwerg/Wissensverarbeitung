@@ -2,23 +2,29 @@
 using System.Collections;
 using SbsSW.SwiPlCs;
 using System;
+using JJC.Psharp.Resources;
+using JJC.Psharp.Predicates;
+using JJC.Psharp.Lang;
+using JJC.Psharp.Lang.Resource;
+using System.Reflection;
+using System.IO;
+using System.Text;
 
-public class PrologInterface : MonoBehaviour {
+public class PrologInterfaceUnity : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         Prolog();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
 
     void Prolog() {
-        print("Let's test...");
-
+        #region old
         /*
         //Environment.SetEnvironmentVariable("SWI_HOME_DIR", @"the_PATH_to_boot32.prc");  // or boot64.prc
         if (!PlEngine.IsInitialized) {
@@ -45,5 +51,25 @@ public class PrologInterface : MonoBehaviour {
             PlEngine.PlCleanup();
             print("finshed!");
         }*/
+        #endregion
+
+
+               
+        TextReader tr = new StreamReader(@".\Assets\Prolog\test.pl");
+        PushbackReader pbr = new PushbackReader(tr);
+
+        TextWriter tw = new StreamWriter(@".\Assets\Prolog\out.txt");
+        TextWriter errorTw = new StreamWriter(@".\Assets\Prolog\error.log");
+
+        PrologInterface prologInterface = new PrologInterface(pbr, tw, errorTw);
+
+        //prologInterface.AddCallingAssembly();
+        prologInterface.AddAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+
+        print(prologInterface.Call());
+
+        prologInterface.Stop();
+
+        print("finish..." + prologInterface.engine.current_input.Read());
     }
 }
