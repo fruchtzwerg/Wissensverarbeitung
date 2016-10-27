@@ -1,1 +1,1 @@
-Try to consult: ./Assets/Prolog/test.pl
+X = 8.
