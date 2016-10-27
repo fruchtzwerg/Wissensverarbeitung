@@ -44,7 +44,8 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
-
+*prolog.log
+*prolog.log.meta
 
 # Unity3D generated meta files
 *.pidb.meta

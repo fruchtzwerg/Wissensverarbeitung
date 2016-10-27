@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System;
@@ -10,9 +9,10 @@ public class Job : MonoBehaviour
 
     private Process prolog;
     private StreamWriter sw;
-    public const string DELIMITER = "-->";
+    public const string DELIMITERSEND = "--> ";
+    public const string DELIMITERRECIVE = "<-- ";
 
-    
+
 
     /// <summary>
     /// Init the swi-prolog.exe in a console window
@@ -48,22 +48,20 @@ public class Job : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// consult prolog knowledge base file
+    /// </summary>
+    /// <param name="path"></param>
     public void ConsultFile(string path)
     {
-        if (prolog == null)
+        if (prolog == null || !File.Exists(path))
             return;
-
-        print("Try to consult: " + path);
-        //Console.WriteLine("Try to consult: " + path);
-        printToUnity("Try to consult: " + path);
-
-
-        sw.WriteLine("consult('" + path + "').");
+        
+        string query = "consult('" + path + "').";
+        sw.WriteLine(query);
         sw.Flush();
 
-        //string output = prolog.StandardOutput.ReadToEnd(); 
-        //printToUnity("consult '" + Path.GetFileName(path) + "': " + output);
+        WriteLogFile(DELIMITERSEND + query);       
     }
 
     /// <summary>
@@ -77,17 +75,10 @@ public class Job : MonoBehaviour
             return;
 
         // print to console and use delimiter
-        print(DELIMITER + message);
+        print(DELIMITERRECIVE + message);
 
-        // print to logfile
-        using (StreamWriter sw2 = new StreamWriter(@".\Assets\Prolog\out.txt"))
-        {
-            sw2.WriteLine(message);
-            sw2.Flush();
-        }
-
+        WriteLogFile(DELIMITERRECIVE + message);
     }
-
 
     /// <summary>
     /// Query swi-prolog for something.
@@ -106,8 +97,21 @@ public class Job : MonoBehaviour
 
         // write the query to prolog console and execute
         sw.WriteLine(message);
+        sw.Flush();
+
+        WriteLogFile(DELIMITERSEND + message);
     }
 
+    /// <summary>
+    /// Write to logfile
+    /// </summary>
+    /// <param name="message"></param>
+    private void WriteLogFile(string message) {        
+        using (StreamWriter sw2 = new StreamWriter(@".\Assets\Prolog\prolog.log", true)) {
+            sw2.WriteLine(DateTime.Now + ": "+ message);
+            sw2.Flush();
+        }
+    }
 
     /// <summary>
     /// Expose the kill signal to other classes.

@@ -1,10 +1,4 @@
-﻿
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.ComponentModel;
 using UnityEngine;
 
 public class PrologWrapper : MonoBehaviour
@@ -16,16 +10,15 @@ public class PrologWrapper : MonoBehaviour
     //Use this for initialization
     void Start()
     {
-        //for (int i = 0; i < PrologFiles.Length; i++)
-        //    _prolog.consultFile(PrologFiles[i]);
         
         // create new backround worker
         var worker = new BackgroundWorker();
         // register listeners
-        worker.DoWork += Query;
+        worker.DoWork += DoWork;
         worker.RunWorkerCompleted += HandleResults;
+        
         // execute worker asynchronously
-        worker.RunWorkerAsync();
+        worker.RunWorkerAsync();            
     }
 
     /// <summary>
@@ -36,7 +29,11 @@ public class PrologWrapper : MonoBehaviour
     private void HandleResults(object sender, RunWorkerCompletedEventArgs args)
     {
         // swi-prolog is running
-        print("SWI-Prolog is running...");
+        print("SWI-Prolog is running...");        
+        
+        //consult all given prolog knowledge base files
+        for (int i = 0; i < PrologFiles.Length; i++)
+            _prolog.ConsultFile(PrologFiles[i]);
     }
 
     /// <summary>
@@ -44,26 +41,25 @@ public class PrologWrapper : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    private void Query(object sender, DoWorkEventArgs args)
-    {
+    private void DoWork(object sender, DoWorkEventArgs args)
+    {        
         print("Launching SWI-Prolog...");
 
-        // start create job object
-        _prolog = new Job();
+         // start create job object
+         _prolog = new Job();
 
-        // run swi-prolog inside cmd
-        _prolog.initPrologProcess();
-
+         // run swi-prolog inside cmd
+         _prolog.initPrologProcess();
+        
         // query for something
         _prolog.Query("X is 2+6.");
     }
 
-
-
     //Update is called once per frame
     void Update()
     {
-
+        //if(_prolog != null)
+            _prolog.Query("version.");
     }
 
     // Kill swi-prolog.exe when unity quits.
