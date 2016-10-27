@@ -61,15 +61,36 @@ public class PrologInterfaceUnity : MonoBehaviour {
         TextWriter tw = new StreamWriter(@".\Assets\Prolog\out.txt");
         TextWriter errorTw = new StreamWriter(@".\Assets\Prolog\error.log");
 
-        PrologInterface prologInterface = new PrologInterface(pbr, tw, errorTw);
+//        PrologInterface prologInterface = new PrologInterface(pbr, tw, errorTw);
+        PrologInterface prologInterface = new PrologInterface();
 
         //prologInterface.AddCallingAssembly();
         prologInterface.AddAssembly(System.Reflection.Assembly.GetExecutingAssembly());
 
-        print(prologInterface.Call());
+        String[] args = { @"C:\Users\Laurens\Documents\Programmieren\UnityProjekte\Wissensverarbeitung\Wissensverarbeitung.git\TrafficLightControl\Assets\Prolog\test.pl" };
+
+        SymbolTerm file = SymbolTerm.MakeSymbol(args[0]);
+        Predicate member = new Compile_1(file, new ReturnCs(prologInterface));
+        prologInterface.SetPredicate(member);
+        bool b = prologInterface.Call();
+
+        print(b);
 
         prologInterface.Stop();
 
-        print("finish..." + prologInterface.engine.current_input.Read());
+        print("finish...");
+    }
+
+    private ListTerm GetList(int[] ints) {
+        Term empty = SymbolTerm.MakeSymbol("[]");
+        Term[] terms = new Term[ints.Length];
+        for (int i = 0; i < ints.Length; i++) {
+            terms[i] = new IntegerTerm(ints[i]);
+        }
+        Term list = empty;
+        for (int i = terms.Length - 1; i >= 0; i--) {
+            list = new ListTerm(terms[i], list);
+        }
+        return (ListTerm)list;
     }
 }
