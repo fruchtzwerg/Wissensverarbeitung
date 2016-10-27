@@ -1,0 +1,1 @@
+Try to consult: ./Assets/Prolog/test.pl
