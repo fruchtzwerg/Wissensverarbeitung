@@ -12,7 +12,7 @@ public class Job : MonoBehaviour
     public const string DELIMITERSEND = "--> ";
     public const string DELIMITERRECIVE = "<-- ";
 
-
+    private IProlog sender;
 
     /// <summary>
     /// Init the swi-prolog.exe in a console window
@@ -68,7 +68,7 @@ public class Job : MonoBehaviour
     /// Print a string to Unity's console and logfile.
     /// </summary>
     /// <param name="message"></param>
-    public void printToUnity(string message)
+    private void printToUnity(string message)
     {
         // only print sensible messages
         if(string.IsNullOrEmpty(message.Trim()))
@@ -78,6 +78,20 @@ public class Job : MonoBehaviour
         print(DELIMITERRECIVE + message);
 
         WriteLogFile(DELIMITERRECIVE + message);
+
+        ReplySender(message);       
+    }
+
+    /// <summary>
+    /// send reply to sender
+    /// </summary>
+    /// <param name="message">message to sender as reply</param>
+    private void ReplySender(string message) {
+        
+        if(sender != null) {
+            sender.ReciveDataFromProlog(message);
+            sender = null;
+        }       
     }
 
     /// <summary>
@@ -101,6 +115,34 @@ public class Job : MonoBehaviour
 
         WriteLogFile(DELIMITERSEND + message);
     }
+
+
+    /// <summary>
+    /// Query swi-prolog for something.
+    /// </summary>
+    /// <param name="message">The query string.</param>
+    /// <param name="sender">The sender object</param>
+    public void Query(string message, IProlog sender) {
+        // std-in of prolog still registered?
+        // OR: message not null or empty?
+        if (sw == null || string.IsNullOrEmpty(message.Trim()))
+            return;
+
+        // make sure the query string ends with a '.'
+        if (!message.Trim().EndsWith("."))
+            message = message + ".";
+
+        //set sender for reply
+        this.sender = sender;
+
+        // write the query to prolog console and execute
+        sw.WriteLine(message);
+        sw.Flush();
+
+        WriteLogFile(DELIMITERSEND + message); 
+    }
+
+
 
     /// <summary>
     /// Write to logfile

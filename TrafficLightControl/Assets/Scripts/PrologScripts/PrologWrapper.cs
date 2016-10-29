@@ -15,7 +15,7 @@ public class PrologWrapper : MonoBehaviour
         var worker = new BackgroundWorker();
         // register listeners
         worker.DoWork += DoWork;
-        worker.RunWorkerCompleted += HandleResults;
+        worker.RunWorkerCompleted += RunWorkerInitCompleted;
         
         // execute worker asynchronously
         worker.RunWorkerAsync();            
@@ -26,7 +26,7 @@ public class PrologWrapper : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    private void HandleResults(object sender, RunWorkerCompletedEventArgs args)
+    private void RunWorkerInitCompleted(object sender, RunWorkerCompletedEventArgs args)
     {
         // swi-prolog is running
         print("SWI-Prolog is running...");        
@@ -55,16 +55,24 @@ public class PrologWrapper : MonoBehaviour
         _prolog.Query("X is 2+6.");
     }
 
+    
     //Update is called once per frame
     void Update()
     {
-        //if(_prolog != null)
-            _prolog.Query("version.");
+        //_prolog.Query("version.");
     }
 
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit()
     {
         _prolog.Kill();
+    }
+
+
+    public void QueryProlog(string query, IProlog sender) {
+        if (sender == null)
+            return;
+
+        _prolog.Query(query, sender);
     }
 }

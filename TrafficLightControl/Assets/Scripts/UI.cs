@@ -14,6 +14,9 @@ public class UI : MonoBehaviour {
     public Button buttonCamPos3;
     public Button buttonCamPos4;
 
+    public Button buttonTestProlog;
+    public GameObject PrologTestGO;
+
     public GameObject Cam;
 
     public Toggle toggle;
@@ -33,6 +36,8 @@ public class UI : MonoBehaviour {
         buttonCamPos2.onClick.AddListener(camButtonEvent2);
         buttonCamPos3.onClick.AddListener(camButtonEvent3);
         buttonCamPos4.onClick.AddListener(camButtonEvent4);
+
+        buttonTestProlog.onClick.AddListener(testPrologEvent);
     }
 	
 	// Update is called once per frame
@@ -94,4 +99,8 @@ public class UI : MonoBehaviour {
     void camButtonEvent4() {
         setCamPostion(camPos4);
     }   
+
+    void testPrologEvent() {
+        PrologTestGO.GetComponent<PrologTestScriptWithInterface>().testProlog();
+    }
 }
