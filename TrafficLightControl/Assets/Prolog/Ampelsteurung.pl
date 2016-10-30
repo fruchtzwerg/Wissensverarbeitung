@@ -31,10 +31,10 @@ weltzustand2([a(zustand2),b(zustand2),c(zustand2)]).
 
 
 %übergebe derzeitigen Weltzustand und erhalte Grüne und Rote Ampeln des nächsten Zustandes
-gib_Weltzustand(weltzustand1,Rotgesamt,Gruengesamt):- weltzustand2(ListeDerKreuzungen)
+gib_Weltzustand(weltzustand1,Gruengesamt):- weltzustand2(ListeDerKreuzungen)
                                                       ,
                                                       gib_Zustand_Kreuzung(ListeDerKreuzungen,Rotgesamt,Gruengesamt).
-gib_Weltzustand(weltzustand2,Rotgesamt,Gruengesamt):- weltzustand1(ListeDerKreuzungen)
+gib_Weltzustand(weltzustand2,Gruengesamt):- weltzustand1(ListeDerKreuzungen)
                                                       ,
                                                       gib_Zustand_Kreuzung(ListeDerKreuzungen,Rotgesamt,Gruengesamt).
 
