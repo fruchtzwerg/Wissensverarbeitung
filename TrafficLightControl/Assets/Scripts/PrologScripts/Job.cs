@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System;
 using System.Text;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Job : MonoBehaviour
 {
@@ -14,11 +16,15 @@ public class Job : MonoBehaviour
 
     private IProlog sender;
 
+    private Queue<WaitingObject> waitingObjects;
+
     /// <summary>
     /// Init the swi-prolog.exe in a console window
     /// </summary>
     public void initPrologProcess()
     {
+        waitingObjects = new Queue<WaitingObject>();
+
         prolog = new Process();
         prolog.StartInfo.UseShellExecute = false;
         prolog.StartInfo.RedirectStandardOutput = true;
@@ -79,7 +85,11 @@ public class Job : MonoBehaviour
 
         WriteLogFile(DELIMITERRECIVE + message);
 
-        ReplySender(message);       
+
+        if (waitingObjects.Count > 0) {
+            ReplySender(message);  
+        }
+             
     }
 
     /// <summary>
@@ -87,11 +97,19 @@ public class Job : MonoBehaviour
     /// </summary>
     /// <param name="message">message to sender as reply</param>
     private void ReplySender(string message) {
-        
-        if(sender != null) {
-            sender.ReciveDataFromProlog(message);
-            sender = null;
-        }       
+        var waitingObject = waitingObjects.Dequeue();
+
+        if(waitingObject != null && waitingObject.Sender != null) {
+            //send reply
+            waitingObject.Sender.ReciveDataFromProlog(message);
+
+            //if there a still other querys to prolog...
+            if (waitingObjects.Count > 0) {
+                //get fist and query prolog
+                var next = waitingObjects.Peek();
+                this.Query(next.Query);
+            }
+        }        
     }
 
     /// <summary>
@@ -133,13 +151,19 @@ public class Job : MonoBehaviour
             message = message + ".";
 
         //set sender for reply
-        this.sender = sender;
+        waitingObjects.Enqueue(new WaitingObject(message, sender));
+        //this.sender = sender;
 
-        // write the query to prolog console and execute
-        sw.WriteLine(message);
-        sw.Flush();
+        //query prolog, if the is no other query
+        if(waitingObjects.Count == 1) {
+            // write the query to prolog console and execute
+            sw.WriteLine(message);
+            sw.Flush();
 
-        WriteLogFile(DELIMITERSEND + message); 
+            WriteLogFile(DELIMITERSEND + message); 
+        }
+
+        print("Queue Count: " + waitingObjects.Count);        
     }
 
 

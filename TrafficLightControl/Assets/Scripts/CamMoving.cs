@@ -3,10 +3,10 @@ using System.Collections;
 
 public class CamMoving : MonoBehaviour {
 
-    public float maxLeft;
-    public float maxRight;
-    public float maxForward;
-    public float maxBackward;
+    public Transform maxLeft;
+    public Transform maxRight;
+    public Transform maxForward;
+    public Transform maxBackward;
     public float maxZoomIn = 16.0f;
     public float maxZoomOut = 88.5f;
 
@@ -51,7 +51,15 @@ public class CamMoving : MonoBehaviour {
         if (!forward)
             speed *= -1;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed);
+
+        Vector3 posTmp = transform.position;
+        Vector3 newPos = posTmp;
+
+        newPos = new Vector3(posTmp.x, posTmp.y, posTmp.z + speed);
+
+        //limit zoom
+        if (newPos.z >= (maxBackward.position.z - speed) && newPos.z <= (maxForward.position.z - speed))
+            transform.position = newPos;
     }
 
     /// <summary>
@@ -65,7 +73,14 @@ public class CamMoving : MonoBehaviour {
         if (!right)
             speed *= -1;
 
-        transform.position = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z );
+        Vector3 posTmp = transform.position;
+        Vector3 newPos = posTmp;
+
+        newPos = new Vector3(posTmp.x + speed, posTmp.y, posTmp.z);
+
+        //limit zoom
+        if (newPos.x >= (maxLeft.position.x - speed) && newPos.x <= (maxRight.position.x - speed))
+            transform.position = newPos;
     }
 
     /// <summary>
