@@ -101,6 +101,6 @@ public class UI : MonoBehaviour {
     }   
 
     void testPrologEvent() {
-        PrologTestGO.GetComponent<PrologTestScriptWithInterface>().testProlog();
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState();
     }
 }
