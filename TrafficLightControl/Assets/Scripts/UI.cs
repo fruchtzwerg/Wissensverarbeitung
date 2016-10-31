@@ -19,6 +19,7 @@ public class UI : MonoBehaviour {
 
     public GameObject Cam;
 
+    public Toggle toggleBoomGates;
     public Toggle toggle;
 
     public GameObject[] trafficLights;    
@@ -30,7 +31,8 @@ public class UI : MonoBehaviour {
     }
 
     void Awake() {
-        toggle.onValueChanged.AddListener(boomGateEvent);
+        toggleBoomGates.onValueChanged.AddListener(boomGateEvent);
+        toggle.onValueChanged.AddListener(trafficLightTestToogle);
 
         buttonCamPos1.onClick.AddListener(camButtonEvent1);
         buttonCamPos2.onClick.AddListener(camButtonEvent2);
@@ -84,6 +86,15 @@ public class UI : MonoBehaviour {
     void boomGateEvent(bool value) {
         foreach(var boomGate in GameObject.FindGameObjectsWithTag("BoomGate")) {
             boomGate.GetComponent<BoomGate>().isOpen = value;
+        }
+    }
+
+    void trafficLightTestToogle(bool value) {
+        if (value) {
+            trafficLights[0].GetComponent<TrafficLight>().switchToGreen();
+        }
+        else {
+            trafficLights[0].GetComponent<TrafficLight>().switchToRed();
         }
     }
 

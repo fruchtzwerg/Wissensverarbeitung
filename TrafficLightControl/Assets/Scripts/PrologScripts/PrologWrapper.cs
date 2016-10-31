@@ -52,7 +52,7 @@ public class PrologWrapper : MonoBehaviour
          _prolog.initPrologProcess();
         
         // query for something
-        _prolog.Query("X is 2+6.");
+        //_prolog.Query("X is 2+6.");
     }
 
     

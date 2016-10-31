@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Timers;
+using System;
 
 public class TrafficLight : MonoBehaviour {
     
@@ -20,6 +22,9 @@ public class TrafficLight : MonoBehaviour {
     private Color red = new Color(1f, 0, 0);
     private Color orange = new Color(1f, 1f, 0);
     private Color green = new Color(0, 1f, 0);
+
+    private Timer timerGreen;
+    private Timer timerRed;
 
     public States state = States.off;
     private States oldState = States.off;
@@ -53,14 +58,67 @@ public class TrafficLight : MonoBehaviour {
         rendGreen.material = new Material(shader);
         rendGreen.material.EnableKeyword("_EMISSION");
         rendGreen.material.color = green;
+
+        timerGreen = new Timer();
+        timerGreen.Interval = 3000;
+        timerGreen.AutoReset = false;
+        timerGreen.Elapsed += timerEventToGreen;       
+
+        timerRed = new Timer();
+        timerRed.Interval = 2000;
+        timerRed.AutoReset = false;
+        timerRed.Elapsed += timerEventToRed;
+
+        state = States.red;
+        switchState();
     }
-	
+
 	// Update is called once per frame
 	void Update () {
-        switchOnLight();
+        switchState();
 	}
 
-    void switchOnLight() {
+    /// <summary>
+    /// switch state from red to green
+    /// </summary>
+    public void switchToGreen() {
+        //only if red or in some sec red
+        if (state != States.redAndOrange || state != States.green) {
+            state = States.redAndOrange;
+            switchState();
+            timerGreen.Start();
+        }
+    }
+
+    /// <summary>
+    /// switch strate from green to red
+    /// </summary>
+    public void switchToRed() {
+        //only if red or in some sec red
+        if (state != States.orange || state != States.red) {
+            state = States.orange;
+            switchState();
+            timerRed.Start();
+        }
+    }
+
+    private void timerEventToGreen(object source, EventArgs e) {
+        //only state -> update called switchState -> timer has one thread and can't call to main thread
+        state = States.green;
+        timerGreen.Stop();
+    }    
+
+    private void timerEventToRed(object source, EventArgs e) {
+        //only state -> update called switchState -> timer has one thread and can't call to main thread
+        state = States.red;
+        timerRed.Stop();
+    }
+
+
+    /// <summary>
+    /// switch state and emission
+    /// </summary>
+    void switchState() {
 
         if (oldState != state) {
             oldState = state;
@@ -103,7 +161,6 @@ public class TrafficLight : MonoBehaviour {
                     break;
             }
 
-        }
-        
+        }        
     }
 }

@@ -109,7 +109,12 @@ public class Job : MonoBehaviour
                 var next = waitingObjects.Peek();
                 this.Query(next.Query);
             }
-        }        
+        }
+        else {
+            print("Waiting Object or sender is null!");
+        }
+
+        //print("Queue Count 2: " + waitingObjects.Count);
     }
 
     /// <summary>
@@ -117,7 +122,7 @@ public class Job : MonoBehaviour
     /// </summary>
     /// <param name="message">The query string.</param>
     public void Query(string message)
-    {
+    {       
         // std-in of prolog still registered?
         // OR: message not null or empty?
         if (sw == null || string.IsNullOrEmpty(message.Trim()))
