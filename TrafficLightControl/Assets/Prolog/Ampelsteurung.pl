@@ -1,51 +1,47 @@
 ﻿% Autoren: Tilo Zuelske und Hannes Boers
 % Datum: 27.10.2016
-
+:- style_check(-discontiguous).
 %Ampel Logik
 % Gültige Zustände der Kreuzung nach STVO, für jede AmpelAnlage definierbar
-zustand1(a,[rot(ampel2),rot(ampel3)],[gruen(ampel1),gruen(ampel4)]).
-zustand2(a,[rot(ampel1),rot(ampel4)],[gruen(ampel2),gruen(ampel3)]).
 
-zustand1(b,[rot(ampel5),rot(ampel6)],[gruen(ampel7),gruen(ampel8)]).
-zustand2(b,[rot(ampel7),rot(ampel8)],[gruen(ampel5),gruen(ampel6)]).
+%Phasen Ampelkreuzung A
+%Aus Grunde dem heraus, dass die Originalen Phasen mit einer zusätzlichen 1 zur Unterscheidung notiert wurden,
+%übernehmen auch wir diese Konvention
+phase11(a,[gruen(k9),gruen(k13),gruen(b4),gruen(h6),gruen(fg9)]).
+phase12(a,[gruen(b3),gruen(k9),gruen(fg9)]).
+phase13(a,[gruen(h5),gruen(f11),gruen(fa10),gruen(k11),gruen(k10)]).
+phase14(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k12)]).
 
-zustand1(c,[rot(ampel9),rot(ampel10)],[gruen(ampel11),gruen(ampel12)]).
-zustand2(c,[rot(ampel11),rot(ampel12)],[gruen(ampel9),gruen(ampel10)]).
-
-%Anlagen und ihre Zustände
-%Anlage A
-gib_zustandAnlage(a,zustand1,Rot,Gruen):-zustand1(a,Rot,Gruen).
-gib_zustandAnlage(a,zustand2,Rot,Gruen):-zustand2(a,Rot,Gruen).
-
-%Anlage B
-gib_zustandAnlage(b,zustand1,Rot,Gruen):-zustand1(b,Rot,Gruen).
-gib_zustandAnlage(b,zustand2,Rot,Gruen):-zustand2(b,Rot,Gruen).
-
-%Anlage C
-gib_zustandAnlage(c,zustand1,Rot,Gruen):-zustand1(c,Rot,Gruen).
-gib_zustandAnlage(c,zustand2,Rot,Gruen):-zustand2(c,Rot,Gruen).
-
-%zu einem Weltzustand gehören mehrere Ampelanlagen und deren Zustände
-weltzustand1([a(zustand1),b(zustand1),c(zustand1)]).
-weltzustand2([a(zustand2),b(zustand2),c(zustand2)]).
+%Regeln Kreuzung A
+ausloeser(a,keineAktion,GG):-phase11(a,GG).
+ausloeser(a,b3,GG):- phase12(a,GG).
+ausloeser(a,k10,GG):-phase13(a,GG).
+ausloeser(a,f10,GG):- phase14(a,GG).
+ausloeser(a,k12,GG):- phase14(a,GG).
 
 
-%übergebe derzeitigen Weltzustand und erhalte Grüne und Rote Ampeln des nächsten Zustandes
-gib_Weltzustand(weltzustand1,Gruengesamt):- weltzustand2(ListeDerKreuzungen)
-                                                      ,
-                                                      gib_Zustand_Kreuzung(ListeDerKreuzungen,Rotgesamt,Gruengesamt).
-gib_Weltzustand(weltzustand2,Gruengesamt):- weltzustand1(ListeDerKreuzungen)
-                                                      ,
-                                                      gib_Zustand_Kreuzung(ListeDerKreuzungen,Rotgesamt,Gruengesamt).
+%Phasen Ampelkreuzung B
+phase1(b,[gruen(h3),gruen(fg8),gruen(fg6),gruen(k7),gruen(b2),gruen(k1),gruen(k5),gruen(k14),gruen(k2),gruen(k3),gruen(fg3),gruen(h1)]).
+phase2(b,[gruen(fa7),gruen(k8),gruen(fg6),gruen(fa1),gruen(fa2),gruen(k6),gruen(k5)]).
+phase3(b,[gruen(fa7),gruen(fg5),gruen(fg8),gruen(fa1),gruen(fa2),gruen(h4),gruen(k6),gruen(h2),gruen(fa5),gruen(fa4)]).
+phase4(b,[gruen(h3),gruen(fg8),gruen(k4),gruen(k7),gruen(b2),gruen(k1),gruen(k2)]).
+phase5(b,[gruen(k4),gruen(k7),gruen(b1),gruen(k2),gruen(b2)]).
+phase6(b,[gruen(h3),gruen(fg8),gruen(fg5),gruen(k7),gruen(b2),gruen(k1),gruen(k3),gruen(k2),gruen(fg3),gruen(h1)]).
 
-%Abbruchbedingung
-gib_Zustand_Kreuzung([],[],[]).
-gib_Zustand_Kreuzung([H|T],RG,GG):- H=..[Kreuzung,Zustand]
-                                    ,
-                                    gib_zustandAnlage(Kreuzung,Zustand,ZR,ZG)
-                                    ,
-                                    gib_Zustand_Kreuzung(T,R,G)
-                                    ,
-                                    append(ZR,R,RG)
-                                    ,
-                                    append(ZG,G,GG).
+%Regeln Kreuzung B
+
+%erfragen der nächsten Ampelphase durch übergabe des Impulsgebers
+getnextPhase(a,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(a,MomentanePhase,Ausloeserampel,Gruenegesamt).
+getnextPhase(b,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(b,MomentanePhase,Ausloeserampel,Gruenegesamt).
+
+
+%erfragen ob die Phasenaenderung zulässig ist für die jeweilige Ampelkreuzung
+%Kreuzung A
+checkifzulaessig(a,phase14,k10,[]).
+checkifzulaessig(a,_,Ausloeser,GG):-ausloeser(a,Ausloeser,GG),!.
+
+%Kreuzung B
+%checkifzulaessig(b,MomentanePhase,Ausloeser):-
+
+
+
