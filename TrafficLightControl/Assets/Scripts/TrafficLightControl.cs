@@ -7,16 +7,30 @@ using System.Collections.Generic;
 public class TrafficLightControl : MonoBehaviour, IProlog {
 
     public GameObject[] trafficLights;
+    public string[] trafficLightNames;
 
     public GameObject PrologInterface;
 
     private const string GREEN = "G = ";
     private const string AMPEL = "ampel";
 
+
+    private Dictionary<string, TrafficLight> dictionary;
+    private List<string> greenTrafficLights;
+
+
     private Regex regex;
     // Use this for initialization
     void Start() {
         regex = new Regex(@"G\s=\s\[(gruen\(.*\),)*gruen\(.*\)\]\.");
+
+        greenTrafficLights = new List<string>();
+
+        if (trafficLights.Length == trafficLightNames.Length) {
+            buildDictionary();
+        }else {
+            print("WARNING! Dircionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
+        }            
     }
 
     // Update is called once per frame
@@ -24,21 +38,27 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     }
 
+    /// <summary>
+    /// processing recived data
+    /// </summary>
+    /// <param name="recivedData"></param>
     public void ReciveDataFromProlog(string recivedData) {
-        if (String.IsNullOrEmpty(recivedData))
+        //recivedData is emtry
+        if (string.IsNullOrEmpty(recivedData))
             return;
-
 
         if (!regex.IsMatch(recivedData))
             print("Regex match nicht...");
 
-        string recivedDataWithOutVar = recivedData.Replace("R = ", "").Replace("[", "").Replace("]", "");
+        string recivedDataWithOutVar = recivedData.Replace(GREEN, "").Replace("[", "").Replace("]", "");
 
         string[] stringSeparators = new string[] { "gruen(" };
         var splits = recivedDataWithOutVar.Split(stringSeparators, StringSplitOptions.None);
 
-        List<String> greenTrafficLights = new List<String>();
+        //clear old green elements
+        greenTrafficLights.Clear();
 
+        //remove unnecessary symbols and elements
         foreach (string s in splits) {
             var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
             tmp = tmp.Trim();
@@ -47,25 +67,30 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
                 greenTrafficLights.Add(tmp);
         }
 
-        //TODO Strings auswerten nach Ampel und dann grün oder rot schalten
-        /*foreach (string s in greenTrafficLights) {
-            if (s.Equals(AMPEL + 1)) {
-                var trafficLight = trafficLights[0].GetComponent<TrafficLight>();
-                trafficLight.switchToGreen();
-            }
-        } */ 
         
-
-        print("GREEN onse: ");
-
-        foreach (String s in greenTrafficLights)
-            print(s);
-
-        
+        //change states...
+        foreach(var entry in dictionary) {
+            //entry trafficlight in green trafficlight list?
+            if (greenTrafficLights.Contains(entry.Key))
+                entry.Value.GetComponent<TrafficLight>().switchToGreen();            
+            else
+                entry.Value.switchToRed();
+        }        
     }
 
     public void NextState() {
+        PrologInterface.GetComponent<PrologWrapper>().QueryProlog("gib_Weltzustand(weltzustand1, G).", this);
+    }
 
-        PrologInterface.GetComponent<PrologWrapper>().QueryProlog("gib_Weltzustand(weltzustand1, R).", this);
+    /// <summary>
+    /// map strings and trafficlightopjects to dictionary
+    /// </summary>
+    private void buildDictionary() {
+        dictionary = new Dictionary<string, TrafficLight>();
+
+        for(int i = 0; i < trafficLights.Length; i++) {
+            dictionary.Add(trafficLightNames[i], trafficLights[i].GetComponent<TrafficLight>());
+        }
+
     }
 }

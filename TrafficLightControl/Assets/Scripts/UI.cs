@@ -22,9 +22,9 @@ public class UI : MonoBehaviour {
     public Toggle toggleBoomGates;
     public Toggle toggle;
 
-    public GameObject[] trafficLights;    
+    public GameObject[] trafficLightsCrossroadA;    
 
-    public InputField[] InputFields;
+    public InputField[] InputFieldsCrossroadA;
 
     // Use this for initialization
     void Start () {
@@ -53,10 +53,10 @@ public class UI : MonoBehaviour {
     /// </summary>
     private void setTextOfInputField() {
 
-        for (int i = 0; i < trafficLights.Length; i++) {
+        for (int i = 0; i < trafficLightsCrossroadA.Length; i++) {
             // set text, if array size > i
-            if (i < InputFields.Length)
-                InputFields[i].text = trafficLights[i].GetComponent<TrafficLight>().state.ToString();
+            if (i < InputFieldsCrossroadA.Length)
+                InputFieldsCrossroadA[i].text = trafficLightsCrossroadA[i].GetComponent<TrafficLight>().State.ToString();
         }
     }
 
@@ -91,10 +91,10 @@ public class UI : MonoBehaviour {
 
     void trafficLightTestToogle(bool value) {
         if (value) {
-            trafficLights[0].GetComponent<TrafficLight>().switchToGreen();
+            trafficLightsCrossroadA[0].GetComponent<TrafficLight>().switchToGreen();
         }
         else {
-            trafficLights[0].GetComponent<TrafficLight>().switchToRed();
+            trafficLightsCrossroadA[0].GetComponent<TrafficLight>().switchToRed();
         }
     }
 

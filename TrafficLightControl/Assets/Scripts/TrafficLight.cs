@@ -26,8 +26,15 @@ public class TrafficLight : MonoBehaviour {
     private Timer timerGreen;
     private Timer timerRed;
 
-    public States state = States.off;
+    private States state = States.off;
     private States oldState = States.off;
+
+    public States State {
+        get {
+            return state;
+        }
+    }
+
     public enum States {
         red,
         orange,
@@ -83,9 +90,9 @@ public class TrafficLight : MonoBehaviour {
     /// </summary>
     public void switchToGreen() {
         //only if red or in some sec red
-        if (state != States.redAndOrange || state != States.green) {
+        if (State != States.redAndOrange && State != States.green) {
             state = States.redAndOrange;
-            switchState();
+            //switchState();
             timerGreen.Start();
         }
     }
@@ -95,9 +102,9 @@ public class TrafficLight : MonoBehaviour {
     /// </summary>
     public void switchToRed() {
         //only if red or in some sec red
-        if (state != States.orange || state != States.red) {
+        if (State != States.orange && State != States.red) {
             state = States.orange;
-            switchState();
+            //switchState();
             timerRed.Start();
         }
     }
@@ -120,10 +127,10 @@ public class TrafficLight : MonoBehaviour {
     /// </summary>
     void switchState() {
 
-        if (oldState != state) {
-            oldState = state;
+        if (oldState != State) {
+            oldState = State;
             //switch emissioncolor of gameobjects
-            switch (state) {
+            switch (State) {
                 case States.red:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendOrange.material.SetColor("_EmissionColor", black);
