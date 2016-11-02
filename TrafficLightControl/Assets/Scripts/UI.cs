@@ -14,7 +14,12 @@ public class UI : MonoBehaviour {
     public Button buttonCamPos3;
     public Button buttonCamPos4;
 
-    public Button buttonTestProlog;
+    public Button buttonTestProlog1;
+    public Button buttonTestProlog2;
+    public Button buttonTestProlog3;
+    public Button buttonTestProlog4;
+    public Button buttonTestProlog5;
+
     public GameObject PrologTestGO;
 
     public GameObject Cam;
@@ -39,7 +44,11 @@ public class UI : MonoBehaviour {
         buttonCamPos3.onClick.AddListener(camButtonEvent3);
         buttonCamPos4.onClick.AddListener(camButtonEvent4);
 
-        buttonTestProlog.onClick.AddListener(testPrologEvent);
+        buttonTestProlog1.onClick.AddListener(testPrologEvent1);
+        buttonTestProlog2.onClick.AddListener(testPrologEvent2);
+        buttonTestProlog3.onClick.AddListener(testPrologEvent3);
+        buttonTestProlog4.onClick.AddListener(testPrologEvent4);
+        buttonTestProlog4.onClick.AddListener(testPrologEvent5);
     }
 	
 	// Update is called once per frame
@@ -111,7 +120,23 @@ public class UI : MonoBehaviour {
         setCamPostion(camPos4);
     }   
 
-    void testPrologEvent() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState();
+    void testPrologEvent1() {
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'keineAktion'");
+    }
+
+    void testPrologEvent2() {
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'b3'");
+    }
+
+    void testPrologEvent3() {
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'k10'");
+    }
+
+    void testPrologEvent4() {
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'f10'");
+    }
+
+    void testPrologEvent5() {
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'k12'");
     }
 }

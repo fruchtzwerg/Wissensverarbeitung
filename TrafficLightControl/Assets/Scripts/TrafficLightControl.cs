@@ -67,24 +67,30 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
             if (!string.IsNullOrEmpty(tmp))
                 greenTrafficLights.Add(tmp);
+            print(tmp);
         }
-
         
         //change states...
         foreach(var entry in dictionary) {
             //entry trafficlight in green trafficlight list?
-            if (greenTrafficLights.Contains(entry.Key))
-                entry.Value.GetComponent<TrafficLight>().switchToGreen();            
+            if (greenTrafficLights.Contains(entry.Key)) {
+
+                print(entry.Key + " to green.");
+                entry.Value.switchToGreen();
+            }
+                       
             else
                 entry.Value.switchToRed();
         }        
     }
 
-    public void NextState() {
+    public void NextState(string activator) {
 
         string greenTrafficlightsList = this.buildGreenTrafficLightListString();
-        string activator = "'keineAktion'";
-        PrologInterface.GetComponent<PrologWrapper>().QueryProlog("getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", "+activator+", G).", this);
+        //string activator = "'keineAktion'";
+
+        string query = "getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", " + activator + ", G).";
+        PrologInterface.GetComponent<PrologWrapper>().QueryProlog(query, this);
     }
 
     /// <summary>
