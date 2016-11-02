@@ -31,7 +31,16 @@ public class Job : MonoBehaviour
         prolog.StartInfo.RedirectStandardInput = true;
         prolog.StartInfo.CreateNoWindow = true;
         prolog.StartInfo.Arguments = "-q";
-        prolog.StartInfo.FileName = @"C:\Program Files\swipl\bin\swipl.exe";
+
+        if (File.Exists(@"C:\Program Files\swipl\bin\swipl.exe"))
+            prolog.StartInfo.FileName = @"C:\Program Files\swipl\bin\swipl.exe";
+        else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
+            prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
+        else {
+            print("SWI not found!");
+            return;
+        }
+           
 
         // start the process
         prolog.Start();
