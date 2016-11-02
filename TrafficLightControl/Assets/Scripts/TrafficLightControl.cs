@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text;
 
 public class TrafficLightControl : MonoBehaviour, IProlog {
 
@@ -14,6 +15,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     private const string GREEN = "G = ";
     private const string AMPEL = "ampel";
 
+    public string CrossroadName;
 
     private Dictionary<string, TrafficLight> dictionary;
     private List<string> greenTrafficLights;
@@ -63,7 +65,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
             var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
             tmp = tmp.Trim();
 
-            if (!String.IsNullOrEmpty(tmp))
+            if (!string.IsNullOrEmpty(tmp))
                 greenTrafficLights.Add(tmp);
         }
 
@@ -79,7 +81,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     }
 
     public void NextState() {
-        PrologInterface.GetComponent<PrologWrapper>().QueryProlog("gib_Weltzustand(weltzustand1, G).", this);
+
+        string greenTrafficlightsList = this.buildGreenTrafficLightListString();
+        string activator = "'keineAktion'";
+        PrologInterface.GetComponent<PrologWrapper>().QueryProlog("getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", "+activator+", G).", this);
     }
 
     /// <summary>
@@ -93,4 +98,34 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
         }
 
     }
+
+
+    /// <summary>
+    /// Build a string with all green trafficlights
+    /// </summary>
+    /// <returns></returns>
+    private string buildGreenTrafficLightListString()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        foreach(var tmp in dictionary)
+        {
+            if (tmp.Value.State != TrafficLight.States.green)
+                continue;
+
+            sb.Append("gruen(" + tmp.Key + "), ");
+        }
+
+        string greenTrafficLights = sb.ToString();
+
+        //no green trafficlight
+        if (string.IsNullOrEmpty(greenTrafficLights))
+            return "[]";
+
+
+        //print();
+
+        return "[" + greenTrafficLights.Remove(greenTrafficLights.Length - 2) + "]";
+    }
+
 }
