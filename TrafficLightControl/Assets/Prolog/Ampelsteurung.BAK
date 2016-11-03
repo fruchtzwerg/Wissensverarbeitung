@@ -31,13 +31,13 @@ phase6(b,[gruen(h3),gruen(fg8),gruen(fg5),gruen(k7),gruen(b2),gruen(k1),gruen(k3
 %Regeln Kreuzung B
 
 %erfragen der nächsten Ampelphase durch übergabe des Impulsgebers
-getnextPhase(a,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(a,MomentanePhase,Ausloeserampel,Gruenegesamt).
-getnextPhase(b,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(b,MomentanePhase,Ausloeserampel,Gruenegesamt).
+getnextPhase(a,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(a,MomentanePhase,Ausloeserampel,Gruenegesamt),!.
+getnextPhase(b,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(b,MomentanePhase,Ausloeserampel,Gruenegesamt),!.
 
 
 %erfragen ob die Phasenaenderung zulässig ist für die jeweilige Ampelkreuzung
 %Kreuzung A
-checkifzulaessig(a,phase14,k10,[]):-!.
+checkifzulaessig(a,phase14,k10,[]).
 checkifzulaessig(a,_,Ausloeser,GG):-ausloeser(a,Ausloeser,GG).
 
 %Kreuzung B
