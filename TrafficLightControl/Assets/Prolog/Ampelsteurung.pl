@@ -37,8 +37,8 @@ getnextPhase(b,MomentanePhase,Ausloeserampel,Gruenegesamt):-checkifzulaessig(b,M
 
 %erfragen ob die Phasenaenderung zulässig ist für die jeweilige Ampelkreuzung
 %Kreuzung A
-checkifzulaessig(a,phase14,k10,[]).
-checkifzulaessig(a,_,Ausloeser,GG):-ausloeser(a,Ausloeser,GG),!.
+checkifzulaessig(a,phase14,k10,[]):-!.
+checkifzulaessig(a,_,Ausloeser,GG):-ausloeser(a,Ausloeser,GG).
 
 %Kreuzung B
 %checkifzulaessig(b,MomentanePhase,Ausloeser):-
