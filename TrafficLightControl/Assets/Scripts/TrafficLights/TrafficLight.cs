@@ -13,21 +13,21 @@ public class TrafficLight : MonoBehaviour {
 
 
     public Shader shader;
-    
-    private Renderer rendRed;
-    private Renderer rendOrange;
-    private Renderer rendGreen;
 
-    private Color black = new Color(0, 0, 0);
-    private Color red = new Color(1f, 0, 0);
-    private Color orange = new Color(1f, 1f, 0);
-    private Color green = new Color(0, 1f, 0);
+    protected Renderer rendRed;
+    protected Renderer rendOrange;
+    protected Renderer rendGreen;
+
+    protected Color black = new Color(0, 0, 0);
+    protected Color red = new Color(1f, 0, 0);
+    protected Color orange = new Color(1f, 1f, 0);
+    protected Color green = new Color(0, 1f, 0);
 
     private Timer timerGreen;
     private Timer timerRed;
 
-    private States state = States.off;
-    private States oldState = States.off;
+    protected States state = States.off;
+    protected States oldState = States.off;
 
     public States State {
         get {
@@ -56,10 +56,13 @@ public class TrafficLight : MonoBehaviour {
         rendRed.material.EnableKeyword("_EMISSION");
         rendRed.material.color = red;
 
-        rendOrange = OrangeLight.GetComponent<Renderer>();
-        rendOrange.material = new Material(shader);
-        rendOrange.material.EnableKeyword("_EMISSION");
-        rendOrange.material.color = orange;
+        if (OrangeLight != null) {
+            rendOrange = OrangeLight.GetComponent<Renderer>();
+            rendOrange.material = new Material(shader);
+            rendOrange.material.EnableKeyword("_EMISSION");
+            rendOrange.material.color = orange;
+        }
+       
 
         rendGreen = GreenLight.GetComponent<Renderer>();
         rendGreen.material = new Material(shader);
@@ -88,7 +91,7 @@ public class TrafficLight : MonoBehaviour {
     /// <summary>
     /// switch state from red to green
     /// </summary>
-    public void switchToGreen() {
+    public virtual void switchToGreen() {
         //only if red or in some sec red
         if (State != States.redAndOrange && State != States.green) {
             state = States.redAndOrange;
@@ -100,7 +103,7 @@ public class TrafficLight : MonoBehaviour {
     /// <summary>
     /// switch strate from green to red
     /// </summary>
-    public void switchToRed() {
+    public virtual void switchToRed() {
         //only if red or in some sec red
         if (State != States.orange && State != States.red) {
             state = States.orange;
@@ -125,7 +128,7 @@ public class TrafficLight : MonoBehaviour {
     /// <summary>
     /// switch state and emission
     /// </summary>
-    void switchState() {
+    protected virtual void switchState() {
 
         if (oldState != State) {
             oldState = State;
