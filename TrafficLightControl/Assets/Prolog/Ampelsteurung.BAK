@@ -9,15 +9,16 @@
 %übernehmen auch wir diese Konvention
 phase11(a,[gruen(k9),gruen(k13),gruen(b4),gruen(h6),gruen(fg9)]).
 phase12(a,[gruen(b3),gruen(k9),gruen(fg9)]).
-phase13(a,[gruen(h5),gruen(f11),gruen(fa10),gruen(k11),gruen(k10)]).
+phase13(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k11),gruen(k10)]).
 phase14(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k12)]).
 
 %Regeln Kreuzung A
 ausloeser(a,keineAktion,GG):-phase11(a,GG).
 ausloeser(a,b3,GG):- phase12(a,GG).
 ausloeser(a,k10,GG):-phase13(a,GG).
-ausloeser(a,f10,GG):- phase14(a,GG).
+ausloeser(a,fa10,GG):- phase14(a,GG).
 ausloeser(a,k12,GG):- phase14(a,GG).
+ausloeser(a,fa11,_):-!,write('use fa10 instead'),fail.
 
 
 %Phasen Ampelkreuzung B
