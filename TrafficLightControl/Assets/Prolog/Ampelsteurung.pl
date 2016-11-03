@@ -7,10 +7,10 @@
 %Phasen Ampelkreuzung A
 %Aus Grunde dem heraus, dass die Originalen Phasen mit einer zusätzlichen 1 zur Unterscheidung notiert wurden,
 %übernehmen auch wir diese Konvention
-phase11(a,[gruen(k9),gruen(k13),gruen(b4),gruen(h6),gruen(fg9)]).
-phase12(a,[gruen(b3),gruen(k9),gruen(fg9)]).
-phase13(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k11),gruen(k10)]).
-phase14(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k12)]).
+phase11(a,[gruen(k9),gruen(k13),gruen(b4),gruen(h6),gruen(fg9),phase11]).
+phase12(a,[gruen(b3),gruen(k9),gruen(fg9),phase12]).
+phase13(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k11),gruen(k10),phase13]).
+phase14(a,[gruen(h5),gruen(fa11),gruen(fa10),gruen(k12),phase14]).
 
 %Regeln Kreuzung A
 ausloeser(a,keineAktion,GG):-phase11(a,GG).
