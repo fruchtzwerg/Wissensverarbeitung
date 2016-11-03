@@ -133,7 +133,7 @@ public class UI : MonoBehaviour {
     }
 
     void testPrologEvent4() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'f10'");
+        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'fa10'");
     }
 
     void testPrologEvent5() {

@@ -20,11 +20,14 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     private Dictionary<string, TrafficLight> dictionary;
     private List<string> greenTrafficLights;
 
+    private string phase;
 
     private Regex regex;
     // Use this for initialization
     void Start() {
         regex = new Regex(@"G\s=\s\[(gruen\(.*\),)*gruen\(.*\)\]\.");
+
+        phase = "phase11";
 
         greenTrafficLights = new List<string>();
 
@@ -45,14 +48,20 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     /// </summary>
     /// <param name="recivedData"></param>
     public void ReciveDataFromProlog(string recivedData) {
-        //recivedData is emtry
-        if (string.IsNullOrEmpty(recivedData))
+        //recivedData is emtry or empty list
+        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = []."))
             return;
 
         if (!regex.IsMatch(recivedData))
             print("Regex match nicht...");
 
         string recivedDataWithOutVar = recivedData.Replace(GREEN, "").Replace("[", "").Replace("]", "");
+
+        string phasetmp = recivedDataWithOutVar.Substring(recivedDataWithOutVar.LastIndexOf(","));
+        phasetmp = phasetmp.Replace(",", "").Replace(".","");
+        phase = phasetmp.Trim();
+
+        print(phase);
 
         string[] stringSeparators = new string[] { "gruen(" };
         var splits = recivedDataWithOutVar.Split(stringSeparators, StringSplitOptions.None);
@@ -86,10 +95,11 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     public void NextState(string activator) {
 
-        string greenTrafficlightsList = this.buildGreenTrafficLightListString();
+        //string greenTrafficlightsList = this.buildGreenTrafficLightListString();
         //string activator = "'keineAktion'";
 
-        string query = "getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", " + activator + ", G).";
+        //string query = "getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", " + activator + ", G).";
+        string query = "getnextPhase('" + CrossroadName + "', '" + phase + "', " + activator + ", G).";
         PrologInterface.GetComponent<PrologWrapper>().QueryProlog(query, this);
     }
 
@@ -105,7 +115,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     }
 
-
+    [Obsolete]
     /// <summary>
     /// Build a string with all green trafficlights
     /// </summary>
