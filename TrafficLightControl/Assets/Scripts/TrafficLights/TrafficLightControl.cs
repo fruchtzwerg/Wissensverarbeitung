@@ -4,6 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Text;
+using System.Timers;
 
 public class TrafficLightControl : MonoBehaviour, IProlog {
 
@@ -20,27 +21,41 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     private Dictionary<string, TrafficLight> dictionary;
     private List<string> greenTrafficLights;
 
+    private PrologWrapper wrapper;
+    private Regex regex;
     private string phase;
 
-    private Regex regex;
+    private Timer timerNormalState;
+    public long backToNormalStateInterval = 8000;
+
     // Use this for initialization
     void Start() {
         regex = new Regex(@"G\s=\s\[(gruen\(.*\),)*gruen\(.*\)\]\.");
+        wrapper = PrologInterface.GetComponent<PrologWrapper>();
 
         phase = "phase11";
-
-        greenTrafficLights = new List<string>();
+        greenTrafficLights = new List<string>();        
 
         if (trafficLights.Length == trafficLightNames.Length) {
-            buildDictionary();
+            BuildDictionary();
         }else {
             print("WARNING! Dircionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
-        }            
+        }
+
+        timerNormalState = new Timer();
+        timerNormalState.Interval = backToNormalStateInterval;
+        timerNormalState.AutoReset = false;
+        timerNormalState.Elapsed += TimerEvent;          
     }
 
     // Update is called once per frame
     void Update() {
 
+    }
+
+    // Kill swi-prolog.exe when unity quits.
+    void OnApplicationQuit() {
+        timerNormalState.Stop();
     }
 
     /// <summary>
@@ -60,9 +75,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
         string phasetmp = recivedDataWithOutVar.Substring(recivedDataWithOutVar.LastIndexOf(","));
         phasetmp = phasetmp.Replace(",", "").Replace(".","");
         phase = phasetmp.Trim();
-
-        print(phase);
-
+                
         string[] stringSeparators = new string[] { "gruen(" };
         var splits = recivedDataWithOutVar.Split(stringSeparators, StringSplitOptions.None);
 
@@ -76,7 +89,6 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
             if (!string.IsNullOrEmpty(tmp))
                 greenTrafficLights.Add(tmp);
-            print(tmp);
         }
         
         //change states...
@@ -84,7 +96,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
             //entry trafficlight in green trafficlight list?
             if (greenTrafficLights.Contains(entry.Key)) {
 
-                print(entry.Key + " to green.");
+                //print(entry.Key + " to green.");
                 entry.Value.switchToGreen();
             }
                        
@@ -93,20 +105,25 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
         }        
     }
 
+    /// <summary>
+    /// Call this function to got to the next state
+    /// </summary>
+    /// <param name="activator"></param>
     public void NextState(string activator) {
 
-        //string greenTrafficlightsList = this.buildGreenTrafficLightListString();
-        //string activator = "'keineAktion'";
-
-        //string query = "getnextPhase('" + CrossroadName + "', " + greenTrafficlightsList + ", " + activator + ", G).";
+        timerNormalState.Stop();
+        
         string query = "getnextPhase('" + CrossroadName + "', '" + phase + "', " + activator + ", G).";
-        PrologInterface.GetComponent<PrologWrapper>().QueryProlog(query, this);
+        wrapper.QueryProlog(query, this);
+
+        //Start timer to normal state
+        timerNormalState.Start();
     }
 
     /// <summary>
     /// map strings and trafficlightopjects to dictionary
     /// </summary>
-    private void buildDictionary() {
+    private void BuildDictionary() {
         dictionary = new Dictionary<string, TrafficLight>();
 
         for(int i = 0; i < trafficLights.Length; i++) {
@@ -115,12 +132,13 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     }
 
+    #region string with green trafficlights
     [Obsolete]
     /// <summary>
     /// Build a string with all green trafficlights
     /// </summary>
     /// <returns></returns>
-    private string buildGreenTrafficLightListString()
+    private string BuildGreenTrafficLightListString()
     {
         StringBuilder sb = new StringBuilder();
 
@@ -143,5 +161,13 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
         return "[" + greenTrafficLights.Remove(greenTrafficLights.Length - 2) + "]";
     }
+    #endregion
 
+    private void TimerEvent(object sender, System.EventArgs e) {
+
+        string query = "getnextPhase('" + CrossroadName + "', '" + phase + "', " + "keineAktion" + ", G).";
+        wrapper.QueryProlog(query, this);
+
+        print("Next State: normal mode");
+    }
 }

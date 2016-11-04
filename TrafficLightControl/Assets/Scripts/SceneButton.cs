@@ -10,7 +10,7 @@ public class SceneButton : MonoBehaviour {
     public Shader shader;
     private Renderer rendRed;
 
-    private bool isPushed;
+    private bool isPushed = false;
 
     private Color black = new Color(0, 0, 0);
     private Color red = new Color(1f, 0, 0);

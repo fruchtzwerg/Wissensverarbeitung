@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Timers;
 
 public class PedestrianTrafficLight : TrafficLight {
 
     public GameObject[] PedestrianTrafficLightButtons;
+
+
+    protected override void InitTimerGreen() {
+        timerGreen = new Timer();
+        timerGreen.Interval = 2000;
+        timerGreen.AutoReset = false;
+        timerGreen.Elapsed += timerEventToGreen;
+    }
 
     /// <summary>
     /// switch state from red to green
@@ -11,7 +20,7 @@ public class PedestrianTrafficLight : TrafficLight {
     public override void switchToGreen() {
         //only if red or in some sec red
         if (State != States.green) {
-            state = States.green;
+            timerGreen.Start();
         }
     }
 
