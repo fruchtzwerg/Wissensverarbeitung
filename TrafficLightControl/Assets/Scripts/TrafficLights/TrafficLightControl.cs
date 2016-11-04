@@ -73,6 +73,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
         string recivedDataWithOutVar = recivedData.Replace(GREEN, "").Replace("[", "").Replace("]", "");
 
         string phasetmp = recivedDataWithOutVar.Substring(recivedDataWithOutVar.LastIndexOf(","));
+        recivedDataWithOutVar = recivedDataWithOutVar.Replace(phasetmp, "");
         phasetmp = phasetmp.Replace(",", "").Replace(".","");
         phase = phasetmp.Trim();
                 
@@ -89,6 +90,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
             if (!string.IsNullOrEmpty(tmp))
                 greenTrafficLights.Add(tmp);
+            //print(tmp);
         }
         
         //change states...

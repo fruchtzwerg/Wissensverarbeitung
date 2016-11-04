@@ -48,7 +48,7 @@ public class UI : MonoBehaviour {
         buttonTestProlog2.onClick.AddListener(testPrologEvent2);
         buttonTestProlog3.onClick.AddListener(testPrologEvent3);
         buttonTestProlog4.onClick.AddListener(testPrologEvent4);
-        buttonTestProlog4.onClick.AddListener(testPrologEvent5);
+        buttonTestProlog5.onClick.AddListener(testPrologEvent5);
     }
 	
 	// Update is called once per frame
