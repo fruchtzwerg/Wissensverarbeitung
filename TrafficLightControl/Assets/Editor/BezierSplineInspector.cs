@@ -17,7 +17,7 @@ public class BezierSplineInspector : Editor
     private Transform handleTransform;
     private Quaternion handleRotation;
 
-    private static Color[] modeColors = {
+    private static readonly Color[] ModeColors = {
         Color.white,
         Color.yellow,
         Color.cyan
@@ -53,11 +53,17 @@ public class BezierSplineInspector : Editor
         spline = target as BezierSpline;
         EditorGUI.BeginChangeCheck();
         bool loop = EditorGUILayout.Toggle("Loop", spline.Loop);
+        Transform startTransform = (Transform)EditorGUILayout.ObjectField("Start Point", spline.StartPoint, typeof(Transform), true);
+        Transform endTransform = (Transform)EditorGUILayout.ObjectField("End Point", spline.EndPoint, typeof(Transform), true);
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(spline, "Toggle Loop");
+            Undo.RecordObject(spline, "Select Start Point");
+            Undo.RecordObject(spline, "Select End Point");
             EditorUtility.SetDirty(spline);
             spline.Loop = loop;
+            spline.StartPoint = startTransform;
+            spline.EndPoint = endTransform;
         }
         if (selectedIndex >= 0 && selectedIndex < spline.ControlPointCount)
         {
@@ -116,7 +122,7 @@ public class BezierSplineInspector : Editor
         {
             size *= 2f;
         }
-        Handles.color = modeColors[(int)spline.GetControlPointMode(index)];
+        Handles.color = ModeColors[(int)spline.GetControlPointMode(index)];
         if (Handles.Button(point, handleRotation, size * handleSize, size * pickSize, Handles.DotCap))
         {
             selectedIndex = index;

@@ -1,11 +1,53 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class BezierSpline : MonoBehaviour
 {
+    
+    [SerializeField]
+    private Vector3[] points;
+    [SerializeField]
+    private BezierControlPointMode[] modes;
+    [SerializeField]
+    private bool loop;
+    [SerializeField]
+    private Transform startPoint;
+    [SerializeField]
+    private Transform endPoint;
+
     public int CurveCount
     {
         get { return (points.Length - 1)/3; }
+    }
+
+    public Transform StartPoint
+    {
+        get { return startPoint; }
+        set
+        {
+            startPoint = value;
+            if (value != null)
+            {
+                //points[0] = value.localPosition;
+                SetControlPoint(0, value.localPosition);
+            }
+        }
+    }
+
+    public Transform EndPoint
+    {
+        get { return endPoint; }
+        set
+        {
+            endPoint = value;
+            if (value != null)
+            {
+                //points[points.Length - 1] = value.localPosition;
+                SetControlPoint(points.Length -1, value.localPosition);
+            }
+        }
     }
 
     public int ControlPointCount
@@ -32,22 +74,31 @@ public class BezierSpline : MonoBehaviour
         return Quaternion.LookRotation(GetDirection(t), Vector3.up);
     }
 
-    [SerializeField]
-    private Vector3[] points;
-    [SerializeField]
-    private BezierControlPointMode[] modes;
-    [SerializeField]
-    private bool loop;
-
 
     void Reset()
     {
+        Vector3 startVector;
+        Vector3 endVector;
+
+        // set start point to defined start
+        if (StartPoint != null)
+            startVector = StartPoint.localPosition;
+        else
+            startVector = new Vector3(6f, 1f, 1f);
+
+        // set endpooint to defined end
+        if (StartPoint != null)
+            endVector = EndPoint.localPosition;
+        else
+            endVector = new Vector3(24f, 1f, 1f);
+
+
         points = new Vector3[]
         {
-            new Vector3(1f, 1f, 1f),
-            new Vector3(2f, 1f, 1f),
-            new Vector3(3f, 1f, 1f),
-            new Vector3(4f, 1f, 1f)
+            startVector,
+            new Vector3(12f, 1f, 1f),
+            new Vector3(18f, 1f, 1f),
+            endVector
         };
         modes = new BezierControlPointMode[] {
             BezierControlPointMode.Free,
@@ -241,6 +292,19 @@ public class BezierSpline : MonoBehaviour
             EnforceMode(0);
         }
     }
+
+
+    void UpdatePositionsInEditor()
+    {
+        if (startPoint != null)
+            SetControlPoint(0, Vector3.zero);
+        if (endPoint != null)
+            SetControlPoint(points.Length - 1, endPoint.localPosition - startPoint.localPosition);
+    }
+
+    // update in editor
+    void OnEnable() { EditorApplication.update += UpdatePositionsInEditor; }
+    void OnDisable() { EditorApplication.update -= UpdatePositionsInEditor; }
 }
 
 public enum BezierControlPointMode

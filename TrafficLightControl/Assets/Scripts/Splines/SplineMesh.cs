@@ -9,7 +9,6 @@ public class SplineMesh : MonoBehaviour
     public BezierSpline Spline;
     public int Segments = 64;
     public float Height = 0.1f;
-    public float Width = 1f;
 
     private void Start()
     {
@@ -45,7 +44,7 @@ public class SplineMesh : MonoBehaviour
             float t = (float)i / Segments;
             Vector3 point = Spline.GetPoint(t) - transform.position;
             rotation = Spline.GetRotation(t);
-            segmentRight = Vector3.Cross(Vector3.up, Spline.GetDirection(t)).normalized * Width;
+            segmentRight = Vector3.Cross(Vector3.up, Spline.GetDirection(t));
 
             //left = rotation * Vector3.left;
             //right = rotation * Vector3.right;
@@ -130,7 +129,6 @@ public class SplineMesh : MonoBehaviour
         mesh.Optimize();
 
     }
-
 
     // run Start() in scene edtor every frame
     void OnEnable() { EditorApplication.update += Start; }
