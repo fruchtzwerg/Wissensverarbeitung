@@ -13,6 +13,8 @@ public class CamMoving : MonoBehaviour {
     public float zoomSpeed = 0.8f;
     public float movingSpeed = 0.3f;
 
+    private bool wasShiftDown = false;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -20,16 +22,27 @@ public class CamMoving : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.W)) {
+	    if (!wasShiftDown && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)))
+	    {
+	        movingSpeed *= 5;
+	        wasShiftDown = true;
+	    }
+	    else if (wasShiftDown && (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift)))
+        {
+            movingSpeed /= 5;
+            wasShiftDown = false;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
             moveForward();
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
             moveForward(false);
         }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             moveRight();
         }
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             moveRight(false);
         }
         if(Input.GetAxis("Mouse ScrollWheel") < 0) {
