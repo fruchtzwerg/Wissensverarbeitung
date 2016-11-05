@@ -50,7 +50,7 @@ public class EventTrigger : MonoBehaviour {
             if (value <= probabilities[i]) {
                 print("Event " + events[i] + " was triggert.");
 
-                control.NextState(events[i]);
+                control.EventWasTriggered(events[i]);
             }                
         }
     }

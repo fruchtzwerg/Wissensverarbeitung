@@ -68,7 +68,20 @@ public class PrologWrapper : MonoBehaviour
         _prolog.Kill();
     }
 
+    /// <summary>
+    /// Query prolog without respons
+    /// </summary>
+    /// <param name="query"></param>
+    public void QueryProlog(string query) {
+        if(!string.IsNullOrEmpty(query))
+            _prolog.Query(query);
+    }
 
+    /// <summary>
+    /// Query prolog with respons
+    /// </summary>
+    /// <param name="query">Query string</param>
+    /// <param name="sender">Sender Object</param>
     public void QueryProlog(string query, IProlog sender) {
         if (sender == null)
             return;

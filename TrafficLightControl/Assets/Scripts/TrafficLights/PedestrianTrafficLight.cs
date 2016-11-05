@@ -82,7 +82,7 @@ public class PedestrianTrafficLight : TrafficLight {
     /// </summary>
     private void switchOffPedestrianTrafficLightLights() {
         foreach(var tmp in PedestrianTrafficLightButtons) {
-            tmp.GetComponent<SceneButton>().switchOffEmission();
+            tmp.GetComponent<PedestrianButton>().switchOffEmission();
         }
     }
 }

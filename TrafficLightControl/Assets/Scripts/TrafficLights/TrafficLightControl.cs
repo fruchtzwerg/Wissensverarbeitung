@@ -15,6 +15,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     private const string GREEN = "G = ";
     private const string AMPEL = "ampel";
+    private const string NEXT_PHASE = "getnextPhase(";
+    private const string NEUES_EREIGNIS = "neuesEreignis(";
 
     public string CrossroadName;
 
@@ -115,7 +117,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
         timerNormalState.Stop();
         
-        string query = "getnextPhase('" + CrossroadName + "', '" + phase + "', " + activator + ", G).";
+        string query = NEXT_PHASE + CrossroadName + ", " + phase + ", " + activator + ", G).";
         wrapper.QueryProlog(query, this);
 
         //Start timer to normal state
@@ -167,9 +169,22 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     private void TimerEvent(object sender, System.EventArgs e) {
 
-        string query = "getnextPhase('" + CrossroadName + "', '" + phase + "', " + "keineAktion" + ", G).";
+        string query = NEXT_PHASE + CrossroadName + ", " + phase + ", " + "keineAktion" + ", G).";
         wrapper.QueryProlog(query, this);
 
         print("Next State: normal mode");
+    }
+
+    /// <summary>
+    /// Call prolog, that a new event was triggered at this crossroad
+    /// </summary>
+    /// <param name="trigger"></param>
+    public void EventWasTriggered(string trigger) {
+        string query = NEUES_EREIGNIS + CrossroadName + ", " + trigger + ").";
+
+        print("Event was triggered: " + query);
+
+        wrapper.QueryProlog(query);
+
     }
 }

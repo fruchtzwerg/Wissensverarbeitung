@@ -1,0 +1,67 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class PedestrianButton : MonoBehaviour {
+
+    public GameObject TrafficLightControl;
+    public GameObject PushedLight;
+    public GameObject PartnerButton;
+    public string Event;
+
+    public Shader shader;
+    private Renderer rendRed;
+
+    private bool isPushed = false;
+
+    private Color black = new Color(0, 0, 0);
+    private Color red = new Color(1f, 0, 0);
+
+    private TrafficLightControl control;
+
+    // Use this for initialization
+    void Start () {
+
+        rendRed = new Renderer();
+
+        rendRed = PushedLight.GetComponent<Renderer>();
+        rendRed.material = new Material(shader);
+        rendRed.material.EnableKeyword("_EMISSION");
+        rendRed.material.color = red;
+
+        control = TrafficLightControl.GetComponent<TrafficLightControl>();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+	    //if(this.TrafficLightGO.GetComponent<TrafficLight>().State == TrafficLight.States.green && isPushed) {
+        //    rendRed.material.SetColor("_EmissionColor", black);
+        //}
+	}
+
+    void OnMouseDown() {
+
+        pushed();
+
+        if(PartnerButton != null) {
+            PartnerButton.GetComponent<PedestrianButton>().partnerButtonPushed();
+        }
+
+        control.EventWasTriggered(Event);
+    }
+
+    private void pushed() {
+        isPushed = true;
+
+        rendRed.material.SetColor("_EmissionColor", red);
+    }
+
+    public void partnerButtonPushed() {
+        pushed();
+    }
+
+    public void switchOffEmission() {
+        isPushed = false;
+
+        rendRed.material.SetColor("_EmissionColor", black);
+    }
+}
