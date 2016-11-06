@@ -2,43 +2,70 @@
 
 public class SplineWalker : MonoBehaviour
 {
+    public enum LookDirection
+    {
+        None,
+        Forward,
+        Backward,
+        Left,
+        Right,
+        Up,
+        Down
+    }
 
-    public BezierSpline spline;
-    public float HeightOffset = 0.5f;
-    public float duration;
-    public bool lookForward;
 
-    private float progress;
     public enum SplineWalkerMode
     {
         Once,
         Loop,
-        PingPong
+        PingPong,
+        Connected
     }
 
+
+    public SplineWaypoint Waypoint;
+    public float HeightOffset = 0.5f;
+    public float duration;
+    public LookDirection LookAtDirection;
     public SplineWalkerMode mode;
 
-    private bool goingForward = true;
+    private float progress;
+    private BezierSpline spline;
+    private bool isGoingForward = true;
 
     private void Update()
     {
-        if (goingForward)
+
+        spline = Waypoint.Spline;
+
+        if (isGoingForward)
         {
             progress += Time.deltaTime / duration;
             if (progress > 1f)
             {
-                if (mode == SplineWalkerMode.Once)
+                switch (mode)
                 {
-                    progress = 1f;
-                }
-                else if (mode == SplineWalkerMode.Loop)
-                {
-                    progress -= 1f;
-                }
-                else
-                {
-                    progress = 2f - progress;
-                    goingForward = false;
+                    case SplineWalkerMode.Once:
+                        progress = 1f;
+                        break;
+                    case SplineWalkerMode.Loop:
+                        progress -= 1f;
+                        break;
+                    case SplineWalkerMode.Connected:
+                        if (Waypoint.NextWaypoint.IsDestination)
+                        {
+                            Destroy(gameObject);
+                            return;
+                        }
+
+                        Waypoint = Waypoint.NextWaypoint;
+                        spline = Waypoint.Spline;
+                        progress = 0;
+                        break;
+                    default:
+                        progress = 2f - progress;
+                        isGoingForward = false;
+                        break;
                 }
             }
         }
@@ -48,15 +75,41 @@ public class SplineWalker : MonoBehaviour
             if (progress < 0f)
             {
                 progress = -progress;
-                goingForward = true;
+                isGoingForward = true;
             }
         }
 
+
         Vector3 position = spline.GetPoint(progress) + Vector3.up * HeightOffset;
         transform.position = position;
-        if (lookForward)
+
+        if(LookAtDirection == LookDirection.None)
+            return;
+
+        transform.LookAt(position + spline.GetDirection(progress));
+
+        if(name.ToLower().Contains("truck"))
+            transform.localEulerAngles += new Vector3(-90, 0, 0);
+
+        switch (LookAtDirection)
         {
-            transform.LookAt(position + spline.GetDirection(progress));
+            case LookDirection.Forward:
+                break;
+            case LookDirection.Backward:
+                transform.localEulerAngles += new Vector3(0, 180, 0);
+                break;
+            case LookDirection.Left:
+                transform.localEulerAngles += new Vector3(0, 90, 0);
+                break;
+            case LookDirection.Right:
+                transform.localEulerAngles += new Vector3(0, -90, 0);
+                break;
+            case LookDirection.Up:
+                transform.localEulerAngles += new Vector3(0, 0, 90);
+                break;
+            case LookDirection.Down:
+                transform.localEulerAngles += new Vector3(0, 0, -90);
+                break;
         }
     }
 }

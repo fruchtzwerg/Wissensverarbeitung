@@ -294,7 +294,7 @@ public class BezierSpline : MonoBehaviour
     }
 
 
-    void UpdatePositionsInEditor()
+    public void UpdatePositionsInEditor()
     {
         if (startPoint != null)
             SetControlPoint(0, Vector3.zero);

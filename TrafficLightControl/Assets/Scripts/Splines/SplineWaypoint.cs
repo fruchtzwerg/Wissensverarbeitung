@@ -6,19 +6,18 @@ public class SplineWaypoint : MonoBehaviour
 {
 
     public SplineWaypoint NextWaypoint;
-    [SerializeField]
-    private BezierSpline spline;
+    public BezierSpline Spline;
 
     public bool IsDestination;
     public bool IsOrigin;
 
     void CreateSpline()
     {
-        if (NextWaypoint != null && spline == null)
+        if (NextWaypoint != null && Spline == null)
         {
-            spline = gameObject.AddComponent<BezierSpline>();
-            spline.StartPoint = transform;
-            spline.EndPoint = NextWaypoint.transform;
+            Spline = gameObject.AddComponent<BezierSpline>();
+            Spline.StartPoint = transform;
+            Spline.EndPoint = NextWaypoint.transform;
         }
     }
 
