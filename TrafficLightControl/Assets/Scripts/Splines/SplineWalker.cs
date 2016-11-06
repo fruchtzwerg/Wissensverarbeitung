@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Random = System.Random;
 
 public class SplineWalker : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class SplineWalker : MonoBehaviour
     private BezierSpline spline;
     private bool isGoingForward = true;
 
+    private Random rnd = new Random();
+
     private void Update()
     {
 
@@ -58,7 +61,9 @@ public class SplineWalker : MonoBehaviour
                             return;
                         }
 
-                        Waypoint = Waypoint.NextWaypoint;
+                        //Waypoint = Waypoint.NextWaypoint;
+                        Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
+
                         spline = Waypoint.Spline;
                         progress = 0;
                         break;
@@ -111,5 +116,18 @@ public class SplineWalker : MonoBehaviour
                 transform.localEulerAngles += new Vector3(0, 0, -90);
                 break;
         }
+    }
+
+
+    /// <summary>
+    /// Get a random origin spawn point
+    /// </summary>
+    /// <returns></returns>
+    private SplineWaypoint GetRandomWaypoint(SplineWaypoint waypoint)
+    {
+        var waypoints = waypoint.GetComponents<SplineWaypoint>();
+        int rand = rnd.Next(0, waypoints.Length);
+
+        return waypoints[rand];
     }
 }

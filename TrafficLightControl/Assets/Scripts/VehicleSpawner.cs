@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -40,8 +41,11 @@ public class VehicleSpawner : MonoBehaviour
         var waypoints = GameObject.Find("Lanes").GetComponentsInChildren<SplineWaypoint>();
         foreach (var waypoint in waypoints)
         {
-            if(waypoint.IsOrigin)
+            if (waypoint.IsOrigin)
+            {
                 originWaypoints.Add(waypoint);
+                print(waypoint.name);
+            }
         }
 
         // load prefabs from /Assets/Resources/<name>
@@ -77,7 +81,7 @@ public class VehicleSpawner : MonoBehaviour
 
         // set the origin of the instance
         var walker = car.GetComponent<SplineWalker>();
-        walker.Waypoint = GameObject.Find(GetRandomOrigin()).GetComponent<SplineWaypoint>();
+        walker.Waypoint = GetRandomOrigin();
     }
 
 
@@ -102,30 +106,15 @@ public class VehicleSpawner : MonoBehaviour
     }
 
 
-    private string GetRandomOrigin()
+    /// <summary>
+    /// Get a random origin spawn point
+    /// </summary>
+    /// <returns></returns>
+    private SplineWaypoint GetRandomOrigin()
     {
-        int rand = rnd.Next(0, 5);
+        int rand = rnd.Next(0, originWaypoints.Count);
 
-        switch (rand)
-        {
-            default:
-            case 0:
-                return "L1_Start";
-            case 1:
-                return "L2_Start";
-            case 2:
-                return "L3_Start";
-            case 3:
-                return "L4_Start";
-            case 4:
-                return "Barther_Start";
-            case 5:
-                return "Jungfernstieg_Start";
-            case 6:
-                return "Bahnhofstr_Start";
-            case 7:
-                return "HBF_Start";
-        }
+        return originWaypoints[rand];
     }
 
 
