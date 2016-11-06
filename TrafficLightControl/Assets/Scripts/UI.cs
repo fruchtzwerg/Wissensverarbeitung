@@ -20,7 +20,7 @@ public class UI : MonoBehaviour {
     public Button buttonTestProlog4;
     public Button buttonTestProlog5;
 
-    public GameObject PrologTestGO;
+    public GameObject CrossroadControl_A;
 
     public GameObject Cam;
 
@@ -44,11 +44,11 @@ public class UI : MonoBehaviour {
         buttonCamPos3.onClick.AddListener(camButtonEvent3);
         buttonCamPos4.onClick.AddListener(camButtonEvent4);
 
-        buttonTestProlog1.onClick.AddListener(testPrologEvent1);
-        buttonTestProlog2.onClick.AddListener(testPrologEvent2);
-        buttonTestProlog3.onClick.AddListener(testPrologEvent3);
-        buttonTestProlog4.onClick.AddListener(testPrologEvent4);
-        buttonTestProlog5.onClick.AddListener(testPrologEvent5);
+        buttonTestProlog1.onClick.AddListener(CrossroadAKeineAktionEvent);
+        buttonTestProlog2.onClick.AddListener(CrossroadAB3Event);
+        buttonTestProlog3.onClick.AddListener(CorssroadK10Event);
+        buttonTestProlog4.onClick.AddListener(CrossroadAFA10Event);
+        buttonTestProlog5.onClick.AddListener(CrossroadAK12Event);
     }
 	
 	// Update is called once per frame
@@ -120,23 +120,23 @@ public class UI : MonoBehaviour {
         setCamPostion(camPos4);
     }   
 
-    void testPrologEvent1() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'keineAktion'");
+    void CrossroadAKeineAktionEvent() {
+        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'keineAktion'");
     }
 
-    void testPrologEvent2() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'b3'");
+    void CrossroadAB3Event() {
+        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'b3'");
     }
 
-    void testPrologEvent3() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'k10'");
+    void CorssroadK10Event() {
+        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'k10'");
     }
 
-    void testPrologEvent4() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'fa10'");
+    void CrossroadAFA10Event() {
+        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'fa10'");
     }
 
-    void testPrologEvent5() {
-        PrologTestGO.GetComponent<TrafficLightControl>().NextState("'k12'");
+    void CrossroadAK12Event() {
+        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'k12'");
     }
 }
