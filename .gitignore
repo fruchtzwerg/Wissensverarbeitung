@@ -8,7 +8,6 @@ TrafficLightControl/Assembly-CSharp-vs.csproj
 TrafficLightControl/Assembly-CSharp.csproj
 TrafficLightControl/Assembly-UnityScript-vs.unityproj
 TrafficLightControl/Assembly-UnityScript.unityproj
-TrafficLightControl/Assets/Resources/*
 TrafficLightControl/Assets/highscore.xml
 TrafficLightControl/Assets/highscore.xml.meta
 TrafficLightControl/Library

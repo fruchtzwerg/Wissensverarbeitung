@@ -78,6 +78,7 @@ public class VehicleSpawner : MonoBehaviour
 
         // instanciate the prefab
         var car = Instantiate(prefab, transform) as GameObject;
+        print(prefab);
 
         // set the origin of the instance
         var walker = car.GetComponent<SplineWalker>();
