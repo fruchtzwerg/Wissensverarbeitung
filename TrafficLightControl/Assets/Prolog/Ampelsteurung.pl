@@ -6,6 +6,7 @@
 :- dynamic queue/2.
 :- dynamic momentanePhase/2.
 :- dynamic laengeAlt/2.
+:- dynamic queuetemp/2.
 :-set_prolog_flag(answer_write_options,
                    [ quoted(true),
                      portray(true),
@@ -19,8 +20,9 @@ momentanePhase(a,phase11).
 momentanePhase(b,phase1).
 
 %zwei queues für die Berechnung der nächsten Ampelphase
-queue(a,[[k12,falsch],[k5,falsch],[k10,falsch],[k10,wahr]]).
+queue(a,[]).
 queue(b,[]).
+queuetemp(Kreuzung,[]).
 
 %Wahrheitswert
 bool([],falsch).
@@ -56,10 +58,31 @@ checkAusloeser(Kreuzung,Ausloeser,Wahrheitswert):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  alle Auslöser(bereits in der Queue)bei Phasenänderung erneut überprüfen     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-recheckAusloeserInQueue(a,[]).
-recheckAusloeserInQueue(b,[]).
-recheckAusloeserInQueue(Kreuzung,[H|T]).
-                             
+reCheckAusloeserInQueue(Kreuzung,[]):-
+                                   queuetemp(Kreuzung,X)
+                                   ,
+                                   retract(queue(Kreuzung,_))
+                                   ,
+                                   assert(queue(Kreuzung,X))
+                                   ,
+                                   retract(queuetemp(_,_))
+                                   ,
+                                   assert(queuetemp(_,[])).
+
+reCheckAusloeserInQueue(Kreuzung,[H|T]):-
+                                   [Ausloeser|Rest]=H
+                                   ,
+                                   checkAusloeser(Kreuzung,Ausloeser,W)
+                                   ,
+                                   queuetemp(Kreuzung,TQ)
+                                   ,
+                                   append(TQ,[[Ausloeser,W]],L)
+                                   ,
+                                   retract(queuetemp(Kreuzung,_))
+                                   ,
+                                   assert(queuetemp(Kreuzung,L))
+                                   ,
+                                   reCheckAusloeserInQueue(Kreuzung,T).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   Definition der Ampelanlagen                                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,6 +147,10 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                Y=..[Phaseneu,Kreuzung,Gruenegesamt]
                                ,
                                call(Y)
+                               ,
+                               queue(Kreuzung,Qneu)
+                               ,
+                               reCheckAusloeserInQueue(Kreuzung,Qneu)
                                ,!.
                                
 checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
