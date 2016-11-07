@@ -19,7 +19,7 @@ momentanePhase(a,phase11).
 momentanePhase(b,phase1).
 
 %zwei queues für die Berechnung der nächsten Ampelphase
-queue(a,[]).
+queue(a,[[k12,falsch],[k5,falsch],[k10,falsch],[k10,wahr]]).
 queue(b,[]).
 
 %Wahrheitswert
@@ -53,8 +53,12 @@ checkAusloeser(Kreuzung,Ausloeser,Wahrheitswert):-
                                               checkifzulaessig(Kreuzung,Phase,Ausloeser,Ergebnis)
                                               ,
                                               bool(Ergebnis,Wahrheitswert).
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  alle Auslöser(bereits in der Queue)bei Phasenänderung erneut überprüfen     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+recheckAusloeserInQueue(a,[]).
+recheckAusloeserInQueue(b,[]).
+recheckAusloeserInQueue(Kreuzung,[H|T]).
                              
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   Definition der Ampelanlagen                                %
@@ -103,9 +107,11 @@ ausloeser(a,fa11,_):-!,
 %                   Anfordern der nächsten Phase                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+                               
 getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung,Q)
+                               ,
+                               checkQueueIsEmpty(Kreuzung,Q,Phaseneu)
                                ,
                                checkQueueComplete(Q,Kreuzung,Phaseneu)
                                ,
@@ -118,8 +124,15 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                Y=..[Phaseneu,Kreuzung,Gruenegesamt]
                                ,
                                call(Y)
-                               ,
-                               !.
+                               ,!.
+                               
+checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
+                               []=Q,
+                               momentanePhase(Kreuzung,Phaseneu),!.
+
+checkQueueIsEmpty(Kreuzung,[H|T],Phaseneu):-
+                               [H|T]=Q,!.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        Queue Operationen                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,6 +144,11 @@ doCheck(Q,Kreuzung,_):-
                     laengeAlt(Kreuzung,AlteLaenge)
                     ,
                     NeueLaenge<AlteLaenge,!.
+
+doCheck(Q,Kreuzung,_):-
+                    length(Q,NeueLaenge)
+                    ,
+                    0=NeueLaenge,!.
 
 doCheck(Q,Kreuzung,Phaseneu):-
                            length(Q,X)
