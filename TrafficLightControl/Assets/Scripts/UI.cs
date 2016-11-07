@@ -121,22 +121,22 @@ public class UI : MonoBehaviour {
     }   
 
     void CrossroadAKeineAktionEvent() {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'keineAktion'");
+        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("");
     }
 
     void CrossroadAB3Event() {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'b3'");
+        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("b3");
     }
 
     void CorssroadK10Event() {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'k10'");
+        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("k10");
     }
 
     void CrossroadAFA10Event() {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'fa10'");
+        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("fa10");
     }
 
     void CrossroadAK12Event() {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().NextState("'k12'");
+        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("k12");
     }
 }

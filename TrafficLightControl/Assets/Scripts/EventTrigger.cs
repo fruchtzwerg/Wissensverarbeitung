@@ -48,8 +48,6 @@ public class EventTrigger : MonoBehaviour {
             float value = (float) rand.NextDouble();
 
             if (value <= probabilities[i]) {
-                print("Event " + events[i] + " was triggert.");
-
                 control.EventWasTriggered(events[i]);
             }                
         }

@@ -90,7 +90,7 @@ public class Job : MonoBehaviour
             return;
 
         // print to console and use delimiter
-        print(DELIMITERRECIVE + message);
+        //print(DELIMITERRECIVE + message);
 
         WriteLogFile(DELIMITERRECIVE + message);
 
@@ -191,6 +191,8 @@ public class Job : MonoBehaviour
             sw2.WriteLine(DateTime.Now + ": "+ message);
             sw2.Flush();
         }
+
+        print(message);
     }
 
     /// <summary>

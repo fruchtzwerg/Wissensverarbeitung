@@ -59,7 +59,6 @@ public class PrologWrapper : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //_prolog.Query("version.");
     }
 
     // Kill swi-prolog.exe when unity quits.

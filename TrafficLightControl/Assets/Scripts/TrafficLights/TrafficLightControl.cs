@@ -24,15 +24,12 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     private List<string> greenTrafficLights;
 
     private PrologWrapper wrapper;
-    private Regex regex;
     private string phase;
 
-    private Timer timerNormalState;
-    public long backToNormalStateInterval = 8000;
+    private Timer phaseTimer;
 
     // Use this for initialization
     void Start() {
-        regex = new Regex(@"G\s=\s\[(gruen\(.*\),)*gruen\(.*\)\]\.");
         wrapper = PrologInterface.GetComponent<PrologWrapper>();
 
         phase = "phase11";
@@ -44,10 +41,11 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
             print("WARNING! Dircionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
         }
 
-        timerNormalState = new Timer();
-        timerNormalState.Interval = backToNormalStateInterval;
-        timerNormalState.AutoReset = false;
-        timerNormalState.Elapsed += TimerEvent;          
+        phaseTimer = new Timer();
+        phaseTimer.Interval = 2000;
+        phaseTimer.AutoReset = false;
+        phaseTimer.Elapsed += TimerEvent;
+        phaseTimer.Start();        
     }
 
     // Update is called once per frame
@@ -57,7 +55,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit() {
-        timerNormalState.Stop();
+        phaseTimer.Stop();
     }
 
     /// <summary>
@@ -66,26 +64,31 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     /// <param name="recivedData"></param>
     public void ReciveDataFromProlog(string recivedData) {
         //recivedData is emtry or empty list
-        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = []."))
+        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") || recivedData.Equals("false"))
             return;
+        
+        //print("R:" + recivedData);
 
-        if (!regex.IsMatch(recivedData))
-            print("Regex match nicht...");
+        string recivedDataWithOutVar = recivedData.Replace(GREEN, "");
 
-        string recivedDataWithOutVar = recivedData.Replace(GREEN, "").Replace("[", "").Replace("]", "");
+        //print("Rwov:" + recivedData);
 
-        string phasetmp = recivedDataWithOutVar.Substring(recivedDataWithOutVar.LastIndexOf(","));
-        recivedDataWithOutVar = recivedDataWithOutVar.Replace(phasetmp, "");
-        phasetmp = phasetmp.Replace(",", "").Replace(".","");
-        phase = phasetmp.Trim();
-                
-        string[] stringSeparators = new string[] { "gruen(" };
-        var splits = recivedDataWithOutVar.Split(stringSeparators, StringSplitOptions.None);
+        int arrayStart = recivedDataWithOutVar.LastIndexOf("[");
+        int arrayEnd = recivedDataWithOutVar.IndexOf("]");
+        int arrayLength = arrayEnd - arrayStart;
 
+        //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
+
+        string greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
+        greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
+
+        string[] stringSeparators = new string[] { "," };
+        var splits = greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
+        
         //clear old green elements
         greenTrafficLights.Clear();
 
-        //remove unnecessary symbols and elements
+        //remove unnecessary symbols and elements and add elemt to list
         foreach (string s in splits) {
             var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
             tmp = tmp.Trim();
@@ -94,7 +97,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
                 greenTrafficLights.Add(tmp);
             //print(tmp);
         }
-        
+                
         //change states...
         foreach(var entry in dictionary) {
             //entry trafficlight in green trafficlight list?
@@ -106,22 +109,29 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
                        
             else
                 entry.Value.switchToRed();
-        }        
+        }
+
+
+        //phase time from response
+        int phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
+
+        string nextPhaseTimeString = recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].","").Replace(",","").Trim();
+
+        int nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
+
+        phaseTimer.Interval = nextPhaseTime*1000;
+
+        phaseTimer.Start();
     }
 
     /// <summary>
     /// Call this function to got to the next state
     /// </summary>
     /// <param name="activator"></param>
-    public void NextState(string activator) {
-
-        timerNormalState.Stop();
-        
-        string query = NEXT_PHASE + CrossroadName + ", " + phase + ", " + activator + ", G).";
-        wrapper.QueryProlog(query, this);
-
-        //Start timer to normal state
-        timerNormalState.Start();
+    private void NextState() {
+                
+        string query = NEXT_PHASE + CrossroadName + ", G).";
+        wrapper.QueryProlog(query, this);        
     }
 
     /// <summary>
@@ -135,44 +145,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
         }
 
     }
-
-    #region string with green trafficlights
-    [Obsolete]
-    /// <summary>
-    /// Build a string with all green trafficlights
-    /// </summary>
-    /// <returns></returns>
-    private string BuildGreenTrafficLightListString()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        foreach(var tmp in dictionary)
-        {
-            if (tmp.Value.State != TrafficLight.States.green)
-                continue;
-
-            sb.Append("gruen(" + tmp.Key + "), ");
-        }
-
-        string greenTrafficLights = sb.ToString();
-
-        //no green trafficlight
-        if (string.IsNullOrEmpty(greenTrafficLights))
-            return "[]";
-
-
-        //print();
-
-        return "[" + greenTrafficLights.Remove(greenTrafficLights.Length - 2) + "]";
-    }
-    #endregion
+    
 
     private void TimerEvent(object sender, System.EventArgs e) {
-
-        string query = NEXT_PHASE + CrossroadName + ", " + phase + ", " + "keineAktion" + ", G).";
-        wrapper.QueryProlog(query, this);
-
-        print("Next State: normal mode");
+        NextState();
     }
 
     /// <summary>
@@ -181,10 +157,6 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     /// <param name="trigger"></param>
     public void EventWasTriggered(string trigger) {
         string query = NEUES_EREIGNIS + CrossroadName + ", " + trigger + ").";
-
-        print("Event was triggered: " + query);
-
         wrapper.QueryProlog(query);
-
     }
 }
