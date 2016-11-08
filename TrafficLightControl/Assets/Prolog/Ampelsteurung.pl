@@ -198,6 +198,12 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung,Qneu)
                                ,
                                reCheckAusloeserInQueue(Kreuzung,Qneu)
+                               ,
+                               length(Qneu,QneuLaenge)
+                               ,
+                               retract(laengeAlt(Kreuzung,_))
+                               ,
+                               assert(laengeAlt(Kreuzung,QneuLaenge))
                                ,!.
                                
 checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
