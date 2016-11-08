@@ -7,6 +7,7 @@
 :- dynamic momentanePhase/2.
 :- dynamic laengeAlt/2.
 :- dynamic queuetemp/2.
+:- dynamic indexSchleife/2.
 :-set_prolog_flag(answer_write_options,
                    [ quoted(true),
                      portray(true),
@@ -34,6 +35,7 @@ bool(_,wahr).
 %Alte Laengen der Queues zur Hilfename für die "while-Schleife"
 laengeAlt(a,0).
 laengeAlt(b,0).
+indexSchleife(_,-1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   neues Ereignis an Queue anfügen                            %
@@ -204,6 +206,10 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                retract(laengeAlt(Kreuzung,_))
                                ,
                                assert(laengeAlt(Kreuzung,QneuLaenge))
+                               ,
+                               retract(indexSchleife(_,_))
+                               ,
+                               assert(indexSchleife(_,-1))
                                ,!.
                                
 checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
@@ -228,6 +234,19 @@ doCheck(Q,_,_):-
               length(Q,NeueLaenge)
               ,
               0=NeueLaenge,!.
+doCheck(_,Kreuzung,_):-
+                      indexSchleife(Kreuzung,I)
+                      ,
+                      laengeAlt(Kreuzung,AlteLaenge)
+                      ,
+                      retract(indexSchleife(_,_))
+                      ,
+                      Neu is I+1
+                      ,
+                      assert(indexSchleife(Kreuzung,Neu))
+                      ,
+                      AlteLaenge<Neu
+                      .
 
 doCheck(Q,Kreuzung,Phaseneu):-
                            length(Q,X)
@@ -287,9 +306,9 @@ checkQueueComplete([H|T],Kreuzung,PhaseNeu):-
                                          [_,R|_]=H
                                          ,
                                          falsch=R
-                                         ,!,
+                                         ,
                                          checkQueueComplete(T,Kreuzung,PhaseNeu)
-                                         .
+                                         ,!.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Zulässige und nicht Zulässige Phasenübergänge                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
