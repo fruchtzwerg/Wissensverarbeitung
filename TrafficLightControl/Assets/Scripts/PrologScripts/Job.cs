@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 
 public class Job : MonoBehaviour
@@ -108,19 +107,21 @@ public class Job : MonoBehaviour
     private void ReplySender(string message) {
         var waitingObject = waitingObjects.Dequeue();
 
+        //if sender is waiting for response
         if(waitingObject != null && waitingObject.Sender != null) {
             //send reply
             waitingObject.Sender.ReciveDataFromProlog(message);
+        } 
 
-            //if there a still other querys to prolog...
-            if (waitingObjects.Count > 0) {
-                //get fist and query prolog
-                var next = waitingObjects.Peek();
-                this.Query(next.Query);
-            }
-        }
-        else {
-            print("Waiting Object or sender is null!");
+        //if there a still other querys to prolog...
+        if (waitingObjects.Count > 0) {
+            //get fist and query prolog
+            var next = waitingObjects.Peek();
+
+            sw.WriteLine(next.Query);
+            sw.Flush();
+
+            WriteLogFile(DELIMITERSEND + next.Query);
         }
 
         //print("Queue Count 2: " + waitingObjects.Count);
@@ -131,21 +132,8 @@ public class Job : MonoBehaviour
     /// </summary>
     /// <param name="message">The query string.</param>
     public void Query(string message)
-    {       
-        // std-in of prolog still registered?
-        // OR: message not null or empty?
-        if (sw == null || string.IsNullOrEmpty(message.Trim()))
-            return;
-
-        // make sure the query string ends with a '.'
-        if (!message.Trim().EndsWith("."))
-            message = message + ".";
-
-        // write the query to prolog console and execute
-        sw.WriteLine(message);
-        sw.Flush();
-
-        WriteLogFile(DELIMITERSEND + message);
+    {
+        this.Query(message, null);
     }
 
 
