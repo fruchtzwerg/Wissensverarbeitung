@@ -16,8 +16,11 @@
 %                         Attribute zur Überwachung                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überwachung der momentanen Phase für beide Ampelanlagen ,Anfangszustand
-momentanePhase(a,phase11).
+momentanePhase(a,phase14).
 momentanePhase(b,phase1).
+
+standardPhase(a,phase11).
+standardPhase(b,phase1).
 
 %zwei queues für die Berechnung der nächsten Ampelphase
 queue(a,[]).
@@ -199,7 +202,7 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                
 checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
                                []=Q,
-                               momentanePhase(Kreuzung,Phaseneu),!.
+                               standardPhase(Kreuzung,Phaseneu),!.
 
 checkQueueIsEmpty(_,Q,_):-not([]=Q),!.
 
@@ -268,6 +271,7 @@ checkQueueHead([H|T],Kreuzung,_):-
 %checken ob die Q überhaupt wahre Elemente(Anforderungen) enthält
 checkQueueComplete([],b,phase1):-!.
 checkQueueComplete([],a,phase11):-!.
+
 checkQueueComplete([H|_],_,_):-
                               [_,R|_]=H
                               ,

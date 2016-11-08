@@ -19,6 +19,9 @@
 momentanePhase(a,phase14).
 momentanePhase(b,phase1).
 
+standardPhase(a,phase11).
+standardPhase(b,phase1).
+
 %zwei queues für die Berechnung der nächsten Ampelphase
 queue(a,[]).
 queue(b,[]).
@@ -71,6 +74,7 @@ checkAllreadyAccepted(Kreuzung,_,[]):-
                                    retract(queuetemp(_,_))
                                    ,
                                    assert(queuetemp(_,[])).
+
 checkAllreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
                                            [Ausloeser|_]=H
                                            ,
@@ -198,7 +202,7 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                
 checkQueueIsEmpty(Kreuzung,Q,Phaseneu):-
                                []=Q,
-                               momentanePhase(Kreuzung,Phaseneu),!.
+                               standardPhase(Kreuzung,Phaseneu),!.
 
 checkQueueIsEmpty(_,Q,_):-not([]=Q),!.
 
@@ -267,6 +271,7 @@ checkQueueHead([H|T],Kreuzung,_):-
 %checken ob die Q überhaupt wahre Elemente(Anforderungen) enthält
 checkQueueComplete([],b,phase1):-!.
 checkQueueComplete([],a,phase11):-!.
+
 checkQueueComplete([H|_],_,_):-
                               [_,R|_]=H
                               ,
