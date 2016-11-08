@@ -1,5 +1,7 @@
 ﻿using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -302,9 +304,11 @@ public class BezierSpline : MonoBehaviour
             SetControlPoint(points.Length - 1, endPoint.localPosition - startPoint.localPosition);
     }
 
+#if UNITY_EDITOR
     // update in editor
     void OnEnable() { EditorApplication.update += UpdatePositionsInEditor; }
     void OnDisable() { EditorApplication.update -= UpdatePositionsInEditor; }
+#endif
 }
 
 public enum BezierControlPointMode

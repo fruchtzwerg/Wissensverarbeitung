@@ -1,7 +1,9 @@
 ﻿
 using UnityEngine;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class SplineMesh : MonoBehaviour
@@ -130,9 +132,11 @@ public class SplineMesh : MonoBehaviour
 
     }
 
+#if UNITY_EDITOR
     // run Start() in scene edtor every frame
     void OnEnable() { EditorApplication.update += Start; }
     void OnDisable() { EditorApplication.update -= Start; }
+#endif
 
     //void Update()
     //{

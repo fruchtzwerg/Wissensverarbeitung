@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 
 [ExecuteInEditMode]
@@ -168,6 +169,7 @@ public class Bezier3D : MonoBehaviour
     }
 
     // run Start() in scene edtor every frame
+#if UNITY_EDITOR
     void OnEnable()
     {
         EditorApplication.update += Start;
@@ -177,4 +179,5 @@ public class Bezier3D : MonoBehaviour
     {
         EditorApplication.update -= Start;
     }
+#endif
 }

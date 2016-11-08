@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class SplineWaypoint : MonoBehaviour
@@ -21,9 +23,11 @@ public class SplineWaypoint : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     // update in editor
     void OnEnable() { EditorApplication.update += CreateSpline; }
     void OnDisable() { EditorApplication.update -= CreateSpline; }
+#endif
 }
 
 
