@@ -16,7 +16,7 @@
 %                         Attribute zur Überwachung                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überwachung der momentanen Phase für beide Ampelanlagen ,Anfangszustand
-momentanePhase(a,phase14).
+momentanePhase(a,phase11).
 momentanePhase(b,phase1).
 
 standardPhase(a,phase11).
