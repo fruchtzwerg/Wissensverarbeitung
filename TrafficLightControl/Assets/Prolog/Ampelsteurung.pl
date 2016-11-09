@@ -98,7 +98,7 @@ checkifzulaessig(b,_,Ausloeser,GG):-ausloeser(b,Ausloeser,GG),!.
 %                         Attribute zur Überwachung                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überwachung der momentanen Phase für beide Ampelanlagen ,Anfangszustand
-momentanePhase(a,phase11).
+momentanePhase(a,phase14).
 momentanePhase(b,phase1).
 
 standardPhase(a,phase11).
@@ -158,14 +158,12 @@ checkAlreadyAccepted(Kreuzung,_,[]):-
                                    ,
                                    assert(queuetemp(_,[])).
 
-checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
-                                           [Ausloeser|_]=H
-                                           ,
-                                           ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
-                                           ,
-                                           Phaseneu=Phase
-                                           ,
-                                           checkAllreadyAccepted(Kreuzung,Phaseneu,T).
+%checkAlreadyAccepted(Kreuzung,Phaseneu,[[Ausloeser,_]|T]):-
+%                                           ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
+%                                           ,
+%                                           Phaseneu=Phase
+%                                           ,
+%                                           checkAllreadyAccepted(Kreuzung,Phaseneu,T).
 
 checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
                                            [Ausloeser|_]=H
@@ -199,14 +197,12 @@ reCheckAusloeserInQueue(Kreuzung,[]):-
                                    ,
                                    assert(queuetemp(_,[])).
 
-reCheckAusloeserInQueue(Kreuzung,[H|T]):-
-                                   [Ausloeser|_]=H
-                                   ,
-                                   checkAusloeser(Kreuzung,Ausloeser,W)
+reCheckAusloeserInQueue(Kreuzung,[[Ausloeser,_]|T]):-
+                                   checkAusloeser(Kreuzung,Ausloeser,Zulaessig)
                                    ,
                                    queuetemp(Kreuzung,TQ)
                                    ,
-                                   append(TQ,[[Ausloeser,W]],L)
+                                   append(TQ,[[Ausloeser,Zulaessig]],L)
                                    ,
                                    retract(queuetemp(Kreuzung,_))
                                    ,
@@ -305,10 +301,8 @@ doCheck(Q,Kreuzung,Phaseneu):-
 %Prüfung des Queue Kopfes bei falsch Element(Anforderungen) an Queue vorne entnehmen und
 %hinten wieder anhängen
 %bei richig ->nächster Zustand und Element(Anforderungen) aus Q entfernen
-checkQueueHead([H|T],Kreuzung,PhaseNeu):-
-                                   [Ausloeser,R|_]=H
-                                   ,
-                                   wahr=R
+checkQueueHead([[Ausloeser,Zulaessig]|T],Kreuzung,PhaseNeu):-
+                                   wahr=Zulaessig
                                    ,
                                    ausloeser(Kreuzung,Ausloeser,[_,PhaseNeu|_])
                                    ,
@@ -321,9 +315,9 @@ checkQueueHead([H|T],Kreuzung,PhaseNeu):-
                                    !.
 
 checkQueueHead([H|T],Kreuzung,_):-
-                                  [_,R|_]=H
+                                  [_,Zulaessig|_]=H
                                   ,
-                                  falsch=R
+                                  falsch=Zulaessig
                                   ,
                                   append(T,[H],Q)
                                   ,
@@ -335,10 +329,8 @@ checkQueueHead([H|T],Kreuzung,_):-
 %checken ob die Q überhaupt wahre Elemente(Anforderungen) enthält
 checkQueueComplete([],b,phase1):-!.
 checkQueueComplete([],a,phase11):-!.
-checkQueueComplete([H|T],Kreuzung,PhaseNeu):-
-                                         [_,R|_]=H
-                                         ,
-                                         falsch=R
+checkQueueComplete([[_,Zulaessig]|T],Kreuzung,PhaseNeu):-
+                                         falsch=Zulaessig
                                          ,
                                          checkQueueComplete(T,Kreuzung,PhaseNeu)
                                          ,!.
