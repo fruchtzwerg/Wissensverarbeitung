@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Timers;
+using System;
 
-public class PedestrianTrafficLight : TrafficLight {
+public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
     public GameObject[] PedestrianTrafficLightButtons;
 
+    public long Interval = 2000;
 
     protected override void InitTimerGreen() {
         timerGreen = new Timer();
-        timerGreen.Interval = 2000;
+        timerGreen.Interval = Interval;
         timerGreen.AutoReset = false;
         timerGreen.Elapsed += timerEventToGreen;
     }
@@ -84,5 +86,10 @@ public class PedestrianTrafficLight : TrafficLight {
         foreach(var tmp in PedestrianTrafficLightButtons) {
             tmp.GetComponent<PedestrianButton>().switchOffEmission();
         }
+    }
+
+    public new void updateMultiplier(float value)
+    {
+        timerGreen.Interval = (long)(Interval * value);
     }
 }

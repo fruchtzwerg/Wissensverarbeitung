@@ -25,11 +25,15 @@ public class UI : MonoBehaviour {
     public GameObject Cam;
 
     public Toggle toggleBoomGates;
-    public Toggle toggle;
+
+    public Slider paceSlider;
+    public InputField paceInput;
 
     public GameObject[] trafficLightsCrossroadA;    
 
     public InputField[] InputFieldsCrossroadA;
+
+    public GameObject[] TimerMultiplier;
 
     // Use this for initialization
     void Start () {
@@ -37,7 +41,6 @@ public class UI : MonoBehaviour {
 
     void Awake() {
         toggleBoomGates.onValueChanged.AddListener(boomGateEvent);
-        toggle.onValueChanged.AddListener(trafficLightTestToogle);
 
         buttonCamPos1.onClick.AddListener(camButtonEvent1);
         buttonCamPos2.onClick.AddListener(camButtonEvent2);
@@ -49,6 +52,8 @@ public class UI : MonoBehaviour {
         buttonTestProlog3.onClick.AddListener(CorssroadK10Event);
         buttonTestProlog4.onClick.AddListener(CrossroadAFA10Event);
         buttonTestProlog5.onClick.AddListener(CrossroadAK12Event);
+
+        paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
     }
 	
 	// Update is called once per frame
@@ -138,5 +143,15 @@ public class UI : MonoBehaviour {
 
     void CrossroadAK12Event() {
         CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("k12");
+    }
+
+    void SliderEvent(){
+        float value = paceSlider.value;
+        paceInput.text = value.ToString();
+
+        float multiplier = 1f / value;
+        foreach(var tmp in TimerMultiplier){
+            tmp.GetComponent<IIntervalMultiplierUpdate>().updateMultiplier(multiplier);
+        }
     }
 }

@@ -1,7 +1,8 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 using UnityEngine;
 
-public class EventTrigger : MonoBehaviour {
+public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate {
 
     public long TimerInterval = 10000;
     public GameObject TrafficLightControl;
@@ -14,6 +15,8 @@ public class EventTrigger : MonoBehaviour {
     private System.Random rand;
 
     private TrafficLightControl control;
+
+    private float multiplier = 1.0f;
 
     // Use this for initialization
     void Start () {
@@ -51,5 +54,11 @@ public class EventTrigger : MonoBehaviour {
                 control.EventWasTriggered(events[i]);
             }                
         }
+    }
+
+    public void updateMultiplier(float value)
+    {
+        print("neues Intervall: " + (long)(TimerInterval * value));
+        timer.Interval = (long)(TimerInterval * value);
     }
 }

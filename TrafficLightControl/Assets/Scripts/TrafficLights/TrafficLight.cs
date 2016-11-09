@@ -3,7 +3,7 @@ using System.Collections;
 using System.Timers;
 using System;
 
-public class TrafficLight : MonoBehaviour {
+public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     
 
 
@@ -28,6 +28,9 @@ public class TrafficLight : MonoBehaviour {
 
     protected States state = States.off;
     protected States oldState = States.off;
+
+    public long IntervalGreen = 3000;
+    public long IntervalRed = 2000;
 
     public States State {
         get {
@@ -78,14 +81,14 @@ public class TrafficLight : MonoBehaviour {
 
     protected virtual void InitTimerGreen() {
         timerGreen = new Timer();
-        timerGreen.Interval = 3000;
+        timerGreen.Interval = IntervalGreen;
         timerGreen.AutoReset = false;
         timerGreen.Elapsed += timerEventToGreen;
     }
 
     protected virtual void InitTimerRed() {
         timerRed = new Timer();
-        timerRed.Interval = 2000;
+        timerRed.Interval = IntervalRed;
         timerRed.AutoReset = false;
         timerRed.Elapsed += timerEventToRed;
     }
@@ -179,5 +182,11 @@ public class TrafficLight : MonoBehaviour {
             }
 
         }        
+    }
+
+    public void updateMultiplier(float value)
+    {
+        timerGreen.Interval = (long)(IntervalGreen * value);
+        timerRed.Interval = (long)(IntervalRed * value);
     }
 }

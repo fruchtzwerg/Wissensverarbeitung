@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 
-public class TrafficLightControl : MonoBehaviour, IProlog {
+public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate {
 
     public GameObject[] trafficLights;
     public string[] trafficLightNames;
@@ -27,6 +27,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     private string phase;
 
     private Timer phaseTimer;
+    private float multiplier = 1.0f;
 
     // Use this for initialization
     void Start() {
@@ -119,7 +120,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
 
         int nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
 
-        phaseTimer.Interval = nextPhaseTime*1000;
+        phaseTimer.Interval = (long)(nextPhaseTime*1000*multiplier);
 
         phaseTimer.Start();
     }
@@ -158,5 +159,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog {
     public void EventWasTriggered(string trigger) {
         string query = NEUES_EREIGNIS + CrossroadName + ", " + trigger + ").";
         wrapper.QueryProlog(query);
+    }
+
+    public void updateMultiplier(float value)
+    {
+        multiplier = value;
     }
 }
