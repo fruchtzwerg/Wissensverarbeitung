@@ -9,6 +9,7 @@ public class SplineModifier : MonoBehaviour
 {
 
     private BezierSpline[] splines;
+    private MeshRenderer[] waypoints;
 
     void ShowSplines()
     {
@@ -20,6 +21,23 @@ public class SplineModifier : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        waypoints = GetComponentsInChildren<MeshRenderer>();
+
+        foreach (var waypoint in waypoints)
+        {
+            waypoint.enabled = false;
+        }
+    }
+
+    void OnDestroy()
+    {
+        foreach (var waypoint in waypoints)
+        {
+            waypoint.enabled = true;
+        }
+    }
 
 #if UNITY_EDITOR
     // update in editor

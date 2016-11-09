@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Random = System.Random;
 
 public class SplineWalker : MonoBehaviour
@@ -33,17 +34,20 @@ public class SplineWalker : MonoBehaviour
     private float _progress;
     private BezierSpline _spline;
     private bool _isGoingForward = true;
+    private TrafficLight _light;
 
     private readonly Random _rnd = new Random();
 
     private void Update()
     {
-
+        // get the spline to walk on
         _spline = Waypoint.Spline;
 
+
+        // move
         if (_isGoingForward)
         {
-            if (MoveFowrward()) return;
+            if (MoveForward()) return;
         }
         else
         {
@@ -51,15 +55,60 @@ public class SplineWalker : MonoBehaviour
         }
 
         // actually move the model
-        var position = _spline.GetPoint(_progress) + Vector3.up * HeightOffset;
+        var position = _spline.GetPoint(_progress) + Vector3.up*HeightOffset;
         transform.position = position;
 
         // if no look direction is specified, no need to go further
-        if(LookAtDirection == LookDirection.None)
+        if (LookAtDirection == LookDirection.None)
             return;
 
         // else turn model
         LookAt(position);
+    }
+
+
+    private bool isStopped;
+    private float checkPoint = 1f;
+    private const float THRESHOLD = .1f;
+    /// <summary>
+    /// Stop movement if checkpoint has not yet been passed and
+    /// light is red or red+orange.
+    /// </summary>
+    /// <returns>true: if movement has been stoped</returns>
+    private bool StopMoving()
+    {
+        if (Waypoint.NextWaypoint.NextLight == null) return false;
+
+        _light = Waypoint.NextWaypoint.NextLight;
+        
+        if (!isStopped)
+        {
+            checkPoint = _spline.CheckPoint;
+        }
+
+        // stop if light is red (+ orange)
+        if (Math.Abs(checkPoint - _progress) <= THRESHOLD)
+        {
+            switch (_light.State)
+            {
+                case TrafficLight.States.red:
+                case TrafficLight.States.redAndOrange:
+                    if (isStopped)
+                        return true;
+
+                    // move checkpoint back
+                    _spline.CheckPoint -= THRESHOLD;
+                    if (_spline.CheckPoint <= 0)
+                        _spline.CheckPoint = 0;
+                    isStopped = true;
+                    return true;
+                default:
+                    _spline.CheckPoint = 1f;
+                    return false;
+            }
+        }
+
+        return false;
     }
 
 
@@ -103,9 +152,13 @@ public class SplineWalker : MonoBehaviour
     /// <summary>
     /// Move model in forward direction.
     /// </summary>
-    /// <returns>true: model was destroyed, else false</returns>
-    private bool MoveFowrward()
+    /// <returns>true: model was destroyed or stoped, else false</returns>
+    private bool MoveForward()
     {
+        // stop movement if neccesary
+        if (StopMoving()) return true;
+
+        // move
         _progress += (Time.deltaTime/Duration)*_spline.WalkerMultiplier;
 
         // not at the end of a node -> done

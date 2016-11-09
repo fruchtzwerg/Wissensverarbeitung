@@ -77,6 +77,8 @@ public class BezierSpline : MonoBehaviour
         return Quaternion.LookRotation(GetDirection(t), Vector3.up);
     }
 
+    public float CheckPoint = 1f;
+
 
     void Reset()
     {

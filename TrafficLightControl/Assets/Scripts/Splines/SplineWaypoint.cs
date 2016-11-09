@@ -9,6 +9,7 @@ public class SplineWaypoint : MonoBehaviour
 
     public SplineWaypoint NextWaypoint;
     public BezierSpline Spline;
+    public TrafficLight NextLight;
 
     public bool IsDestination;
     public bool IsOrigin;
