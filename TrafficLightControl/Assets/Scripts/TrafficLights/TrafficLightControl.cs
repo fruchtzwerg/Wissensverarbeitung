@@ -49,14 +49,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         phaseTimer.Start();        
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit() {
-        phaseTimer.Stop();
+        if(phaseTimer != null)
+            phaseTimer.Stop();
     }
 
     /// <summary>

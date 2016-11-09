@@ -1,8 +1,8 @@
 ﻿using System;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
 
 [ExecuteInEditMode]
 public class BezierSpline : MonoBehaviour
@@ -18,6 +18,7 @@ public class BezierSpline : MonoBehaviour
     private Transform startPoint;
     [SerializeField]
     private Transform endPoint;
+    public float WalkerMultiplier = 1;
 
     public int CurveCount
     {
@@ -63,7 +64,7 @@ public class BezierSpline : MonoBehaviour
         set
         {
             loop = value;
-            if (value == true)
+            if (value)
             {
                 modes[modes.Length - 1] = modes[0];
                 SetControlPoint(0, points[0]);
@@ -79,30 +80,21 @@ public class BezierSpline : MonoBehaviour
 
     void Reset()
     {
-        Vector3 startVector;
-        Vector3 endVector;
-
         // set start point to defined start
-        if (StartPoint != null)
-            startVector = StartPoint.localPosition;
-        else
-            startVector = new Vector3(6f, 1f, 1f);
+        var startVector = StartPoint != null ? StartPoint.localPosition : new Vector3(6f, 1f, 1f);
 
-        // set endpooint to defined end
-        if (StartPoint != null)
-            endVector = EndPoint.localPosition;
-        else
-            endVector = new Vector3(24f, 1f, 1f);
+        // set end point to defined end
+        var endVector = StartPoint != null ? EndPoint.localPosition : new Vector3(24f, 1f, 1f);
 
 
-        points = new Vector3[]
+        points = new[]
         {
             startVector,
             new Vector3(12f, 1f, 1f),
             new Vector3(18f, 1f, 1f),
             endVector
         };
-        modes = new BezierControlPointMode[] {
+        modes = new[] {
             BezierControlPointMode.Free,
             BezierControlPointMode.Free
         };
@@ -246,7 +238,7 @@ public class BezierSpline : MonoBehaviour
     }
 
 
-    public Vector3 GetVelocity(float t)
+    private Vector3 GetVelocity(float t)
     {
         int i;
         if (t >= 1f)
@@ -300,7 +292,7 @@ public class BezierSpline : MonoBehaviour
     {
         if (startPoint != null)
             SetControlPoint(0, Vector3.zero);
-        if (endPoint != null)
+        if (endPoint != null && startPoint != null)
             SetControlPoint(points.Length - 1, endPoint.localPosition - startPoint.localPosition);
     }
 

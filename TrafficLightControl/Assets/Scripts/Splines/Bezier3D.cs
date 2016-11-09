@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,11 +9,11 @@ using UnityEditor;
 public class Bezier3D : MonoBehaviour
 {
     public Vector3 start = new Vector3(0, 0, 0);
-    public Vector3 end = new Vector3(1, 1, 0);
-    public Vector3 handle1 = new Vector3(0, 1, 0);
-    public Vector3 handle2 = new Vector3(1, 0, 0);
-    public int resolution = 12;
-    public float thickness = 0.25f;
+    public Vector3 End = new Vector3(1, 1, 0);
+    public Vector3 Handle1 = new Vector3(0, 1, 0);
+    public Vector3 Handle2 = new Vector3(1, 0, 0);
+    public int Resolution = 12;
+    public float Thickness = 0.25f;
 
     public BezierSpline Spline;
 
@@ -27,17 +27,16 @@ public class Bezier3D : MonoBehaviour
     }
 
     //cacluates point coordinates on a quadratic curve
-    public static Vector3 PointOnPath(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    private static Vector3 PointOnPath(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        float u, uu, uuu, tt, ttt;
         Vector3 p;
 
-        u = 1 - t;
-        uu = u*u;
-        uuu = uu*u;
+        var u = 1 - t;
+        var uu = u*u;
+        var uuu = uu*u;
 
-        tt = t*t;
-        ttt = tt*t;
+        var tt = t*t;
+        var ttt = tt*t;
 
         p = uuu*p0;
         p += 3*uu*t*p1;
@@ -47,36 +46,36 @@ public class Bezier3D : MonoBehaviour
         return p;
     }
 
-    public Mesh CreateMesh()
+    private Mesh CreateMesh()
     {
         Mesh mesh;
 
         mesh = new Mesh();
 
-        float scaling = 1;
-        float width = thickness/2f;
-        List<Vector3> vertList = new List<Vector3>();
-        List<int> triList = new List<int>();
-        List<Vector2> uvList = new List<Vector2>();
-        Vector3 upNormal = new Vector3(0, 0, -1);
+        const float scaling = 1;
+        var width = Thickness/2f;
+        var vertList = new List<Vector3>();
+        var triList = new List<int>();
+        var uvList = new List<Vector2>();
+        var upNormal = new Vector3(0, 0, -1);
 
-        triList.AddRange(new int[]
+        triList.AddRange(new[]
         {
             2, 1, 0, //start face
             0, 3, 2
         });
 
-        for (int s = 0; s < resolution; s++)
+        for (var s = 0; s < Resolution; s++)
         {
-            float t = ((float) s)/resolution;
-            float futureT = ((float) s + 1)/resolution;
+            var t = ((float) s)/Resolution;
+            var futureT = ((float) s + 1)/Resolution;
 
             Vector3 segmentStart;
             Vector3 segmentEnd;
             if (!Spline)
             {
-                segmentStart = PointOnPath(t, start, handle1, handle2, end);
-                segmentEnd = PointOnPath(futureT, start, handle1, handle2, end);
+                segmentStart = PointOnPath(t, start, Handle1, Handle2, End);
+                segmentEnd = PointOnPath(futureT, start, Handle1, Handle2, End);
             }
             else
             {
@@ -84,30 +83,30 @@ public class Bezier3D : MonoBehaviour
                 segmentEnd = Spline.GetPoint(futureT);
             }
 
-            Vector3 segmentDirection = segmentEnd - segmentStart;
-            if (s == 0 || s == resolution - 1)
+            var segmentDirection = segmentEnd - segmentStart;
+            if (s == 0 || s == Resolution - 1)
                 segmentDirection = new Vector3(0, 1, 0);
             segmentDirection.Normalize();
-            Vector3 segmentRight = Vector3.Cross(upNormal, segmentDirection);
+            var segmentRight = Vector3.Cross(upNormal, segmentDirection);
             segmentRight *= width;
-            Vector3 offset = segmentRight.normalized*(width/2)*scaling;
-            Vector3 br = segmentRight + upNormal*width + offset;
-            Vector3 tr = segmentRight + upNormal*-width + offset;
-            Vector3 bl = -segmentRight + upNormal*width + offset;
-            Vector3 tl = -segmentRight + upNormal*-width + offset;
+            var offset = segmentRight.normalized*(width/2)*scaling;
+            var br = segmentRight + upNormal*width + offset;
+            var tr = segmentRight + upNormal*-width + offset;
+            var bl = -segmentRight + upNormal*width + offset;
+            var tl = -segmentRight + upNormal*-width + offset;
 
-            int curTriIdx = vertList.Count;
+            var curTriIdx = vertList.Count;
 
-            Vector3[] segmentVerts = new Vector3[]
+            Vector3[] segmentVerts =
             {
                 segmentStart + br,
                 segmentStart + bl,
                 segmentStart + tl,
-                segmentStart + tr,
+                segmentStart + tr
             };
             vertList.AddRange(segmentVerts);
 
-            Vector2[] uvs = new Vector2[]
+            Vector2[] uvs =
             {
                 new Vector2(1, 0),
                 new Vector2(0, 0),
@@ -116,7 +115,7 @@ public class Bezier3D : MonoBehaviour
             };
             uvList.AddRange(uvs);
 
-            int[] segmentTriangles = new int[]
+            int[] segmentTriangles =
             {
                 curTriIdx + 6, curTriIdx + 5, curTriIdx + 1, //left face
                 curTriIdx + 1, curTriIdx + 2, curTriIdx + 6,
@@ -130,11 +129,11 @@ public class Bezier3D : MonoBehaviour
             triList.AddRange(segmentTriangles);
 
             // final segment fenceposting: finish segment and add end face
-            if (s == resolution - 1)
+            if (s == Resolution - 1)
             {
                 curTriIdx = vertList.Count;
 
-                vertList.AddRange(new Vector3[]
+                vertList.AddRange(new[]
                 {
                     segmentEnd + br,
                     segmentEnd + bl,
@@ -142,7 +141,7 @@ public class Bezier3D : MonoBehaviour
                     segmentEnd + tr
                 });
 
-                uvList.AddRange(new Vector2[]
+                uvList.AddRange(new[]
                 {
                     new Vector2(0, 0),
                     new Vector2(0, 1),
@@ -150,7 +149,7 @@ public class Bezier3D : MonoBehaviour
                     new Vector2(1, 1)
                 }
                     );
-                triList.AddRange(new int[]
+                triList.AddRange(new[]
                 {
                     curTriIdx + 0, curTriIdx + 1, curTriIdx + 2, //end face
                     curTriIdx + 2, curTriIdx + 3, curTriIdx + 0
@@ -170,14 +169,7 @@ public class Bezier3D : MonoBehaviour
 
     // run Start() in scene edtor every frame
 #if UNITY_EDITOR
-    void OnEnable()
-    {
-        EditorApplication.update += Start;
-    }
-
-    void OnDisable()
-    {
-        EditorApplication.update -= Start;
-    }
+    void OnEnable() { EditorApplication.update += Start; }
+    void OnDisable() { EditorApplication.update -= Start; }
 #endif
 }

@@ -1,24 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SplineDecorator : MonoBehaviour
 {
 
-    public BezierSpline spline;
-
-    public int frequency;
-
-    public bool lookForward;
-
-    public Transform[] items;
+    public BezierSpline Spline;
+    public int Frequency;
+    public bool LookForward;
+    public Transform[] Items;
 
     private void Awake()
     {
-        if (frequency <= 0 || items == null || items.Length == 0)
+        if (Frequency <= 0 || Items == null || Items.Length == 0)
         {
             return;
         }
-        float stepSize = frequency * items.Length;
-        if (spline.Loop || stepSize == 1)
+        float stepSize = Frequency * Items.Length;
+        if (Spline.Loop || Math.Abs(stepSize - 1) < .0001f)
         {
             stepSize = 1f / stepSize;
         }
@@ -26,16 +24,16 @@ public class SplineDecorator : MonoBehaviour
         {
             stepSize = 1f / (stepSize - 1);
         }
-        for (int p = 0, f = 0; f < frequency; f++)
+        for (int p = 0, f = 0; f < Frequency; f++)
         {
-            for (int i = 0; i < items.Length; i++, p++)
+            for (var i = 0; i < Items.Length; i++, p++)
             {
-                Transform item = Instantiate(items[i]) as Transform;
-                Vector3 position = spline.GetPoint(p * stepSize);
+                var item = Instantiate(Items[i]);
+                var position = Spline.GetPoint(p * stepSize);
                 item.transform.localPosition = position;
-                if (lookForward)
+                if (LookForward)
                 {
-                    item.transform.LookAt(position + spline.GetDirection(p * stepSize));
+                    item.transform.LookAt(position + Spline.GetDirection(p * stepSize));
                 }
                 item.transform.parent = transform;
             }

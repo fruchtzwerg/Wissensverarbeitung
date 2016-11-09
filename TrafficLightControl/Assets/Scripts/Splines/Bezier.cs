@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Bezier : MonoBehaviour {
 
@@ -11,7 +10,7 @@ public class Bezier : MonoBehaviour {
     public static Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
         t = Mathf.Clamp01(t);
-        float oneMinusT = 1f - t;
+        var oneMinusT = 1f - t;
         return
             oneMinusT * oneMinusT * oneMinusT * p0 +
             3f * oneMinusT * oneMinusT * t * p1 +
@@ -29,7 +28,7 @@ public class Bezier : MonoBehaviour {
     public static Vector3 GetVelocity(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
         t = Mathf.Clamp01(t);
-        float oneMinusT = 1f - t;
+        var oneMinusT = 1f - t;
         var derivative = 3f * oneMinusT * oneMinusT * (p1 - p0) + 6f * oneMinusT * t * (p2 - p1) + 3f * t * t * (p3 - p2);
 
         return derivative;

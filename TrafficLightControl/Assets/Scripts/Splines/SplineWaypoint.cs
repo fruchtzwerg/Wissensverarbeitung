@@ -13,14 +13,13 @@ public class SplineWaypoint : MonoBehaviour
     public bool IsDestination;
     public bool IsOrigin;
 
-    void CreateSpline()
+    private void CreateSpline()
     {
-        if (NextWaypoint != null && Spline == null)
-        {
-            Spline = gameObject.AddComponent<BezierSpline>();
-            Spline.StartPoint = transform;
-            Spline.EndPoint = NextWaypoint.transform;
-        }
+        if (NextWaypoint == null || Spline != null) return;
+
+        Spline = gameObject.AddComponent<BezierSpline>();
+        Spline.StartPoint = transform;
+        Spline.EndPoint = NextWaypoint.transform;
     }
 
 #if UNITY_EDITOR

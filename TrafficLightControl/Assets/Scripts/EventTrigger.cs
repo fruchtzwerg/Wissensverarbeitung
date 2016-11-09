@@ -33,15 +33,11 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate {
         if (events.Length != probabilities.Length)
             print("not all events have propabilities!");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit() {
-        timer.Stop();
+        if(timer != null)
+            timer.Stop();
     }
 
     private void  timerElapsed(object source, System.EventArgs e) {

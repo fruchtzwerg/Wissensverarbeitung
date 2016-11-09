@@ -1,6 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -14,20 +13,20 @@ public class SplineMesh : MonoBehaviour
 
     private void Start()
     {
-        Mesh mesh = new Mesh();
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        List<Vector3> normals = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
+        var mesh = new Mesh();
+        var vertices = new List<Vector3>();
+        var triangles = new List<int>();
+        var normals = new List<Vector3>();
+        var uvs = new List<Vector2>();
 
-        Vector3 start = Spline.GetPoint(0f) - transform.position;
-        Quaternion rotation = Spline.GetRotation(0);
+        var start = Spline.GetPoint(0f) - transform.position;
+        var rotation = Spline.GetRotation(0);
         //Vector3 left = rotation * Vector3.left;
         //Vector3 right = rotation * Vector3.right;
-        Vector3 segmentRight = Vector3.Cross(Vector3.up, Spline.GetDirection(0f));
-        Vector3 left = -segmentRight;
-        Vector3 right = segmentRight;
-        Vector3 up = rotation * Vector3.up;
+        var segmentRight = Vector3.Cross(Vector3.up, Spline.GetDirection(0f));
+        var left = -segmentRight;
+        var right = segmentRight;
+        var up = rotation * Vector3.up;
         vertices.Add(start + right);
         normals.Add(up);
         vertices.Add(start + right + Vector3.down * Height);
@@ -41,11 +40,10 @@ public class SplineMesh : MonoBehaviour
         uvs.Add(new Vector2(1, 0));
         uvs.Add(new Vector2(0, 0));
 
-        for (int i = 0; i <= Segments; i++)
+        for (var i = 0; i <= Segments; i++)
         {
-            float t = (float)i / Segments;
-            Vector3 point = Spline.GetPoint(t) - transform.position;
-            rotation = Spline.GetRotation(t);
+            var t = (float)i / Segments;
+            var point = Spline.GetPoint(t) - transform.position;
             segmentRight = Vector3.Cross(Vector3.up, Spline.GetDirection(t));
 
             //left = rotation * Vector3.left;
@@ -54,8 +52,7 @@ public class SplineMesh : MonoBehaviour
             right = segmentRight;
 
             var triIndex = vertices.Count-4;
-            Vector3[] verts = new[]
-            {
+            Vector3[] verts = {
                 point + right,
                 point + right + Vector3.down*Height,
                 point + left,
@@ -63,8 +60,7 @@ public class SplineMesh : MonoBehaviour
             };
             vertices.AddRange(verts);
 
-            Vector3[] norms = new[]
-            {
+            Vector3[] norms = {
                 up, up, up, up
             };
             normals.AddRange(norms);

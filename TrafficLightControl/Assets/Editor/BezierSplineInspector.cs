@@ -55,6 +55,7 @@ public class BezierSplineInspector : Editor
         bool loop = EditorGUILayout.Toggle("Loop", spline.Loop);
         Transform startTransform = (Transform)EditorGUILayout.ObjectField("Start Point", spline.StartPoint, typeof(Transform), true);
         Transform endTransform = (Transform)EditorGUILayout.ObjectField("End Point", spline.EndPoint, typeof(Transform), true);
+        float walkerMultiplier = EditorGUILayout.FloatField("Walker Velocity Multiplier", spline.WalkerMultiplier);
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(spline, "Toggle Loop");
@@ -64,6 +65,7 @@ public class BezierSplineInspector : Editor
             spline.Loop = loop;
             spline.StartPoint = startTransform;
             spline.EndPoint = endTransform;
+            spline.WalkerMultiplier = walkerMultiplier;
         }
         if (selectedIndex >= 0 && selectedIndex < spline.ControlPointCount)
         {
