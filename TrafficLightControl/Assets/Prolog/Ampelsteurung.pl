@@ -98,7 +98,7 @@ checkifzulaessig(b,_,Ausloeser,GG):-ausloeser(b,Ausloeser,GG),!.
 %                         Attribute zur Überwachung                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überwachung der momentanen Phase für beide Ampelanlagen ,Anfangszustand
-momentanePhase(a,phase14).
+momentanePhase(a,phase11).
 momentanePhase(b,phase1).
 
 standardPhase(a,phase11).
@@ -158,12 +158,12 @@ checkAlreadyAccepted(Kreuzung,_,[]):-
                                    ,
                                    assert(queuetemp(_,[])).
 
-%checkAlreadyAccepted(Kreuzung,Phaseneu,[[Ausloeser,_]|T]):-
-%                                           ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
-%                                           ,
-%                                           Phaseneu=Phase
-%                                           ,
-%                                           checkAllreadyAccepted(Kreuzung,Phaseneu,T).
+checkAlreadyAccepted(Kreuzung,Phaseneu,[[Ausloeser,_]|T]):-
+                                           ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
+                                           ,
+                                           Phaseneu=Phase
+                                           ,
+                                           checkAlreadyAccepted(Kreuzung,Phaseneu,T).
 
 checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
                                            [Ausloeser|_]=H
