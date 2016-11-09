@@ -167,7 +167,13 @@ public class Job : MonoBehaviour
             WriteLogFile(DELIMITERSEND + message); 
         }
 
-        print("Queue Count: " + waitingObjects.Count + "Process Name: " + prolog.ProcessName + ", Exit: " + prolog.HasExited);
+        print("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", Exit: " + prolog.HasExited);
+
+        if(waitingObjects.Count > 3) {
+
+            sw.WriteLine(waitingObjects.Peek().Query);
+            sw.Flush();
+        }
     }
 
 

@@ -65,64 +65,72 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <param name="recivedData"></param>
     public void ReciveDataFromProlog(string recivedData) {
         //recivedData is emtry or empty list
-        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") || recivedData.Equals("false"))
+        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") || recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false."))
             return;
-        
+
+
+        //\[\[.*\],.*,\d{1,3}\]
         //print("R:" + recivedData);
+        try {
+            string recivedDataWithOutVar = recivedData.Replace(GREEN, "");
 
-        string recivedDataWithOutVar = recivedData.Replace(GREEN, "");
+            //print("Rwov:" + recivedData);
 
-        //print("Rwov:" + recivedData);
+            int arrayStart = recivedDataWithOutVar.LastIndexOf("[");
+            int arrayEnd = recivedDataWithOutVar.IndexOf("]");
+            int arrayLength = arrayEnd - arrayStart;
 
-        int arrayStart = recivedDataWithOutVar.LastIndexOf("[");
-        int arrayEnd = recivedDataWithOutVar.IndexOf("]");
-        int arrayLength = arrayEnd - arrayStart;
+            //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
 
-        //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
+            string greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
+            greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
 
-        string greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
-        greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
+            string[] stringSeparators = new string[] { "," };
+            var splits = greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
 
-        string[] stringSeparators = new string[] { "," };
-        var splits = greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
-        
-        //clear old green elements
-        greenTrafficLights.Clear();
+            //clear old green elements
+            greenTrafficLights.Clear();
 
-        //remove unnecessary symbols and elements and add elemt to list
-        foreach (string s in splits) {
-            var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
-            tmp = tmp.Trim();
+            //remove unnecessary symbols and elements and add elemt to list
+            foreach (string s in splits) {
+                var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
+                tmp = tmp.Trim();
 
-            if (!string.IsNullOrEmpty(tmp))
-                greenTrafficLights.Add(tmp);
-            //print(tmp);
-        }
-                
-        //change states...
-        foreach(var entry in dictionary) {
-            //entry trafficlight in green trafficlight list?
-            if (greenTrafficLights.Contains(entry.Key)) {
-
-                //print(entry.Key + " to green.");
-                entry.Value.switchToGreen();
+                if (!string.IsNullOrEmpty(tmp))
+                    greenTrafficLights.Add(tmp);
+                //print(tmp);
             }
-                       
-            else
-                entry.Value.switchToRed();
+
+            //change states...
+            foreach (var entry in dictionary) {
+                //entry trafficlight in green trafficlight list?
+                if (greenTrafficLights.Contains(entry.Key)) {
+
+                    //print(entry.Key + " to green.");
+                    entry.Value.switchToGreen();
+                }
+
+                else
+                    entry.Value.switchToRed();
+            }
+
+            //phase time from response
+            int phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
+
+            string nextPhaseTimeString = recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].", "").Replace(",", "").Trim();
+
+
+            int nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
+
+            phaseTimer.Interval = (long)(nextPhaseTime * 1000 * multiplier);
+
+            phaseTimer.Start();
         }
-
-
-        //phase time from response
-        int phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
-
-        string nextPhaseTimeString = recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].","").Replace(",","").Trim();
-
-        int nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
-
-        phaseTimer.Interval = (long)(nextPhaseTime*1000*multiplier);
-
-        phaseTimer.Start();
+        catch (Exception ex) {
+            print("#######################################################################");
+            print(ex);
+            print("#######################################################################");
+        }
     }
 
     /// <summary>
@@ -132,7 +140,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private void NextState() {
                 
         string query = NEXT_PHASE + CrossroadName + ", G).";
-        wrapper.QueryProlog(query, this);        
+        wrapper.QueryProlog(query, this);       
     }
 
     /// <summary>
@@ -159,6 +167,9 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     public void EventWasTriggered(string trigger) {
         string query = NEUES_EREIGNIS + CrossroadName + ", " + trigger + ").";
         wrapper.QueryProlog(query);
+
+        if (!phaseTimer.Enabled)
+            print(">>>>>>>>>>>>>>>>>> TIMER IS NOT RUNNING <<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 
     public void updateMultiplier(float value)
