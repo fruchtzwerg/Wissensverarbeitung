@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -196,5 +197,11 @@ public class UI : MonoBehaviour
             if (parent != null)
                 parent.updateMultiplier(multiplier);
         }
+    }
+
+
+    public void EndEditText(string text)
+    {
+        paceSlider.value = (float)Convert.ToDouble(text);
     }
 }
