@@ -28,7 +28,6 @@ phase13(a,[[h5,fa11,fa10,k11,k10],phase13,20]).
 phase14(a,[[h5,fa11,fa10,k12],phase14,18]).
 
 %Regeln Kreuzung A
-ausloeser(a,keineAktion,GG):-phase11(a,GG).
 ausloeser(a,b3,GG):- phase12(a,GG).
 ausloeser(a,k10,GG):-phase13(a,GG).
 ausloeser(a,fa10,GG):- phase14(a,GG).
@@ -47,7 +46,6 @@ phase5(b,[[k4,k7,b1,k2,b2],phase5,zeit]).
 phase6(b,[[h3,fg8,fg5,k7,b2,k1,k3,k2,fg3,h1],phase6,zeit]).
 
 %Regeln Kreuzung B
-ausloeser(b,keineAktion,GG):-phase1(b,GG).
 ausloeser(b,fa4,GG):-phase3(b,GG).
 ausloeser(b,fa1,GG):-phase2(b,GG).
 ausloeser(b,k8,GG):-phase2(b,GG).
@@ -68,29 +66,27 @@ checkifzulaessig(a,_,Ausloeser,GG):-ausloeser(a,Ausloeser,GG),!.
 
 %Kreuzung B
 %nicht zulässige Übergänge
-checkifzulaessig(b,phase3,keineAktion,[]).
-checkifzulaessig(b,phase3,fa1,[]).
-checkifzulaessig(b,phase3,k8,[]).
-checkifzulaessig(b,phase3,k6,[]).
-checkifzulaessig(b,phase2,fa4,[]).
-checkifzulaessig(b,phase5,fa1,[]).
-checkifzulaessig(b,phase5,k8,[]).
-checkifzulaessig(b,phase5,k6,[]).
-checkifzulaessig(b,phase5,k4,[]).
-checkifzulaessig(b,phase4,b1,[]).
-checkifzulaessig(b,phase6,k4,[]).
-checkifzulaessig(b,phase3,schranke,[]).
-checkifzulaessig(b,phase2,keineAktion,[]).
-checkifzulaessig(b,phase2,schranke,[]).
-checkifzulaessig(b,phase5,schranke,[]).
-checkifzulaessig(b,phase4,fa4,[]).
-checkifzulaessig(b,phase4,fa1,[]).
-checkifzulaessig(b,phase4,k6,[]).
-checkifzulaessig(b,phase4,k8,[]).
-checkifzulaessig(b,phase6,fa1,[]).
-checkifzulaessig(b,phase6,k6,[]).
-checkifzulaessig(b,phase6,k8,[]).
-checkifzulaessig(b,phase6,b1,[]).
+checkifzulaessig(b,phase3,fa1,[]):-!.
+checkifzulaessig(b,phase3,k8,[]):-!.
+checkifzulaessig(b,phase3,k6,[]):-!.
+checkifzulaessig(b,phase2,fa4,[]):-!.
+checkifzulaessig(b,phase5,fa1,[]):-!.
+checkifzulaessig(b,phase5,k8,[]):-!.
+checkifzulaessig(b,phase5,k6,[]):-!.
+checkifzulaessig(b,phase5,k4,[]):-!.
+checkifzulaessig(b,phase4,b1,[]):-!.
+checkifzulaessig(b,phase6,k4,[]):-!.
+checkifzulaessig(b,phase3,schranke,[]):-!.
+checkifzulaessig(b,phase2,schranke,[]):-!.
+checkifzulaessig(b,phase5,schranke,[]):-!.
+checkifzulaessig(b,phase4,fa4,[]):-!.
+checkifzulaessig(b,phase4,fa1,[]):-!.
+checkifzulaessig(b,phase4,k6,[]):-!.
+checkifzulaessig(b,phase4,k8,[]):-!.
+checkifzulaessig(b,phase6,fa1,[]):-!.
+checkifzulaessig(b,phase6,k6,[]):-!.
+checkifzulaessig(b,phase6,k8,[]):-!.
+checkifzulaessig(b,phase6,b1,[]):-!.
 %zulässig
 checkifzulaessig(b,_,Ausloeser,GG):-ausloeser(b,Ausloeser,GG),!.
 
@@ -269,8 +265,18 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                assert(laengeAlt(Kreuzung,QneuLaenge))
                                ,
                                !.
+%der Übergang bei Kreuzung b von phase2 bzw phase3 zur phase1 ist nicht zulässig
+checkQueueIsEmpty(b,[],Phaseneu):-
+                               momentanePhase(b,MomPhase)
+                               ,
+                               (phase2=MomPhase;phase3=MomPhase)
+                               ,
+                               Phaseneu=MomPhase
+                               ,
+                               !.
                                
 checkQueueIsEmpty(Kreuzung,[],Phaseneu):-standardPhase(Kreuzung,Phaseneu).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        Queue Operationen                                     %
@@ -327,13 +333,21 @@ checkQueueHead([H|T],Kreuzung,_):-
 
 
 %checken ob die Q überhaupt wahre Elemente(Anforderungen) enthält
+checkQueueComplete([],b,Phaseneu):-
+                               momentanePhase(b,MomPhase)
+                               ,
+                               (phase2=MomPhase;phase3=MomPhase)
+                               ,
+                               Phaseneu=MomPhase
+                               ,
+                               !.
+
 checkQueueComplete([],b,phase1):-!.
 checkQueueComplete([],a,phase11):-!.
 checkQueueComplete([[_,Zulaessig]|T],Kreuzung,PhaseNeu):-
                                          falsch=Zulaessig
                                          ,
-                                         checkQueueComplete(T,Kreuzung,PhaseNeu)
-                                         ,!.
+                                         checkQueueComplete(T,Kreuzung,PhaseNeu).
 
 
 
