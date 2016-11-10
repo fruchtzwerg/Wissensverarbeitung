@@ -3,8 +3,9 @@ using System.Collections;
 using System.Timers;
 using System;
 
-public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
-    
+public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
+{
+
 
 
     public GameObject RedLight;
@@ -32,13 +33,13 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     public long IntervalGreen = 3000;
     public long IntervalRed = 2000;
 
-    public States State {
-        get {
-            return state;
-        }
+    public States State
+    {
+        get { return state; }
     }
 
-    public enum States {
+    public enum States
+    {
         red,
         orange,
         green,
@@ -49,23 +50,25 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         //init Rendere with different materials
-        rendRed = new Renderer();         
+        rendRed = new Renderer();
 
         rendRed = RedLight.GetComponent<Renderer>();
         rendRed.material = new Material(shader);
         rendRed.material.EnableKeyword("_EMISSION");
         rendRed.material.color = red;
 
-        if (OrangeLight != null) {
+        if (OrangeLight != null)
+        {
             rendOrange = OrangeLight.GetComponent<Renderer>();
             rendOrange.material = new Material(shader);
             rendOrange.material.EnableKeyword("_EMISSION");
             rendOrange.material.color = orange;
         }
-       
+
 
         rendGreen = GreenLight.GetComponent<Renderer>();
         rendGreen.material = new Material(shader);
@@ -73,21 +76,25 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
         rendGreen.material.color = green;
 
         InitTimerGreen();
-        InitTimerRed();        
+        InitTimerRed();
 
         state = States.red;
         switchState();
     }
 
+
     protected virtual void InitTimerGreen()
     {
-        timerGreen = new Timer();
-        timerGreen.Interval = IntervalGreen;
-        timerGreen.AutoReset = false;
+        timerGreen = new Timer
+        {
+            Interval = IntervalGreen,
+            AutoReset = false
+        };
         timerGreen.Elapsed += timerEventToGreen;
     }
 
-    protected virtual void InitTimerRed() {
+    protected virtual void InitTimerRed()
+    {
         timerRed = new Timer
         {
             Interval = IntervalRed,
@@ -96,17 +103,24 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
         timerRed.Elapsed += timerEventToRed;
     }
 
-        // Update is called once per frame
-        void Update () {
+    // Update is called once per frame
+    void Update()
+    {
+        //print("green:delta=" + Time.deltaTime + ", remaining=" + timerGreen.Remaining + ", doCount=" + timerGreen._doCount);
+        //print("red:delta=" + Time.deltaTime + ", remaining=" + timerRed.Remaining + ", doCount=" + timerRed._doCount);
+        timerGreen.Update(Time.deltaTime);
+        timerRed.Update(Time.deltaTime);
         switchState();
-	}
+    }
 
     /// <summary>
     /// switch state from red to green
     /// </summary>
-    public virtual void switchToGreen() {
+    public virtual void switchToGreen()
+    {
         //only if red or in some sec red
-        if (State != States.redAndOrange && State != States.green) {
+        if (State != States.redAndOrange && State != States.green)
+        {
             state = States.redAndOrange;
             //switchState();
             timerGreen.Start();
@@ -116,22 +130,26 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     /// <summary>
     /// switch strate from green to red
     /// </summary>
-    public virtual void switchToRed() {
+    public virtual void switchToRed()
+    {
         //only if red or in some sec red
-        if (State != States.orange && State != States.red) {
+        if (State != States.orange && State != States.red)
+        {
             state = States.orange;
             //switchState();
             timerRed.Start();
         }
     }
 
-    protected virtual void timerEventToGreen(object source, EventArgs e) {
+    protected virtual void timerEventToGreen(object source, EventArgs e)
+    {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
         state = States.green;
         timerGreen.Stop();
     }
 
-    protected virtual void timerEventToRed(object source, EventArgs e) {
+    protected virtual void timerEventToRed(object source, EventArgs e)
+    {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
         state = States.red;
         timerRed.Stop();
@@ -141,12 +159,15 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     /// <summary>
     /// switch state and emission
     /// </summary>
-    protected virtual void switchState() {
+    protected virtual void switchState()
+    {
 
-        if (oldState != State) {
+        if (oldState != State)
+        {
             oldState = State;
             //switch emissioncolor of gameobjects
-            switch (State) {
+            switch (State)
+            {
                 case States.red:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendOrange.material.SetColor("_EmissionColor", black);
@@ -184,12 +205,12 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
                     break;
             }
 
-        }        
+        }
     }
 
     public void updateMultiplier(float value)
     {
-        timerGreen.Interval = (long)(IntervalGreen * value);
-        timerRed.Interval = (long)(IntervalRed * value);
+        timerGreen.Interval = (long) (IntervalGreen*value);
+        timerRed.Interval = (long) (IntervalRed*value);
     }
 }

@@ -10,9 +10,11 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     public long Interval = 2000;
 
     protected override void InitTimerGreen() {
-        timerGreen = new Timer();
-        timerGreen.Interval = Interval;
-        timerGreen.AutoReset = false;
+        timerGreen = new Timer
+        {
+            Interval = Interval,
+            AutoReset = false
+        };
         timerGreen.Elapsed += timerEventToGreen;
     }
 

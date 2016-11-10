@@ -4,6 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Timers;
 
 public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate {
@@ -39,7 +40,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         if (trafficLights.Length == trafficLightNames.Length) {
             BuildDictionary();
         }else {
-            print("WARNING! Dircionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
+            print("WARNING! Dictionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
         }
 
         phaseTimer = new Timer();
@@ -47,6 +48,12 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         phaseTimer.AutoReset = false;
         phaseTimer.Elapsed += TimerEvent;
         phaseTimer.Start();        
+    }
+
+    void Update()
+    {
+        print("remaining=" + phaseTimer.Remaining + ", Enabled=" + phaseTimer.Enabled);
+        phaseTimer.Update(Time.deltaTime);
     }
 
     // Kill swi-prolog.exe when unity quits.
@@ -120,6 +127,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
             phaseTimer.Interval = (long)(nextPhaseTime * 1000 * multiplier);
 
+            // wait because asych
+            Thread.Sleep(100);
             phaseTimer.Start();
         }
         catch (Exception ex) {
@@ -171,5 +180,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     public void updateMultiplier(float value)
     {
         multiplier = value;
+        //print("LightControlValue" + value);
+        phaseTimer.Remaining *= value;
     }
 }
