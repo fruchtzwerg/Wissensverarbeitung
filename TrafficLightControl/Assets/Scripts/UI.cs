@@ -36,7 +36,11 @@ public class UI : MonoBehaviour {
     public GameObject[] TimerMultiplier;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
+        paceSlider.maxValue = 5f;
+        paceSlider.minValue = .1f;
+        paceSlider.value = 1f;
     }
 
     void Awake() {
@@ -150,8 +154,23 @@ public class UI : MonoBehaviour {
         paceInput.text = value.ToString();
 
         float multiplier = 1f / value;
-        foreach(var tmp in TimerMultiplier){
-            tmp.GetComponent<IIntervalMultiplierUpdate>().updateMultiplier(multiplier);
+        // for each registered object
+        foreach(var tmp1 in TimerMultiplier)
+        {
+            // get interfaces of its children
+            var childrenMultiplier = tmp1.GetComponentsInChildren<IIntervalMultiplierUpdate>();
+
+            // for each interface of its children
+            foreach (var tmp2 in childrenMultiplier)
+            {
+                // update childrens interfaces
+                tmp2.updateMultiplier(multiplier);
+            }
+
+            // update registered object (parent) interface
+            var parent = tmp1.GetComponent<IIntervalMultiplierUpdate>();
+            if(parent != null)
+                parent.updateMultiplier(multiplier);
         }
     }
 }

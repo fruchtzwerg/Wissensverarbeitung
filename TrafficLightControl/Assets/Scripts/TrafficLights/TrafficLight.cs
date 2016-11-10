@@ -80,16 +80,20 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
     }
 
     protected virtual void InitTimerGreen() {
-        timerGreen = new Timer();
-        timerGreen.Interval = IntervalGreen;
-        timerGreen.AutoReset = false;
+        timerGreen = new Timer
+        {
+            Interval = IntervalGreen,
+            AutoReset = false
+        };
         timerGreen.Elapsed += timerEventToGreen;
     }
 
     protected virtual void InitTimerRed() {
-        timerRed = new Timer();
-        timerRed.Interval = IntervalRed;
-        timerRed.AutoReset = false;
+        timerRed = new Timer
+        {
+            Interval = IntervalRed,
+            AutoReset = false
+        };
         timerRed.Elapsed += timerEventToRed;
     }
 

@@ -54,7 +54,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate {
 
     public void updateMultiplier(float value)
     {
-        print("neues Intervall: " + (long)(TimerInterval * value));
+        //print("neues Intervall: " + (long)(TimerInterval * value));
         timer.Interval = (long)(TimerInterval * value);
     }
 }

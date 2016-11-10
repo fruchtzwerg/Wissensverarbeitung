@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 
 [ExecuteInEditMode]
-public class BezierSpline : MonoBehaviour
+public class BezierSpline : MonoBehaviour, IIntervalMultiplierUpdate
 {
     
     [SerializeField]
@@ -19,6 +19,7 @@ public class BezierSpline : MonoBehaviour
     [SerializeField]
     private Transform endPoint;
     public float WalkerMultiplier = 1;
+    public float Speed = 1;
 
     public int CurveCount
     {
@@ -303,6 +304,12 @@ public class BezierSpline : MonoBehaviour
     void OnEnable() { EditorApplication.update += UpdatePositionsInEditor; }
     void OnDisable() { EditorApplication.update -= UpdatePositionsInEditor; }
 #endif
+
+
+    public void updateMultiplier(float value)
+    {
+        Speed = WalkerMultiplier/value;
+    }
 }
 
 public enum BezierControlPointMode

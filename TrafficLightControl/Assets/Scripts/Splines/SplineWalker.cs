@@ -159,7 +159,7 @@ public class SplineWalker : MonoBehaviour
         if (StopMoving()) return true;
 
         // move
-        _progress += (Time.deltaTime/Duration)*_spline.WalkerMultiplier;
+        _progress += (Time.deltaTime/Duration)*_spline.Speed;
 
         // not at the end of a node -> done
         if (_progress < 1f) return false;
@@ -199,7 +199,7 @@ public class SplineWalker : MonoBehaviour
     /// </summary>
     private void MoveBackward()
     {
-        _progress -= (Time.deltaTime/Duration)*_spline.WalkerMultiplier;
+        _progress -= (Time.deltaTime/Duration)*_spline.Speed;
 
         if (_progress > 0f) return;
 

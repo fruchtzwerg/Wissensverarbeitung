@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-public class VehicleSpawner : MonoBehaviour
+public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
 {
     // spwan chances in percentage per frame
     // 1f = 1% chance each frame
@@ -14,6 +13,11 @@ public class VehicleSpawner : MonoBehaviour
     public float SuvSpawnChancePercentage = 1.5f;
     public float BusSpawnChancePercentage = .1f;
     public float TruckSpawnChancePercentage = .5f;
+
+    private float _carChance;
+    private float _suvChance;
+    private float _busChance;
+    private float _truckChance;
 
     private List<SplineWaypoint> originWaypoints = new List<SplineWaypoint>();
 
@@ -31,6 +35,8 @@ public class VehicleSpawner : MonoBehaviour
 
     private Random rnd = new Random();
 
+    private float multiplier = 1f;
+
     private int span;
     private float min;
 
@@ -44,7 +50,7 @@ public class VehicleSpawner : MonoBehaviour
             if (waypoint.IsOrigin)
             {
                 originWaypoints.Add(waypoint);
-                print(waypoint.name);
+                //print(waypoint.name);
             }
         }
 
@@ -54,25 +60,44 @@ public class VehicleSpawner : MonoBehaviour
         busPrefab = Resources.Load("Bus", typeof(GameObject)) as GameObject;
         truckPrefab = Resources.Load("Truck", typeof(GameObject)) as GameObject;
 
+        UpdateThresholds();
+    }
+
+
+    /// <summary>
+    /// Update thresholds for spawn chances
+    /// </summary>
+    private void UpdateThresholds()
+    {
+        // init spawn chances
+        _carChance = CarSpawnChancePercentage/multiplier;
+        _suvChance = SuvSpawnChancePercentage/multiplier;
+        _busChance = BusSpawnChancePercentage/multiplier;
+        _truckChance = TruckSpawnChancePercentage/multiplier;
+
+        //print(string.Format("car={0}, suv={1}, bus={2}, truck={3}", _carChance, _suvChance, _busChance, _truckChance));
+
         // get min of all percentages
-        min = Math.Min(CarSpawnChancePercentage,
-            Math.Min(SuvSpawnChancePercentage,
-                Math.Min(BusSpawnChancePercentage, TruckSpawnChancePercentage)));
+        min = Math.Min(_carChance,
+            Math.Min(_suvChance,
+                Math.Min(_busChance, _truckChance)));
         // get span
         span = ToInt(100/min);
 
         // get actual thresholds relative to span
-        carTreshold = ToInt(span*(CarSpawnChancePercentage/100));
-        suvTreshold = ToInt(span*(SuvSpawnChancePercentage/100) + carTreshold);
-        busTreshold = ToInt(span*(BusSpawnChancePercentage/100) + suvTreshold);
-        truckTreshold = ToInt(span*(TruckSpawnChancePercentage/100) + busTreshold);
+        carTreshold = ToInt(span*(_carChance/100));
+        suvTreshold = ToInt(span*(_suvChance/100) + carTreshold);
+        busTreshold = ToInt(span*(_busChance/100) + suvTreshold);
+        truckTreshold = ToInt(span*(_truckChance/100) + busTreshold);
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         // get the prefab
-        GameObject prefab = GetRandomVehicle();
+        var prefab = GetRandomVehicle();
         if (prefab == null)
             return;
 
@@ -92,7 +117,8 @@ public class VehicleSpawner : MonoBehaviour
     /// <returns>prefab of vehicle</returns>
     private GameObject GetRandomVehicle()
     {
-        int rand = rnd.Next(0, span + 1);
+        //print("min=" + min + ", max=" + (span+1));
+        var rand = rnd.Next(0, span + 1);
 
         if (rand < carTreshold)
             return carPrefab;
@@ -113,7 +139,7 @@ public class VehicleSpawner : MonoBehaviour
     /// <returns></returns>
     private SplineWaypoint GetRandomOrigin()
     {
-        int rand = rnd.Next(0, originWaypoints.Count);
+        var rand = rnd.Next(0, originWaypoints.Count);
 
         return originWaypoints[rand];
     }
@@ -124,8 +150,14 @@ public class VehicleSpawner : MonoBehaviour
     /// </summary>
     /// <param name="_float"></param>
     /// <returns></returns>
-    private int ToInt(float _float)
+    private static int ToInt(float _float)
     {
         return (int) Math.Round(_float);
+    }
+
+    public void updateMultiplier(float value)
+    {
+        multiplier = value;
+        UpdateThresholds();
     }
 }
