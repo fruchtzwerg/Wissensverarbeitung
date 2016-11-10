@@ -79,12 +79,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate {
         switchState();
     }
 
-    protected virtual void InitTimerGreen() {
-        timerGreen = new Timer
-        {
-            Interval = IntervalGreen,
-            AutoReset = false
-        };
+    protected virtual void InitTimerGreen()
+    {
+        timerGreen = new Timer();
+        timerGreen.Interval = IntervalGreen;
+        timerGreen.AutoReset = false;
         timerGreen.Elapsed += timerEventToGreen;
     }
 
