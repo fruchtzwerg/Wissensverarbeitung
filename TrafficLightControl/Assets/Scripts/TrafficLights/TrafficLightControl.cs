@@ -181,6 +181,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     {
         multiplier = value;
         //print("LightControlValue" + value);
-        phaseTimer.Remaining *= value;
+        if(phaseTimer != null)
+            phaseTimer.Remaining *= value;
     }
 }
