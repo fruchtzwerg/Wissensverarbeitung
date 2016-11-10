@@ -45,14 +45,14 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
         phaseTimer = new Timer();
         phaseTimer.Interval = 2000;
-        phaseTimer.AutoReset = false;
+        phaseTimer.AutoReset = true;
         phaseTimer.Elapsed += TimerEvent;
         phaseTimer.Start();        
     }
 
     void Update()
     {
-        print("remaining=" + phaseTimer.Remaining + ", Enabled=" + phaseTimer.Enabled);
+        //print("remaining=" + phaseTimer.Remaining + ", Enabled=" + phaseTimer.Enabled);
         phaseTimer.Update(Time.deltaTime);
     }
 
