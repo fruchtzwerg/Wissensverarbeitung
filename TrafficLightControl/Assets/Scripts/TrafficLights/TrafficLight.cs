@@ -16,19 +16,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     protected Renderer rendRed;
     protected Renderer rendOrange;
     protected Renderer rendGreen;
-
-    protected Color black = new Color(0, 0, 0);
-    protected Color red = new Color(0.7f, 0, 0);
-    protected Color orange = new Color(1f, 1f, 0);
-    protected Color green = new Color(0, 1f, 0);
-
+    
     protected Timer timerGreen;
     protected Timer timerRed;
 
     private BoxCollider _collider;
-    private Material matGreen;
-    private Material matYellow;
-    private Material matRed;
 
     protected States state = States.Off;
     protected States oldState = States.Off;
@@ -57,28 +49,20 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         // init collider
         _collider = GetComponent<BoxCollider>();
 
-        // init materials
-        matGreen = Resources.Load("TrafficLightGreen", typeof(Material)) as Material;
-        matYellow = Resources.Load("TrafficLightYellow", typeof(Material)) as Material;
-        matRed = Resources.Load("TrafficLightRed", typeof(Material)) as Material;
-
         //init Rendere with different materials
         if (RedLight)
         {
             rendRed = RedLight.GetComponent<Renderer>();
-            rendRed.material = matRed;
         }
 
         if (OrangeLight)
         {
             rendOrange = OrangeLight.GetComponent<Renderer>();
-            rendOrange.material = matYellow;
         }
 
         if (GreenLight)
         {
             rendGreen = GreenLight.GetComponent<Renderer>();
-            rendGreen.material = matGreen;
         }
 
         InitTimerGreen();
@@ -175,36 +159,36 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
             switch (State)
             {
                 case States.Red:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendOrange.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendOrange.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.Orange:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendOrange.material.SetColor("_EmissionColor", orange);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendOrange.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     EnableCollider();
                     break;
                 case States.Green:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendOrange.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", green);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendOrange.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.white);
                     EnableCollider(false);
                     break;
                 case States.RedAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendOrange.material.SetColor("_EmissionColor", orange);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendOrange.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.On:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendOrange.material.SetColor("_EmissionColor", orange);
-                    rendGreen.material.SetColor("_EmissionColor", green);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendOrange.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.white);
                     break;
                 default:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendOrange.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendOrange.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
             }
 

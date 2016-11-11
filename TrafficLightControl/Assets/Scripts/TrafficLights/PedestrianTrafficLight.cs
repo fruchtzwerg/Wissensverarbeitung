@@ -48,30 +48,30 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
             //switch emissioncolor of gameobjects
             switch (State) {
                 case States.Red:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.Orange:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.Green:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", green);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.white);
 
                     switchOffPedestrianTrafficLightLights();
                     break;
                 case States.RedAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.On:
-                    rendRed.material.SetColor("_EmissionColor", red);
-                    rendGreen.material.SetColor("_EmissionColor", green);
+                    rendRed.material.SetColor("_EmissionColor", Color.white);
+                    rendGreen.material.SetColor("_EmissionColor", Color.white);
                     break;
                 default:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", black);
+                    rendRed.material.SetColor("_EmissionColor", Color.black);
+                    rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
             }
         }
