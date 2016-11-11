@@ -61,10 +61,6 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
                     switchOffPedestrianTrafficLightLights();
                     break;
-                case States.greenAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendGreen.material.SetColor("_EmissionColor", green);
-                    break;
                 case States.redAndOrange:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendGreen.material.SetColor("_EmissionColor", black);

@@ -52,7 +52,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
             float value = (float)rand.NextDouble();
 
-            if (value <= probabilities[i])
+            if (value <= probabilities[i] && TrafficLightControl != null)
             {
                 TrafficLightControl.EventWasTriggered(events[i]);
             }

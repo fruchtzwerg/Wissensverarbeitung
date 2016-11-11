@@ -108,6 +108,9 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
         // set the origin of the instance
         var walker = car.GetComponent<SplineWalker>();
         walker.Waypoint = GetRandomOrigin();
+
+        // attatch to parent
+        walker.transform.parent = walker.Waypoint.Spline.transform;
     }
 
 

@@ -36,7 +36,10 @@ public class SplineWalker : MonoBehaviour
     private bool _isGoingForward = true;
     private TrafficLight _light;
 
+    public bool Move = true;
+
     private readonly Random _rnd = new Random();
+
 
     private void Update()
     {
@@ -65,51 +68,7 @@ public class SplineWalker : MonoBehaviour
         // else turn model
         LookAt(position);
     }
-
-
-    private bool isStopped;
-    private float checkPoint = 1f;
-    private const float THRESHOLD = .1f;
-    /// <summary>
-    /// Stop movement if checkpoint has not yet been passed and
-    /// light is red or red+orange.
-    /// </summary>
-    /// <returns>true: if movement has been stoped</returns>
-    private bool StopMoving()
-    {
-        if (Waypoint.NextWaypoint.NextLight == null) return false;
-
-        _light = Waypoint.NextWaypoint.NextLight;
-        
-        if (!isStopped)
-        {
-            checkPoint = _spline.CheckPoint;
-        }
-
-        // stop if light is red (+ orange)
-        if (Math.Abs(checkPoint - _progress) <= THRESHOLD)
-        {
-            switch (_light.State)
-            {
-                case TrafficLight.States.red:
-                case TrafficLight.States.redAndOrange:
-                    if (isStopped)
-                        return true;
-
-                    // move checkpoint back
-                    _spline.CheckPoint -= THRESHOLD;
-                    if (_spline.CheckPoint <= 0)
-                        _spline.CheckPoint = 0;
-                    isStopped = true;
-                    return true;
-                default:
-                    _spline.CheckPoint = 1f;
-                    return false;
-            }
-        }
-
-        return false;
-    }
+    
 
 
     /// <summary>
@@ -155,8 +114,9 @@ public class SplineWalker : MonoBehaviour
     /// <returns>true: model was destroyed or stoped, else false</returns>
     private bool MoveForward()
     {
+        //StopMoving();
         // stop movement if neccesary
-        if (StopMoving()) return true;
+        if (!Move) return true;
 
         // move
         _progress += (Time.deltaTime/Duration)*_spline.Speed;
@@ -183,6 +143,7 @@ public class SplineWalker : MonoBehaviour
                 Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
 
                 _spline = Waypoint.Spline;
+                transform.parent = _spline.transform;
                 _progress = 0;
                 break;
             default:

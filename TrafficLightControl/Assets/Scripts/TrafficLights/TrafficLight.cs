@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Timers;
 using System;
 
 public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
@@ -27,6 +25,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     protected Timer timerGreen;
     protected Timer timerRed;
 
+    private BoxCollider collider;
+
     protected States state = States.off;
     protected States oldState = States.off;
 
@@ -44,7 +44,6 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         orange,
         green,
         redAndOrange,
-        greenAndOrange,
         off,
         on
     }
@@ -52,6 +51,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     // Use this for initialization
     void Start()
     {
+        collider = GetComponent<BoxCollider>();
 
         //init Rendere with different materials
         rendRed = new Renderer();
@@ -177,16 +177,13 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendOrange.material.SetColor("_EmissionColor", orange);
                     rendGreen.material.SetColor("_EmissionColor", black);
+                    EnableCollider();
                     break;
                 case States.green:
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendOrange.material.SetColor("_EmissionColor", black);
                     rendGreen.material.SetColor("_EmissionColor", green);
-                    break;
-                case States.greenAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", black);
-                    rendOrange.material.SetColor("_EmissionColor", orange);
-                    rendGreen.material.SetColor("_EmissionColor", green);
+                    EnableCollider(false);
                     break;
                 case States.redAndOrange:
                     rendRed.material.SetColor("_EmissionColor", red);
@@ -206,6 +203,21 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
             }
 
         }
+    }
+
+
+    /// <summary>
+    /// Move the collider out of the way.
+    /// </summary>
+    /// <param name="enable"></param>
+    private void EnableCollider(bool enable = true)
+    {
+        var offset = new Vector3(0, 100, 0);
+
+        if (enable)
+            collider.center += offset;
+        else
+            collider.center -= offset;
     }
 
     public void updateMultiplier(float value)
