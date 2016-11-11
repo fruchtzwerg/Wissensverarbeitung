@@ -34,7 +34,6 @@ public class SplineWalker : MonoBehaviour
     private float _progress;
     private BezierSpline _spline;
     private bool _isGoingForward = true;
-    private TrafficLight _light;
 
     public bool Move = true;
 

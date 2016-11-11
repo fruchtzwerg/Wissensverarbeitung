@@ -25,10 +25,13 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     protected Timer timerGreen;
     protected Timer timerRed;
 
-    private BoxCollider collider;
+    private BoxCollider _collider;
+    private Material matGreen;
+    private Material matYellow;
+    private Material matRed;
 
-    protected States state = States.off;
-    protected States oldState = States.off;
+    protected States state = States.Off;
+    protected States oldState = States.Off;
 
     public long IntervalGreen = 3000;
     public long IntervalRed = 2000;
@@ -40,45 +43,48 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 
     public enum States
     {
-        red,
-        orange,
-        green,
-        redAndOrange,
-        off,
-        on
+        Red,
+        Orange,
+        Green,
+        RedAndOrange,
+        Off,
+        On
     }
 
     // Use this for initialization
     void Start()
     {
-        collider = GetComponent<BoxCollider>();
+        // init collider
+        _collider = GetComponent<BoxCollider>();
+
+        // init materials
+        matGreen = Resources.Load("TrafficLightGreen", typeof(Material)) as Material;
+        matYellow = Resources.Load("TrafficLightYellow", typeof(Material)) as Material;
+        matRed = Resources.Load("TrafficLightRed", typeof(Material)) as Material;
 
         //init Rendere with different materials
-        rendRed = new Renderer();
-
-        rendRed = RedLight.GetComponent<Renderer>();
-        rendRed.material = new Material(shader);
-        rendRed.material.EnableKeyword("_EMISSION");
-        rendRed.material.color = red;
-
-        if (OrangeLight != null)
+        if (RedLight)
         {
-            rendOrange = OrangeLight.GetComponent<Renderer>();
-            rendOrange.material = new Material(shader);
-            rendOrange.material.EnableKeyword("_EMISSION");
-            rendOrange.material.color = orange;
+            rendRed = RedLight.GetComponent<Renderer>();
+            rendRed.material = matRed;
         }
 
+        if (OrangeLight)
+        {
+            rendOrange = OrangeLight.GetComponent<Renderer>();
+            rendOrange.material = matYellow;
+        }
 
-        rendGreen = GreenLight.GetComponent<Renderer>();
-        rendGreen.material = new Material(shader);
-        rendGreen.material.EnableKeyword("_EMISSION");
-        rendGreen.material.color = green;
+        if (GreenLight)
+        {
+            rendGreen = GreenLight.GetComponent<Renderer>();
+            rendGreen.material = matGreen;
+        }
 
         InitTimerGreen();
         InitTimerRed();
 
-        state = States.red;
+        state = States.Red;
         switchState();
     }
 
@@ -119,9 +125,9 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public virtual void switchToGreen()
     {
         //only if red or in some sec red
-        if (State != States.redAndOrange && State != States.green)
+        if (State != States.RedAndOrange && State != States.Green)
         {
-            state = States.redAndOrange;
+            state = States.RedAndOrange;
             //switchState();
             timerGreen.Start();
         }
@@ -133,9 +139,9 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public virtual void switchToRed()
     {
         //only if red or in some sec red
-        if (State != States.orange && State != States.red)
+        if (State != States.Orange && State != States.Red)
         {
-            state = States.orange;
+            state = States.Orange;
             //switchState();
             timerRed.Start();
         }
@@ -144,14 +150,14 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     protected virtual void timerEventToGreen(object source, EventArgs e)
     {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
-        state = States.green;
+        state = States.Green;
         timerGreen.Stop();
     }
 
     protected virtual void timerEventToRed(object source, EventArgs e)
     {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
-        state = States.red;
+        state = States.Red;
         timerRed.Stop();
     }
 
@@ -168,29 +174,29 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
             //switch emissioncolor of gameobjects
             switch (State)
             {
-                case States.red:
+                case States.Red:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendOrange.material.SetColor("_EmissionColor", black);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     break;
-                case States.orange:
+                case States.Orange:
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendOrange.material.SetColor("_EmissionColor", orange);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     EnableCollider();
                     break;
-                case States.green:
+                case States.Green:
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendOrange.material.SetColor("_EmissionColor", black);
                     rendGreen.material.SetColor("_EmissionColor", green);
                     EnableCollider(false);
                     break;
-                case States.redAndOrange:
+                case States.RedAndOrange:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendOrange.material.SetColor("_EmissionColor", orange);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     break;
-                case States.on:
+                case States.On:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendOrange.material.SetColor("_EmissionColor", orange);
                     rendGreen.material.SetColor("_EmissionColor", green);
@@ -215,9 +221,9 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         var offset = new Vector3(0, 100, 0);
 
         if (enable)
-            collider.center += offset;
+            _collider.center += offset;
         else
-            collider.center -= offset;
+            _collider.center -= offset;
     }
 
     public void updateMultiplier(float value)

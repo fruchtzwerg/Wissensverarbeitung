@@ -23,7 +23,7 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     /// </summary>
     public override void switchToGreen() {
         //only if red or in some sec red
-        if (State != States.green) {
+        if (State != States.Green) {
             timerGreen.Start();
         }
     }
@@ -33,8 +33,8 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     /// </summary>
     public override void switchToRed() {
         //only if red or in some sec red
-        if (State != States.red) {
-            state = States.red;
+        if (State != States.Red) {
+            state = States.Red;
         }
     }
 
@@ -47,25 +47,25 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
             oldState = State;
             //switch emissioncolor of gameobjects
             switch (State) {
-                case States.red:
+                case States.Red:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     break;
-                case States.orange:
+                case States.Orange:
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     break;
-                case States.green:
+                case States.Green:
                     rendRed.material.SetColor("_EmissionColor", black);
                     rendGreen.material.SetColor("_EmissionColor", green);
 
                     switchOffPedestrianTrafficLightLights();
                     break;
-                case States.redAndOrange:
+                case States.RedAndOrange:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendGreen.material.SetColor("_EmissionColor", black);
                     break;
-                case States.on:
+                case States.On:
                     rendRed.material.SetColor("_EmissionColor", red);
                     rendGreen.material.SetColor("_EmissionColor", green);
                     break;
