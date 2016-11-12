@@ -33,6 +33,8 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     private GameObject busPrefab;
     private GameObject truckPrefab;
 
+    public Material[] BodyMaterials;
+
     private Random rnd = new Random();
 
     private float multiplier = 1f;
@@ -103,7 +105,13 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
 
         // instanciate the prefab
         var car = Instantiate(prefab, transform) as GameObject;
-        //print(prefab);
+        if(car == null)
+            return;
+
+        // set color
+        var body = car.FindComponentInChildWithTag<Renderer>("Body");
+        if (body)
+            body.material = GetRandomMaterial();
 
         // set the origin of the instance
         var walker = car.GetComponent<SplineWalker>();
@@ -143,8 +151,14 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     private SplineWaypoint GetRandomOrigin()
     {
         var rand = rnd.Next(0, originWaypoints.Count);
-
         return originWaypoints[rand];
+    }
+
+
+    private Material GetRandomMaterial()
+    {
+        var rand = rnd.Next(0, BodyMaterials.Length);
+        return BodyMaterials[rand];
     }
 
 

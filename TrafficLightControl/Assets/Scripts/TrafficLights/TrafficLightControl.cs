@@ -25,7 +25,6 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private List<string> greenTrafficLights;
 
     private PrologWrapper wrapper;
-    private string phase;
 
     private Timer phaseTimer;
     private float multiplier = 1.0f;
@@ -33,8 +32,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     // Use this for initialization
     void Start() {
         wrapper = PrologInterface.GetComponent<PrologWrapper>();
-
-        phase = "phase11";
+        
         greenTrafficLights = new List<string>();        
 
         if (trafficLights.Length == trafficLightNames.Length) {

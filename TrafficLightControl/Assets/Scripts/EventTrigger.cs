@@ -15,8 +15,6 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
     private System.Random rand;
 
-    private float multiplier = 1f;
-
     // Use this for initialization
     void Start()
     {
