@@ -23,6 +23,9 @@ TrafficLightControl/.user
 TrafficLightControl/.suo
 TrafficLightControl/ProjectSettings/ProjectSettings.asset
 
+TrafficLightControl/Assets/ConsoleE
+TrafficLightControl/Assets/ConsoleE/Editor/*.meta
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
