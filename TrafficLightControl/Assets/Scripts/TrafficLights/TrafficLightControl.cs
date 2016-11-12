@@ -7,159 +7,160 @@ using System.Text;
 using System.Threading;
 using System.Timers;
 
-public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate {
+public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate
+{
 
-    public GameObject[] trafficLights;
-    public string[] trafficLightNames;
+    public enum Crossroads
+    {
+        a,
+        b
+    }
 
-    public GameObject PrologInterface;
+    public TrafficLight[] TrafficLights;
+
+    public PrologWrapper PrologInterface;
 
     private const string GREEN = "G = ";
     private const string AMPEL = "ampel";
     private const string NEXT_PHASE = "getnextPhase(";
     private const string NEUES_EREIGNIS = "neuesEreignis(";
 
-    public string CrossroadName;
+    public Crossroads Crossroad = Crossroads.a;
 
-    private Dictionary<string, TrafficLight> dictionary;
-    private List<string> greenTrafficLights;
-
-    private PrologWrapper wrapper;
-
-    private Timer phaseTimer;
-    private float multiplier = 1.0f;
+    private List<string> _greenTrafficLights;
+    
+    private Timer _phaseTimer;
+    private float _multiplier = 1.0f;
 
     // Use this for initialization
-    void Start() {
-        wrapper = PrologInterface.GetComponent<PrologWrapper>();
-        
-        greenTrafficLights = new List<string>();        
+    void Start()
+    {
+        _greenTrafficLights = new List<string>();
 
-        if (trafficLights.Length == trafficLightNames.Length) {
-            BuildDictionary();
-        }else {
-            print("WARNING! Dictionary wird nicht richtig aufgebaut, da die Arrays von Namen und Gameobjekten unterschiedlich groß sind!");
-        }
-
-        phaseTimer = new Timer();
-        phaseTimer.Interval = 2000;
-        phaseTimer.AutoReset = true;
-        phaseTimer.Elapsed += TimerEvent;
-        phaseTimer.Start();        
+        _phaseTimer = new Timer
+        {
+            Interval = 2000,
+            AutoReset = true
+        };
+        _phaseTimer.Elapsed += TimerEvent;
+        _phaseTimer.Start();
     }
 
     void Update()
     {
         //print("remaining=" + phaseTimer.Remaining + ", Enabled=" + phaseTimer.Enabled);
-        phaseTimer.Update(Time.deltaTime);
+        _phaseTimer.Update(Time.deltaTime);
     }
 
     // Kill swi-prolog.exe when unity quits.
-    void OnApplicationQuit() {
-        if(phaseTimer != null)
-            phaseTimer.Stop();
+    void OnApplicationQuit()
+    {
+        if (_phaseTimer != null)
+            _phaseTimer.Stop();
     }
 
     /// <summary>
     /// processing recived data
     /// </summary>
     /// <param name="recivedData"></param>
-    public void ReciveDataFromProlog(string recivedData) {
+    public void ReciveDataFromProlog(string recivedData)
+    {
         //recivedData is emtry or empty list
-        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") || recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false."))
+        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") ||
+            recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false."))
             return;
 
 
         //\[\[.*\],.*,\d{1,3}\]
         //print("R:" + recivedData);
-        try {
-            string recivedDataWithOutVar = recivedData.Replace(GREEN, "");
+        try
+        {
+            var recivedDataWithOutVar = recivedData.Replace(GREEN, "");
 
             //print("Rwov:" + recivedData);
 
-            int arrayStart = recivedDataWithOutVar.LastIndexOf("[");
-            int arrayEnd = recivedDataWithOutVar.IndexOf("]");
-            int arrayLength = arrayEnd - arrayStart;
+            var arrayStart = recivedDataWithOutVar.LastIndexOf("[");
+            var arrayEnd = recivedDataWithOutVar.IndexOf("]");
+            var arrayLength = arrayEnd - arrayStart;
 
             //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
 
-            string greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
+            var greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
             greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
 
-            string[] stringSeparators = new string[] { "," };
+            var stringSeparators = new string[] {","};
             var splits = greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
 
             //clear old green elements
-            greenTrafficLights.Clear();
+            _greenTrafficLights.Clear();
 
-            //remove unnecessary symbols and elements and add elemt to list
-            foreach (string s in splits) {
-                var tmp = s.Replace(")", "").Replace(".", "").Replace(",", "");
-                tmp = tmp.Trim();
+            //remove unnecessary symbols and elements and add element to list
+            foreach (var s in splits)
+            {
+                string tmp;
 
-                if (!string.IsNullOrEmpty(tmp))
-                    greenTrafficLights.Add(tmp);
-                //print(tmp);
+                if (string.IsNullOrEmpty(tmp = Parse(s)))
+                    continue;
+
+                _greenTrafficLights.Add(tmp);
             }
 
             //change states...
-            foreach (var entry in dictionary) {
+            foreach (var l in TrafficLights)
+            {
                 //entry trafficlight in green trafficlight list?
-                if (greenTrafficLights.Contains(entry.Key)) {
+                var name = l.Name.ToString().ToLower();
+                if (_greenTrafficLights.Contains(name))
+                {
 
                     //print(entry.Key + " to green.");
-                    entry.Value.switchToGreen();
+                    l.switchToGreen();
                 }
 
                 else
-                    entry.Value.switchToRed();
+                    l.switchToRed();
             }
 
             //phase time from response
-            int phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
+            var phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
 
-            string nextPhaseTimeString = recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].", "").Replace(",", "").Trim();
+            var nextPhaseTimeString =
+                recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].", "").Replace(",", "").Trim();
 
 
-            int nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
+            var nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
 
-            phaseTimer.Interval = (long)(nextPhaseTime * 1000 * multiplier);
+            _phaseTimer.Interval = (long) (nextPhaseTime*1000*_multiplier);
 
             // wait because asych
             Thread.Sleep(100);
-            phaseTimer.Start();
+            _phaseTimer.Start();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             print("#######################################################################");
             print(ex);
             print("#######################################################################");
         }
     }
 
+    private static string Parse(string s)
+    {
+        return s.Replace(")", "").Replace(".", "").Replace(",", "").Trim();
+    }
+
     /// <summary>
     /// Call this function to got to the next state
     /// </summary>
-    /// <param name="activator"></param>
-    private void NextState() {
-                
-        string query = NEXT_PHASE + CrossroadName + ", G).";
-        wrapper.QueryProlog(query, this);       
+    private void NextState()
+    {
+        var query = NEXT_PHASE + Crossroad + ", G).";
+        PrologInterface.QueryProlog(query, this);
     }
 
-    /// <summary>
-    /// map strings and trafficlightopjects to dictionary
-    /// </summary>
-    private void BuildDictionary() {
-        dictionary = new Dictionary<string, TrafficLight>();
 
-        for(int i = 0; i < trafficLights.Length; i++) {
-            dictionary.Add(trafficLightNames[i], trafficLights[i].GetComponent<TrafficLight>());
-        }
-
-    }
-    
-
-    private void TimerEvent(object sender, System.EventArgs e) {
+    private void TimerEvent(object sender, System.EventArgs e)
+    {
         NextState();
     }
 
@@ -167,19 +168,20 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// Call prolog, that a new event was triggered at this crossroad
     /// </summary>
     /// <param name="trigger"></param>
-    public void EventWasTriggered(string trigger) {
-        string query = NEUES_EREIGNIS + CrossroadName + ", " + trigger + ").";
-        wrapper.QueryProlog(query);
+    public void EventWasTriggered(string trigger)
+    {
+        var query = NEUES_EREIGNIS + Crossroad + ", " + trigger + ").";
+        PrologInterface.QueryProlog(query);
 
-        if (!phaseTimer.Enabled)
+        if (!_phaseTimer.Enabled)
             print(">>>>>>>>>>>>>>>>>> TIMER IS NOT RUNNING <<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 
     public void updateMultiplier(float value)
     {
-        multiplier = value;
+        _multiplier = value;
         //print("LightControlValue" + value);
-        if(phaseTimer != null)
-            phaseTimer.Remaining *= value;
+        if (_phaseTimer != null)
+            _phaseTimer.Remaining *= value;
     }
 }

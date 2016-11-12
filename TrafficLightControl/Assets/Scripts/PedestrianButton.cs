@@ -3,32 +3,20 @@ using System.Collections;
 
 public class PedestrianButton : MonoBehaviour {
 
-    public GameObject TrafficLightControl;
-    public GameObject PushedLight;
-    public GameObject PartnerButton;
+    public TrafficLightControl TrafficLightControl;
+    public Renderer PushedLight;
+    public PedestrianButton PartnerButton;
     public string Event;
 
     public Shader shader;
-    private Renderer rendRed;
 
     private bool isPushed = false;
-
-    private Color black = new Color(0, 0, 0);
-    private Color red = new Color(1f, 0, 0);
-
-    private TrafficLightControl control;
-
+    
     // Use this for initialization
     void Start () {
-
-        rendRed = new Renderer();
-
-        rendRed = PushedLight.GetComponent<Renderer>();
-        rendRed.material = new Material(shader);
-        rendRed.material.EnableKeyword("_EMISSION");
-        rendRed.material.color = red;
-
-        control = TrafficLightControl.GetComponent<TrafficLightControl>();
+        PushedLight.material = new Material(shader);
+        PushedLight.material.EnableKeyword("_EMISSION");
+        PushedLight.material.color = Color.red;
     }
 	
 	// Update is called once per frame
@@ -39,20 +27,19 @@ public class PedestrianButton : MonoBehaviour {
 	}
 
     void OnMouseDown() {
-
+        print("down");
         pushed();
 
-        if(PartnerButton != null) {
-            PartnerButton.GetComponent<PedestrianButton>().partnerButtonPushed();
-        }
+        if(PartnerButton)
+            PartnerButton.partnerButtonPushed();
 
-        control.EventWasTriggered(Event);
+        TrafficLightControl.EventWasTriggered(Event);
     }
 
     private void pushed() {
         isPushed = true;
 
-        rendRed.material.SetColor("_EmissionColor", red);
+        PushedLight.material.SetColor("_EmissionColor", Color.green);
     }
 
     public void partnerButtonPushed() {
@@ -62,6 +49,6 @@ public class PedestrianButton : MonoBehaviour {
     public void switchOffEmission() {
         isPushed = false;
 
-        rendRed.material.SetColor("_EmissionColor", black);
+        PushedLight.material.SetColor("_EmissionColor", Color.black);
     }
 }

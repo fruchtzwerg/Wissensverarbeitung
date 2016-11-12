@@ -3,15 +3,41 @@ using System;
 
 public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 {
+    public enum States
+    {
+        Red,
+        Orange,
+        Green,
+        RedAndOrange,
+        Off,
+        On
+    }
 
+    public enum Lights
+    {
+        b3,
+        fa10,
+        fa11,
+        fg9,
+        k2,
+        k3,
+        k4,
+        k5,
+        k6,
+        k7,
+        k8,
+        k9,
+        k10,
+        k11,
+        k12,
+        k13
+    }
 
+    public Lights Name;
 
     public GameObject RedLight;
     public GameObject OrangeLight;
     public GameObject GreenLight;
-
-
-    public Shader shader;
 
     protected Renderer rendRed;
     protected Renderer rendOrange;
@@ -33,16 +59,6 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         get { return state; }
     }
 
-    public enum States
-    {
-        Red,
-        Orange,
-        Green,
-        RedAndOrange,
-        Off,
-        On
-    }
-
     // Use this for initialization
     void Start()
     {
@@ -51,19 +67,13 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 
         //init Rendere with different materials
         if (RedLight)
-        {
             rendRed = RedLight.GetComponent<Renderer>();
-        }
 
         if (OrangeLight)
-        {
             rendOrange = OrangeLight.GetComponent<Renderer>();
-        }
 
         if (GreenLight)
-        {
             rendGreen = GreenLight.GetComponent<Renderer>();
-        }
 
         InitTimerGreen();
         InitTimerRed();
@@ -93,6 +103,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         timerRed.Elapsed += timerEventToRed;
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -102,6 +114,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         timerRed.Update(Time.deltaTime);
         switchState();
     }
+
 
     /// <summary>
     /// switch state from red to green
@@ -117,6 +130,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         }
     }
 
+
     /// <summary>
     /// switch strate from green to red
     /// </summary>
@@ -130,6 +144,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
             timerRed.Start();
         }
     }
+
 
     protected virtual void timerEventToGreen(object source, EventArgs e)
     {

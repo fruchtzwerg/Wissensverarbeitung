@@ -1,15 +1,43 @@
 fileFormatVersion: 2
-guid: 506cc5af6841f71488ca02d26d62173a
-timeCreated: 1478893878
+guid: 5a24cc283a7e98f4b99d290fcf1a7328
+timeCreated: 1478894078
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Layer_02zs
+    100000: Svetofor noga
+    100002: Svetofor_1 golova
+    100004: Svetofor_knopka
+    100006: //RootNode
+    100008: Boom
+    100010: Pedestrian
+    100012: Signal
+    400000: Svetofor noga
+    400002: Svetofor_1 golova
+    400004: Svetofor_knopka
+    400006: //RootNode
+    400008: Boom
+    400010: Pedestrian
+    400012: Signal
+    2300000: Svetofor noga
+    2300002: Svetofor_1 golova
+    2300004: Svetofor_knopka
+    2300006: Boom
+    2300008: Pedestrian
+    2300010: Signal
+    3300000: Svetofor noga
+    3300002: Svetofor_1 golova
+    3300004: Svetofor_knopka
+    3300006: Boom
+    3300008: Pedestrian
+    3300010: Signal
+    4300000: Svetofor noga
+    4300002: Svetofor_knopka
+    4300004: Svetofor_1 golova
+    4300006: Signal
+    4300008: Pedestrian
+    4300010: Boom
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,7 +96,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

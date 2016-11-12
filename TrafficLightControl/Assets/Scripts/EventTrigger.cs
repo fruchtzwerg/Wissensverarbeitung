@@ -1,6 +1,4 @@
-﻿using System;
-using System.Timers;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 {
@@ -18,12 +16,18 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
     // Use this for initialization
     void Start()
     {
-        timer = new Timer();
-        timer.Interval = TimerInterval;
+        // if TrafficLightControl is same object, init it
+        if (!TrafficLightControl)
+            TrafficLightControl = GetComponent<TrafficLightControl>();
+
+        timer = new Timer
+        {
+            Interval = TimerInterval,
+            AutoReset = true
+        };
         timer.Elapsed += timerElapsed;
-        timer.AutoReset = true;
         timer.Start();
-        print("remaining=" + timer.Remaining);
+        //print("remaining=" + timer.Remaining);
 
         rand = new System.Random();
 
