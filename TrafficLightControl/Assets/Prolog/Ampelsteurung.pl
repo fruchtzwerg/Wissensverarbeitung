@@ -38,12 +38,12 @@ ausloeser(a,fa11,_):-!,
 
 
 %Phasen Ampelkreuzung B
-phase1(b,[[h3,fg8,fg6,k7,b2,k1,k5,k14,k2,k3,fg3,h1],phase1,35]).
-phase2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5],phase2,10]).
-phase3(b,[[fa7,fg5,fg8,fa1,fa2,h4,k6,h2,fa5,fa4],phase3,9]).
-phase4(b,[[h3,fg8,k4,k7,b2,k1,k2],phase4,5]).
-phase5(b,[[k4,k7,b1,k2,b2],phase5,5]).
-phase6(b,[[h3,fg8,fg5,k7,b2,k1,k3,k2,fg3,h1,boomgate],phase6,15]).
+phase1(b,[[h3,fg8,fg6,k7,b2,k1,k5,k14,k2,k3,fg3,h1,boomgate],phase1,35]).
+phase2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5,boomgate],phase2,10]).
+phase3(b,[[fa7,fg5,fg8,fa1,fa2,h4,k6,h2,fa5,fa4,boomgate],phase3,9]).
+phase4(b,[[h3,fg8,k4,k7,b2,k1,k2,boomgate],phase4,5]).
+phase5(b,[[k4,k7,b1,k2,b2,boomgate],phase5,5]).
+phase6(b,[[h3,fg8,fg5,k7,b2,k1,k3,k2,fg3,h1],phase6,15]).
 
 %Regeln Kreuzung B
 ausloeser(b,fa4,GG):-phase3(b,GG).
