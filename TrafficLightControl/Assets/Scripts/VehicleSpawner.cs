@@ -14,6 +14,9 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     public float BusSpawnChancePercentage = .1f;
     public float TruckSpawnChancePercentage = .5f;
 
+    public int MaxVehicles = 100;
+    public static int Count;
+
     private float _carChance;
     private float _suvChance;
     private float _busChance;
@@ -98,15 +101,22 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     // Update is called once per frame
     void Update()
     {
+        // NO MORE, PLS NO MORE!!!
+        if(Count == MaxVehicles)
+            return;
+
         // get the prefab
         var prefab = GetRandomVehicle();
         if (prefab == null)
             return;
 
-        // instanciate the prefab
+        // instanciate the prefab (spawn the vehicle)
         var car = Instantiate(prefab, transform) as GameObject;
         if(car == null)
             return;
+
+        // one more vehicle...
+        Count++;
 
         // set color
         var body = car.FindComponentInChildWithTag<Renderer>("Body");

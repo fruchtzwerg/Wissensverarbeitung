@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class UI : MonoBehaviour
@@ -16,24 +17,26 @@ public class UI : MonoBehaviour
     public Button buttonCamPos3;
     public Button buttonCamPos4;
 
-    public Button buttonTestProlog1;
-    public Button buttonTestProlog2;
-    public Button buttonTestProlog3;
-    public Button buttonTestProlog4;
-    public Button buttonTestProlog5;
+    public TrafficLightControl CrossroadControl_A;
+    public TrafficLightControl CrossroadControl_B;
 
-    public GameObject CrossroadControl_A;
-
-    public GameObject Cam;
+    public CamMoving Cam;
 
     public Toggle toggleBoomGates;
 
     public Slider paceSlider;
     public InputField paceInput;
+    
+    public VerticalLayoutGroup RowsAParent;
+    public GridLayoutGroup ButtonsAParent;
+    private List<HorizontalLayoutGroup> _rowsA = new List<HorizontalLayoutGroup>();
 
-    public GameObject[] trafficLightsCrossroadA;
+    public VerticalLayoutGroup RowsBParent;
+    public GridLayoutGroup ButtonsBParent;
+    private List<HorizontalLayoutGroup> _rowsB = new List<HorizontalLayoutGroup>();
 
-    public InputField[] InputFieldsCrossroadA;
+    private HorizontalLayoutGroup rowPrefab;
+    private Button buttonPrefab;
 
     public GameObject[] TimerMultiplier;
 
@@ -47,38 +50,68 @@ public class UI : MonoBehaviour
         buttonCamPos3.onClick.AddListener(camButtonEvent3);
         buttonCamPos4.onClick.AddListener(camButtonEvent4);
 
-        buttonTestProlog1.onClick.AddListener(CrossroadAKeineAktionEvent);
-        buttonTestProlog2.onClick.AddListener(CrossroadAB3Event);
-        buttonTestProlog3.onClick.AddListener(CorssroadK10Event);
-        buttonTestProlog4.onClick.AddListener(CrossroadAFA10Event);
-        buttonTestProlog5.onClick.AddListener(CrossroadAK12Event);
-
-        paceSlider.maxValue = 5f;
-        paceSlider.minValue = .1f;
-        paceSlider.value = 1f;
-        paceInput.text = paceSlider.value.ToString();
-
         paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
+
+        rowPrefab = Resources.Load<HorizontalLayoutGroup>("Row");
+        buttonPrefab = Resources.Load<Button>("Button");
+
+        InitRows(CrossroadControl_A.TrafficLights, _rowsA, RowsAParent);
+        InitRows(CrossroadControl_B.TrafficLights, _rowsB, RowsBParent);
+
+        InitButtons(CrossroadControl_A, ButtonsAParent);
+        InitButtons(CrossroadControl_B, ButtonsBParent);
+    }
+
+    private void InitRows(IEnumerable<TrafficLight> lights, ICollection<HorizontalLayoutGroup> rows, Component parent)
+    {
+        foreach (var l in lights)
+        {
+            var row = Instantiate(rowPrefab);
+            var name = row.GetComponentInChildren<Text>();
+            var state = row.GetComponentInChildren<InputField>();
+
+            name.text = l.Name.ToString();
+            state.text = l.State.ToString();
+            row.transform.SetParent(parent.transform, false);
+
+            rows.Add(row);
+        }
+    }
+
+    private void InitButtons(TrafficLightControl control, Component parent)
+    {
+        var events = control.GetComponent<EventTrigger>().events;
+        foreach (var @event in events)
+        {
+            var button = Instantiate(buttonPrefab);
+            var text = button.GetComponentInChildren<Text>();
+
+            text.text = @event;
+            
+            var e = @event; // necessary for lambda closure
+            button.onClick.AddListener(() => OnButtonClicked(e, control));
+
+            button.transform.SetParent(parent.transform);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        setTextOfInputField();
+        SetTextOfInputField(CrossroadControl_A.TrafficLights);
+        SetTextOfInputField(CrossroadControl_B.TrafficLights);
     }
 
     //####################################################################################################
     /// <summary>
     ///  set the text of the inputfield array
     /// </summary>
-    private void setTextOfInputField()
+    private void SetTextOfInputField(TrafficLight[] lights)
     {
-
-        for (int i = 0; i < trafficLightsCrossroadA.Length; i++)
+        for (var i = 0; i < lights.Length; i++)
         {
-            // set text, if array size > i
-            if (i < InputFieldsCrossroadA.Length)
-                InputFieldsCrossroadA[i].text = trafficLightsCrossroadA[i].GetComponent<TrafficLight>().State.ToString();
+            var name = _rowsA[i].GetComponentInChildren<InputField>();
+            name.text = lights[i].State.ToString();
         }
     }
 
@@ -104,7 +137,7 @@ public class UI : MonoBehaviour
     /// <param name="postion"></param>
     void setCamPostion(Vector3 postion)
     {
-        Cam.GetComponent<CamMoving>().setCamPosition(postion);
+        Cam.setCamPosition(postion);
     }
 
     //########################################## Events  ##########################################################
@@ -116,17 +149,15 @@ public class UI : MonoBehaviour
         }
     }
 
-    void trafficLightTestToogle(bool value)
+
+
+
+    private void OnButtonClicked(string @event, TrafficLightControl control)
     {
-        if (value)
-        {
-            trafficLightsCrossroadA[0].GetComponent<TrafficLight>().switchToGreen();
-        }
-        else
-        {
-            trafficLightsCrossroadA[0].GetComponent<TrafficLight>().switchToRed();
-        }
+        control.EventWasTriggered(@event);
     }
+
+
 
     void camButtonEvent1()
     {
@@ -146,31 +177,6 @@ public class UI : MonoBehaviour
     void camButtonEvent4()
     {
         setCamPostion(camPos4);
-    }
-
-    void CrossroadAKeineAktionEvent()
-    {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("");
-    }
-
-    void CrossroadAB3Event()
-    {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("b3");
-    }
-
-    void CorssroadK10Event()
-    {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("k10");
-    }
-
-    void CrossroadAFA10Event()
-    {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("fa10");
-    }
-
-    void CrossroadAK12Event()
-    {
-        CrossroadControl_A.GetComponent<TrafficLightControl>().EventWasTriggered("k12");
     }
 
     void SliderEvent()

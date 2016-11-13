@@ -136,6 +136,7 @@ public class SplineWalker : MonoBehaviour
                 if (Waypoint.NextWaypoint.IsDestination)
                 {
                     Destroy(gameObject);
+                    VehicleSpawner.Count--;
                     return true;
                 }
 

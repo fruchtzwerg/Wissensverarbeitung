@@ -19,6 +19,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         fa10,
         fa11,
         fg9,
+        k1,
         k2,
         k3,
         k4,
@@ -30,7 +31,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         k10,
         k11,
         k12,
-        k13
+        k13,
+        k14
     }
 
     public Lights Name;
