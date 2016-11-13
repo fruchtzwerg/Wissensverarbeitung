@@ -16,6 +16,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
 
     public int MaxVehicles = 100;
     public static int Count;
+    public Transform Lanes;
 
     private float _carChance;
     private float _suvChance;
@@ -49,7 +50,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     void Start()
     {
         // get all waypoints marked as origin
-        var waypoints = GameObject.Find("Lanes").GetComponentsInChildren<SplineWaypoint>();
+        var waypoints = Lanes.GetComponentsInChildren<SplineWaypoint>();
         foreach (var waypoint in waypoints)
         {
             if (waypoint.IsOrigin)
