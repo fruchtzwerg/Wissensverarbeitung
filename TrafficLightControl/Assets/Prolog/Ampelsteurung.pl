@@ -52,7 +52,7 @@ ausloeser(b,k8,GG):-phase2(b,GG).
 ausloeser(b,k6,GG):-phase2(b,GG).
 ausloeser(b,k4,GG):-phase4(b,GG).
 ausloeser(b,b1,GG):-phase5(b,GG).
-ausloeser(b,schranke,GG):-phase6(b,GG).
+ausloeser(b,boomgate,GG):-phase6(b,GG).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Zulässige und nicht Zulässige Phasenübergänge                %
@@ -76,9 +76,9 @@ checkifzulaessig(b,phase5,k6,[]):-!.
 checkifzulaessig(b,phase5,k4,[]):-!.
 checkifzulaessig(b,phase4,b1,[]):-!.
 checkifzulaessig(b,phase6,k4,[]):-!.
-checkifzulaessig(b,phase3,schranke,[]):-!.
-checkifzulaessig(b,phase2,schranke,[]):-!.
-checkifzulaessig(b,phase5,schranke,[]):-!.
+checkifzulaessig(b,phase3,boomgate,[]):-!.
+checkifzulaessig(b,phase2,boomgate,[]):-!.
+checkifzulaessig(b,phase5,boomgate,[]):-!.
 checkifzulaessig(b,phase4,fa4,[]):-!.
 checkifzulaessig(b,phase4,fa1,[]):-!.
 checkifzulaessig(b,phase4,k6,[]):-!.
