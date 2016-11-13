@@ -6,7 +6,7 @@ public class PedestrianButton : MonoBehaviour {
     public TrafficLightControl TrafficLightControl;
     public Renderer PushedLight;
     public PedestrianButton PartnerButton;
-    public string Event;
+    public EventTrigger.Events Event;
 
     public Shader shader;
 
@@ -33,7 +33,7 @@ public class PedestrianButton : MonoBehaviour {
         if(PartnerButton)
             PartnerButton.partnerButtonPushed();
 
-        TrafficLightControl.EventWasTriggered(Event);
+        TrafficLightControl.EventWasTriggered(Event.ToString());
     }
 
     private void pushed() {

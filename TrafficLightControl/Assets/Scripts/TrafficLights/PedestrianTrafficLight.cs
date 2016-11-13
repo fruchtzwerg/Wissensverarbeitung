@@ -5,7 +5,7 @@ using System;
 
 public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
-    public GameObject[] PedestrianTrafficLightButtons;
+    public PedestrianButton[] PedestrianTrafficLightButtons;
 
     public long Interval = 2000;
 
@@ -82,7 +82,7 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     /// </summary>
     private void switchOffPedestrianTrafficLightLights() {
         foreach(var tmp in PedestrianTrafficLightButtons) {
-            tmp.GetComponent<PedestrianButton>().switchOffEmission();
+            tmp.switchOffEmission();
         }
     }
 

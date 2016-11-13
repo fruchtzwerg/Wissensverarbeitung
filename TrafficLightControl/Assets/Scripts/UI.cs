@@ -86,10 +86,10 @@ public class UI : MonoBehaviour
             var button = Instantiate(buttonPrefab);
             var text = button.GetComponentInChildren<Text>();
 
-            text.text = @event;
+            text.text = @event.ToString();
             
             var e = @event; // necessary for lambda closure
-            button.onClick.AddListener(() => OnButtonClicked(e, control));
+            button.onClick.AddListener(() => OnButtonClicked(e.ToString(), control));
 
             button.transform.SetParent(parent.transform);
         }

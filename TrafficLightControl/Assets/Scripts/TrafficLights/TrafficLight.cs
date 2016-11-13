@@ -16,8 +16,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public enum Lights
     {
         b3,
+        fa1,
+        fa2,
         fa10,
         fa11,
+        fg8,
         fg9,
         k1,
         k2,

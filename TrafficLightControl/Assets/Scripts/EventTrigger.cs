@@ -8,10 +8,26 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
     private Timer timer;
 
-    public string[] events;
+    public Events[] events;
     public float[] probabilities;
 
     private System.Random rand;
+
+
+    public enum Events {
+        schranke,
+        b1,
+        b3,
+        fa1,
+        fa4,
+        fa10,
+        k4,
+        k6,
+        k8,
+        k10,
+        k12
+        
+    }
 
     // Use this for initialization
     void Start()
@@ -56,7 +72,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
             if (value <= probabilities[i] && TrafficLightControl != null)
             {
-                TrafficLightControl.EventWasTriggered(events[i]);
+                TrafficLightControl.EventWasTriggered(events[i].ToString());
             }
         }
     }
