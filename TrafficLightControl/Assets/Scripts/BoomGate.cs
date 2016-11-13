@@ -1,18 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BoomGate : MonoBehaviour {
+public class BoomGate : TrafficLight {
 
     public GameObject pivot;
     public bool isOpen = false;
-
-    private int state;
-    private enum States {
-        open,
-        opening,
-        closed,
-        closing
-    }
 
     private Vector3 pivotVector3;
     private Quaternion openPosition; 
@@ -20,9 +12,11 @@ public class BoomGate : MonoBehaviour {
 
     private int degreeCopunter = 0;
 
+    private float multiplier = 1f;
+
     // Use this for initialization
     void Start () {
-        state = (int)States.closed;
+        state = States.Closed;
 
     }
 	
@@ -32,39 +26,52 @@ public class BoomGate : MonoBehaviour {
   
 	}
 
+    public override void switchToGreen() {
+        print("open boomgate!");
+        isOpen = true;
+    }
+
+    public override void switchToRed() {
+        isOpen = false;
+    }
+
     private void rotatePivot(bool open) {        
                 
-        if (state == (int)States.closed && open) {         
+        if (state == States.Closed && open) {
 
-            state = (int)States.opening;
+            state = States.Opening;
         }
         //State opening -> opening barrier
-        else if(state == (int)States.opening && open) {
-            pivot.transform.Rotate(0,1,0);
+        else if(state == States.Opening && open) {
+            pivot.transform.Rotate(0,1 * multiplier, 0);
 
             degreeCopunter++;
 
             if (degreeCopunter == 90) {
                 degreeCopunter = 0;
 
-                state = (int)States.open;
+                state = States.Open;
             }
         }
         //State closing -> closing barrier
-        else if (state == (int)States.closing && !open) {
-            pivot.transform.Rotate(0, -1, 0);
+        else if (state == States.Closing && !open) {
+            pivot.transform.Rotate(0, -1* multiplier, 0);
 
             degreeCopunter++;
 
             if(degreeCopunter == 90) {
                 degreeCopunter = 0;
 
-                state = (int)States.closed;
+                state = States.Closed;
             }
         }
-        else if(state == (int)States.open && !open) {
+        else if(state == States.Open && !open) {
             pivot.transform.Rotate(-1,0,0);
-            state = (int)States.closing;
+            state = States.Closing;
         }
+    }
+
+    public new void updateMultiplier(float value) {
+        multiplier = value;
     }
 }

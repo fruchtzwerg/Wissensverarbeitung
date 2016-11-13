@@ -15,7 +15,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
 
     public enum Events {
-        schranke,
+        boomgate,
         b1,
         b3,
         fa1,

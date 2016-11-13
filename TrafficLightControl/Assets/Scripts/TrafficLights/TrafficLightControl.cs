@@ -110,15 +110,15 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             {
                 //entry trafficlight in green trafficlight list?
                 var name = l.Name.ToString().ToLower();
-                if (_greenTrafficLights.Contains(name))
-                {
-
-                    //print(entry.Key + " to green.");
+                if (_greenTrafficLights.Contains(name)){
+                    //print(name + " to green.");
                     l.switchToGreen();
                 }
 
-                else
+                else {
                     l.switchToRed();
+                }
+                    
             }
 
             //phase time from response
@@ -131,7 +131,6 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             var nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
 
             _phaseTimer.Interval = (long) (nextPhaseTime*1000*_multiplier);
-
             // wait because asych
             Thread.Sleep(100);
             _phaseTimer.Start();

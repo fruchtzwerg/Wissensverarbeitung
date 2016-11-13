@@ -10,7 +10,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         Green,
         RedAndOrange,
         Off,
-        On
+        On,
+        Open,
+        Opening,
+        Closed,
+        Closing
     }
 
     public enum Lights
@@ -18,8 +22,13 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         b3,
         fa1,
         fa2,
+        fa4,
+        fa5,
+        fa7,
         fa10,
         fa11,
+        fg3,
+        fg6,
         fg8,
         fg9,
         k1,
@@ -35,7 +44,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         k11,
         k12,
         k13,
-        k14
+        k14,
+        boomgate
     }
 
     public Lights Name;
