@@ -4,8 +4,9 @@ using System.IO;
 using System;
 using System.Text;
 using System.Collections.Generic;
+using Debug = UnityEngine.Debug;
 
-public class Job : MonoBehaviour
+public class Job
 {
 
     private Process prolog;
@@ -36,7 +37,7 @@ public class Job : MonoBehaviour
         else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
             prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
         else {
-            print("SWI not found!");
+            Debug.Log("SWI not found!");
             return;
         }
            
@@ -123,7 +124,7 @@ public class Job : MonoBehaviour
 
             WriteLogFile(DELIMITERSEND + next.Query);
 
-            print("Process Name: "+ prolog.ProcessName +", Exit: " +prolog.HasExited);
+            Debug.Log("Process Name: "+ prolog.ProcessName +", Exit: " +prolog.HasExited);
         }
 
         //print("Queue Count 2: " + waitingObjects.Count);
@@ -167,7 +168,7 @@ public class Job : MonoBehaviour
             WriteLogFile(DELIMITERSEND + message); 
         }
 
-        print("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", Exit: " + prolog.HasExited);
+        Debug.Log("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", Exit: " + prolog.HasExited);
 
         if(waitingObjects.Count > 3) {
 
@@ -188,7 +189,7 @@ public class Job : MonoBehaviour
             sw2.Flush();
         }
 
-        print(message);
+        Debug.Log(message);
     }
 
     /// <summary>

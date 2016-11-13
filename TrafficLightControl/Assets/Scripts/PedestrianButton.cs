@@ -13,7 +13,8 @@ public class PedestrianButton : MonoBehaviour {
     private bool isPushed = false;
     
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         PushedLight.material = new Material(shader);
         PushedLight.material.EnableKeyword("_EMISSION");
         PushedLight.material.color = Color.red;

@@ -98,19 +98,19 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetTextOfInputField(CrossroadControl_A.TrafficLights);
-        SetTextOfInputField(CrossroadControl_B.TrafficLights);
+        SetTextOfInputField(CrossroadControl_A.TrafficLights, _rowsA);
+        SetTextOfInputField(CrossroadControl_B.TrafficLights, _rowsB);
     }
 
     //####################################################################################################
     /// <summary>
     ///  set the text of the inputfield array
     /// </summary>
-    private void SetTextOfInputField(TrafficLight[] lights)
+    private void SetTextOfInputField(IList<TrafficLight> lights, IList<HorizontalLayoutGroup> rows)
     {
-        for (var i = 0; i < lights.Length; i++)
+        for (var i = 0; i < lights.Count; i++)
         {
-            var name = _rowsA[i].GetComponentInChildren<InputField>();
+            var name = rows[i].GetComponentInChildren<InputField>();
             name.text = lights[i].State.ToString();
         }
     }
