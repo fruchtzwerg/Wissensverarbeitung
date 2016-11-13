@@ -22,6 +22,8 @@ TrafficLightControl/obj
 TrafficLightControl/.user
 TrafficLightControl/.suo
 TrafficLightControl/ProjectSettings/ProjectSettings.asset
+TrafficLightControl/*.blend1
+TrafficLightControl/*.blend1.meta
 
 TrafficLightControl/Assets/ConsoleE
 TrafficLightControl/Assets/ConsoleE/Editor/*.meta
