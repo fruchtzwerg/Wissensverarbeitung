@@ -1,126 +1,63 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CamMoving : MonoBehaviour {
 
-    public Transform maxLeft;
-    public Transform maxRight;
-    public Transform maxForward;
-    public Transform maxBackward;
-    public float maxZoomIn = 16.0f;
-    public float maxZoomOut = 88.5f;
+    public Transform MaxLeft;
+    public Transform MaxRight;
+    public Transform MaxForward;
+    public Transform MaxBackward;
+    public float MaxZoomIn = 16.0f;
+    public float MaxZoomOut = 88.5f;
 
-    public float zoomSpeed = 0.8f;
-    public float movingSpeed = 0.3f;
-
-    private bool wasShiftDown = false;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
+    public float ZoomSpeed = 2f;
+    public float MovementSpeed = 0.5f;
+    public float FastMovementSpeed = 2.5f;
+    
 	
 	// Update is called once per frame
 	void Update () {
-	    if (!wasShiftDown && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)))
-	    {
-	        movingSpeed *= 5;
-	        wasShiftDown = true;
-	    }
-	    else if (wasShiftDown && (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift)))
-        {
-            movingSpeed /= 5;
-            wasShiftDown = false;
-        }
-
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
-            moveForward();
-        }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-            moveForward(false);
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-            moveRight();
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-            moveRight(false);
-        }
-        if(Input.GetAxis("Mouse ScrollWheel") < 0) {
-            zoomIn();
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-            zoomIn(false);
-        }
+        Move();
     }
 
     /// <summary>
     /// Translate this object in z/-z direction
     /// </summary>
-    /// <param name="forward"></param>
-    void moveForward(bool forward = true) {
+    private void Move()
+    {
+        var hor = CrossPlatformInputManager.GetAxis("Horizontal");
+        var vert = CrossPlatformInputManager.GetAxis("Vertical");
+        var lat = CrossPlatformInputManager.GetAxis("Mouse ScrollWheel")*ZoomSpeed;
+        var latJoy = CrossPlatformInputManager.GetAxis("Joy Y") * ZoomSpeed;
+        var goFast = CrossPlatformInputManager.GetButton("Sprint");
+        var goFastJoy = CrossPlatformInputManager.GetAxis("Joy Z");
+        var speed = goFast || goFastJoy > 0 ? FastMovementSpeed : MovementSpeed;
 
-        float speed = movingSpeed;
+        var atUpperBounds = transform.position.z + vert >= MaxForward.position.z;
+        var atLowerBounds = transform.position.z + vert <= MaxBackward.position.z;
+        var atLeftBounds = transform.position.x + hor >= MaxRight.position.x;
+        var atRightBounds = transform.position.x + hor <= MaxLeft.position.x;
+        var atOuterBounds = transform.position.y - lat + latJoy >= MaxZoomOut;
+        var atInnerBounds = transform.position.y - lat + latJoy <= MaxZoomIn;
 
-        if (!forward)
-            speed *= -1;
+        if ((atUpperBounds && vert > 0) || (atLowerBounds && vert < 0))
+            vert = 0;
+        if ((atLeftBounds && hor > 0) || (atRightBounds && hor < 0))
+            hor = 0;
+        if ((atOuterBounds && lat + latJoy < 0 ) || (atInnerBounds && lat + latJoy > 0))
+            lat = latJoy = 0;
 
-
-        Vector3 posTmp = transform.position;
-        Vector3 newPos = posTmp;
-
-        newPos = new Vector3(posTmp.x, posTmp.y, posTmp.z + speed);
-
-        //limit zoom
-        if (newPos.z >= (maxBackward.position.z - speed) && newPos.z <= (maxForward.position.z - speed))
-            transform.position = newPos;
+        var dir = new Vector3(hor, vert, (lat + latJoy)*ZoomSpeed);
+        transform.Translate(dir * speed);
     }
 
-    /// <summary>
-    /// Translate this object in x/-x direction
-    /// </summary>
-    /// <param name="forward"></param>
-    void moveRight(bool right = true) {
 
-        float speed = movingSpeed;
-
-        if (!right)
-            speed *= -1;
-
-        Vector3 posTmp = transform.position;
-        Vector3 newPos = posTmp;
-
-        newPos = new Vector3(posTmp.x + speed, posTmp.y, posTmp.z);
-
-        //limit zoom
-        if (newPos.x >= (maxLeft.position.x - speed) && newPos.x <= (maxRight.position.x - speed))
-            transform.position = newPos;
-    }
-
-    /// <summary>
-    /// Translate this object in y/-y direction
-    /// </summary>
-    /// <param name="zoomIn"></param>
-    void zoomIn(bool zoomIn = true) {
-        float speed = zoomSpeed;
-
-        if (!zoomIn)
-            speed *= -1;
-
-        Vector3 posTmp = transform.position;
-        Vector3 newPos = posTmp;
-        
-        newPos = new Vector3(posTmp.x, posTmp.y + speed, posTmp.z);
-        
-        //limit zoom
-        if (newPos.y >= (maxZoomIn) && newPos.y <= (maxZoomOut + zoomSpeed))
-            transform.position = newPos;
-    }
 
     /// <summary>
     /// set the postion of the camera
     /// </summary>
     /// <param name="position"></param>
-    public void setCamPosition(Vector3 position) {
+    public void SetCamPosition(Vector3 position) {
         transform.position = position;
     }
 }
