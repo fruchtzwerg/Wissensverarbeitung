@@ -35,7 +35,6 @@ public class BezierSpline : MonoBehaviour, IIntervalMultiplierUpdate
             startPoint = value;
             if (value != null)
             {
-                //points[0] = value.localPosition;
                 SetControlPoint(0, value.localPosition);
             }
         }
@@ -49,8 +48,7 @@ public class BezierSpline : MonoBehaviour, IIntervalMultiplierUpdate
             endPoint = value;
             if (value != null)
             {
-                //points[points.Length - 1] = value.localPosition;
-                SetControlPoint(points.Length -1, value.localPosition);
+                SetControlPoint(points.Length - 1, value.localPosition);
             }
         }
     }
@@ -85,10 +83,10 @@ public class BezierSpline : MonoBehaviour, IIntervalMultiplierUpdate
     void Reset()
     {
         // set start point to defined start
-        var startVector = StartPoint != null ? StartPoint.localPosition : new Vector3(6f, 1f, 1f);
+        var startVector = StartPoint ? StartPoint.localPosition : new Vector3(6f, 1f, 1f);
 
         // set end point to defined end
-        var endVector = StartPoint != null ? EndPoint.localPosition : new Vector3(24f, 1f, 1f);
+        var endVector = StartPoint ? EndPoint.localPosition : new Vector3(24f, 1f, 1f);
 
 
         points = new[]
@@ -294,10 +292,12 @@ public class BezierSpline : MonoBehaviour, IIntervalMultiplierUpdate
 
     public void UpdatePositionsInEditor()
     {
-        if (startPoint != null)
+        if (startPoint)
             SetControlPoint(0, Vector3.zero);
-        if (endPoint != null && startPoint != null)
+        //startPoint.localPosition = Vector3.zero;
+        if (endPoint && startPoint)
             SetControlPoint(points.Length - 1, endPoint.localPosition - startPoint.localPosition);
+        //endPoint.localPosition = points[points.Length -1];
     }
 
 #if UNITY_EDITOR

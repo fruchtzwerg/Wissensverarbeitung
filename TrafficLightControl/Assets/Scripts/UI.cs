@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class UI : MonoBehaviour
 {
@@ -45,10 +46,10 @@ public class UI : MonoBehaviour
     {
         toggleBoomGates.onValueChanged.AddListener(boomGateEvent);
 
-        buttonCamPos1.onClick.AddListener(camButtonEvent1);
-        buttonCamPos2.onClick.AddListener(camButtonEvent2);
-        buttonCamPos3.onClick.AddListener(camButtonEvent3);
-        buttonCamPos4.onClick.AddListener(camButtonEvent4);
+        buttonCamPos1.onClick.AddListener(() => Cam.SetCamPosition(camPos1));
+        buttonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(camPos2));
+        buttonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(camPos3));
+        buttonCamPos4.onClick.AddListener(() => Cam.SetCamPosition(camPos4));
 
         paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
 
@@ -100,6 +101,16 @@ public class UI : MonoBehaviour
     {
         SetTextOfInputField(CrossroadControl_A.TrafficLights, _rowsA);
         SetTextOfInputField(CrossroadControl_B.TrafficLights, _rowsB);
+
+        // controller cam pos
+        if(CrossPlatformInputManager.GetButton("Fire1"))
+            Cam.SetCamPosition(camPos2);
+        if (CrossPlatformInputManager.GetButton("Fire2"))
+            Cam.SetCamPosition(camPos3);
+        if (CrossPlatformInputManager.GetButton("Fire3"))
+            Cam.SetCamPosition(camPos4);
+        if (CrossPlatformInputManager.GetButton("Jump"))
+            Cam.SetCamPosition(camPos1);
     }
 
     //####################################################################################################
@@ -131,14 +142,6 @@ public class UI : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Call function CamMoving script to set postion of cam
-    /// </summary>
-    /// <param name="postion"></param>
-    void setCamPostion(Vector3 postion)
-    {
-        Cam.setCamPosition(postion);
-    }
 
     //########################################## Events  ##########################################################
     void boomGateEvent(bool value)
@@ -157,27 +160,6 @@ public class UI : MonoBehaviour
         control.EventWasTriggered(@event);
     }
 
-
-
-    void camButtonEvent1()
-    {
-        setCamPostion(camPos1);
-    }
-
-    void camButtonEvent2()
-    {
-        setCamPostion(camPos2);
-    }
-
-    void camButtonEvent3()
-    {
-        setCamPostion(camPos3);
-    }
-
-    void camButtonEvent4()
-    {
-        setCamPostion(camPos4);
-    }
 
     void SliderEvent()
     {

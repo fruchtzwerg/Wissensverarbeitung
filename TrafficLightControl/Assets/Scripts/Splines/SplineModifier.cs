@@ -8,34 +8,15 @@ using UnityEditor;
 public class SplineModifier : MonoBehaviour
 {
 
-    private BezierSpline[] splines;
-    private MeshRenderer[] waypoints;
+    private BezierSpline[] _splines;
 
     void ShowSplines()
     {
-        splines = GetComponentsInChildren<BezierSpline>();
+        _splines = GetComponentsInChildren<BezierSpline>();
 
-        foreach (var spline in splines)
+        foreach (var spline in _splines)
         {
             spline.UpdatePositionsInEditor();
-        }
-    }
-
-    void Start()
-    {
-        waypoints = GetComponentsInChildren<MeshRenderer>();
-
-        foreach (var waypoint in waypoints)
-        {
-            waypoint.enabled = false;
-        }
-    }
-
-    void OnDestroy()
-    {
-        foreach (var waypoint in waypoints)
-        {
-            waypoint.enabled = true;
         }
     }
 

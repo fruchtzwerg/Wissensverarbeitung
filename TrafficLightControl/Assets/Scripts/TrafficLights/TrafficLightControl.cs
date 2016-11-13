@@ -137,6 +137,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         }
         catch (Exception ex)
         {
+            _phaseTimer.Interval = 15000*_multiplier;
+            Thread.Sleep(100);
+            _phaseTimer.Start();
+
             print("#######################################################################");
             print(ex);
             print("#######################################################################");

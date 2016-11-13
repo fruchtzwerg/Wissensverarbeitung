@@ -168,7 +168,7 @@ public class Job
             WriteLogFile(DELIMITERSEND + message); 
         }
 
-        Debug.Log("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", Exit: " + prolog.HasExited);
+        Debug.Log("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", IsRunning: " + !prolog.HasExited);
 
         if(waitingObjects.Count > 3) {
 

@@ -9,8 +9,6 @@ public class PedestrianButton : MonoBehaviour {
     public EventTrigger.Events Event;
 
     public Shader shader;
-
-    private bool isPushed = false;
     
     // Use this for initialization
     void Start ()
@@ -38,8 +36,6 @@ public class PedestrianButton : MonoBehaviour {
     }
 
     private void pushed() {
-        isPushed = true;
-
         PushedLight.material.SetColor("_EmissionColor", Color.green);
     }
 
@@ -48,8 +44,6 @@ public class PedestrianButton : MonoBehaviour {
     }
 
     public void switchOffEmission() {
-        isPushed = false;
-
         PushedLight.material.SetColor("_EmissionColor", Color.black);
     }
 }
