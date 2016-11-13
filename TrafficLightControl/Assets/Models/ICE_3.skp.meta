@@ -1,0 +1,551 @@
+fileFormatVersion: 2
+guid: fa55b843e185bf243a81a430f035b01b
+timeCreated: 1479047572
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005d0000005e0000005f000000600000006100000062000000630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a0000007b0000007c0000007d0000007e0000007f000000800000008100000082000000830000008400000085000000860000008700000088000000890000008a0000008b0000008c0000008d0000008e0000008f000000900000009100000092000000930000009400000095000000960000009700000098000000990000009a0000009b0000009c0000009d0000009e0000009f000000a0000000a1000000a2000000a3000000a4000000a5000000a6000000a7000000a8000000a9000000aa000000ab000000ac000000ad000000ae000000af000000b0000000b1000000b2000000b3000000b4000000b5000000b6000000b7000000b8000000b9000000ba000000bb000000bc000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c6000000c7000000c8000000c9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000
+  assetHash:
+    serializedVersion: 2
+    Hash: 36dff51b8fe16161b629ceb609dfef7c
+  longitude: 5.917
+  latitude: 51.983
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 31.455727, y: 8.030672, z: 12.759845}
+      lookAt: {x: 43.824566, y: 4.156473, z: 18.273638}
+      up: {x: 0.25121912, y: 0.9614299, z: 0.11198871}
+      fov: 30
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes:
+    - camera:
+        position: {x: 31.455727, y: 8.030672, z: 12.759845}
+        lookAt: {x: 43.824566, y: 4.156473, z: 18.273638}
+        up: {x: 0.25121912, y: 0.9614299, z: 0.11198871}
+        fov: 30
+        aspectRatio: 0
+        orthoSize: 1
+        isPerspective: 1
+      name: Page 1
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Group 1
+    100002: Group 10
+    100004: Group 106
+    100006: Group 11
+    100008: Group 111
+    100010: Group 112
+    100012: Group 113
+    100014: Group 114
+    100016: Group 116
+    100018: Group 118
+    100020: Group 119
+    100022: Group 121
+    100024: Group 123
+    100026: Group 13
+    100028: Group 133
+    100030: Group 134
+    100032: Group 135
+    100034: Group 137
+    100036: Group 139
+    100038: Group 141
+    100040: Group 142
+    100042: Group 144
+    100044: Group 15
+    100046: Group 154
+    100048: Group 156
+    100050: Group 157
+    100052: Group 159
+    100054: Group 161
+    100056: Group 162
+    100058: Group 164
+    100060: Group 166
+    100062: Group 168
+    100064: Group 175
+    100066: Group 176
+    100068: Group 177
+    100070: Group 179
+    100072: Group 180
+    100074: Group 182
+    100076: Group 184
+    100078: Group 185
+    100080: Group 187
+    100082: Group 197
+    100084: Group 198
+    100086: Group 199
+    100088: Group 201
+    100090: Group 203
+    100092: Group 205
+    100094: Group 206
+    100096: Group 208
+    100098: Group 218
+    100100: Group 25
+    100102: Group 26
+    100104: Group 27
+    100106: Group 29
+    100108: Group 3
+    100110: Group 31
+    100112: Group 33
+    100114: Group 34
+    100116: Group 36
+    100118: Group 4
+    100120: Group 46
+    100122: Group 48
+    100124: Group 49
+    100126: Group 5
+    100128: Group 51
+    100130: Group 53
+    100132: Group 54
+    100134: Group 56
+    100136: Group 58
+    100138: Group 6
+    100140: Group 60
+    100142: Group 63
+    100144: Group 64
+    100146: Group 65
+    100148: Group 67
+    100150: Group 68
+    100152: Group 70
+    100154: Group 72
+    100156: Group 73
+    100158: Group 75
+    100160: Group 8
+    100162: Group 85
+    100164: Group 86
+    100166: Group 87
+    100168: Group 89
+    100170: Group 91
+    100172: Group 93
+    100174: Group 94
+    100176: Group 96
+    100178: //RootNode
+    100180: locomotive
+    100182: locomotive 1
+    100184: rubber-section
+    100186: rubber-section 1
+    100188: rubber-section 2
+    100190: wagon
+    100192: wagon 1
+    100194: wheel
+    100196: wheel 1
+    100198: wheel 10
+    100200: wheel 11
+    100202: wheel 12
+    100204: wheel 13
+    100206: wheel 14
+    100208: wheel 15
+    100210: wheel 16
+    100212: wheel 17
+    100214: wheel 18
+    100216: wheel 19
+    100218: wheel 2
+    100220: wheel 20
+    100222: wheel 21
+    100224: wheel 22
+    100226: wheel 23
+    100228: wheel 24
+    100230: wheel 25
+    100232: wheel 26
+    100234: wheel 27
+    100236: wheel 28
+    100238: wheel 29
+    100240: wheel 3
+    100242: wheel 30
+    100244: wheel 31
+    100246: wheel 4
+    100248: wheel 5
+    100250: wheel 6
+    100252: wheel 7
+    100254: wheel 8
+    100256: wheel 9
+    400000: Group 1
+    400002: Group 10
+    400004: Group 106
+    400006: Group 11
+    400008: Group 111
+    400010: Group 112
+    400012: Group 113
+    400014: Group 114
+    400016: Group 116
+    400018: Group 118
+    400020: Group 119
+    400022: Group 121
+    400024: Group 123
+    400026: Group 13
+    400028: Group 133
+    400030: Group 134
+    400032: Group 135
+    400034: Group 137
+    400036: Group 139
+    400038: Group 141
+    400040: Group 142
+    400042: Group 144
+    400044: Group 15
+    400046: Group 154
+    400048: Group 156
+    400050: Group 157
+    400052: Group 159
+    400054: Group 161
+    400056: Group 162
+    400058: Group 164
+    400060: Group 166
+    400062: Group 168
+    400064: Group 175
+    400066: Group 176
+    400068: Group 177
+    400070: Group 179
+    400072: Group 180
+    400074: Group 182
+    400076: Group 184
+    400078: Group 185
+    400080: Group 187
+    400082: Group 197
+    400084: Group 198
+    400086: Group 199
+    400088: Group 201
+    400090: Group 203
+    400092: Group 205
+    400094: Group 206
+    400096: Group 208
+    400098: Group 218
+    400100: Group 25
+    400102: Group 26
+    400104: Group 27
+    400106: Group 29
+    400108: Group 3
+    400110: Group 31
+    400112: Group 33
+    400114: Group 34
+    400116: Group 36
+    400118: Group 4
+    400120: Group 46
+    400122: Group 48
+    400124: Group 49
+    400126: Group 5
+    400128: Group 51
+    400130: Group 53
+    400132: Group 54
+    400134: Group 56
+    400136: Group 58
+    400138: Group 6
+    400140: Group 60
+    400142: Group 63
+    400144: Group 64
+    400146: Group 65
+    400148: Group 67
+    400150: Group 68
+    400152: Group 70
+    400154: Group 72
+    400156: Group 73
+    400158: Group 75
+    400160: Group 8
+    400162: Group 85
+    400164: Group 86
+    400166: Group 87
+    400168: Group 89
+    400170: Group 91
+    400172: Group 93
+    400174: Group 94
+    400176: Group 96
+    400178: //RootNode
+    400180: locomotive
+    400182: locomotive 1
+    400184: rubber-section
+    400186: rubber-section 1
+    400188: rubber-section 2
+    400190: wagon
+    400192: wagon 1
+    400194: wheel
+    400196: wheel 1
+    400198: wheel 10
+    400200: wheel 11
+    400202: wheel 12
+    400204: wheel 13
+    400206: wheel 14
+    400208: wheel 15
+    400210: wheel 16
+    400212: wheel 17
+    400214: wheel 18
+    400216: wheel 19
+    400218: wheel 2
+    400220: wheel 20
+    400222: wheel 21
+    400224: wheel 22
+    400226: wheel 23
+    400228: wheel 24
+    400230: wheel 25
+    400232: wheel 26
+    400234: wheel 27
+    400236: wheel 28
+    400238: wheel 29
+    400240: wheel 3
+    400242: wheel 30
+    400244: wheel 31
+    400246: wheel 4
+    400248: wheel 5
+    400250: wheel 6
+    400252: wheel 7
+    400254: wheel 8
+    400256: wheel 9
+    2300000: Group 106
+    2300002: Group 11
+    2300004: Group 114
+    2300006: Group 116
+    2300008: Group 119
+    2300010: Group 121
+    2300012: Group 123
+    2300014: Group 13
+    2300016: Group 135
+    2300018: Group 137
+    2300020: Group 139
+    2300022: Group 142
+    2300024: Group 144
+    2300026: Group 15
+    2300028: Group 154
+    2300030: Group 157
+    2300032: Group 159
+    2300034: Group 162
+    2300036: Group 164
+    2300038: Group 166
+    2300040: Group 168
+    2300042: Group 177
+    2300044: Group 180
+    2300046: Group 182
+    2300048: Group 185
+    2300050: Group 187
+    2300052: Group 199
+    2300054: Group 201
+    2300056: Group 203
+    2300058: Group 206
+    2300060: Group 208
+    2300062: Group 218
+    2300064: Group 27
+    2300066: Group 29
+    2300068: Group 31
+    2300070: Group 34
+    2300072: Group 36
+    2300074: Group 46
+    2300076: Group 49
+    2300078: Group 51
+    2300080: Group 54
+    2300082: Group 56
+    2300084: Group 58
+    2300086: Group 6
+    2300088: Group 60
+    2300090: Group 65
+    2300092: Group 68
+    2300094: Group 70
+    2300096: Group 73
+    2300098: Group 75
+    2300100: Group 8
+    2300102: Group 87
+    2300104: Group 89
+    2300106: Group 91
+    2300108: Group 94
+    2300110: Group 96
+    2300112: rubber-section
+    2300114: rubber-section 1
+    2300116: rubber-section 2
+    2300118: wheel
+    2300120: wheel 1
+    2300122: wheel 10
+    2300124: wheel 11
+    2300126: wheel 12
+    2300128: wheel 13
+    2300130: wheel 14
+    2300132: wheel 15
+    2300134: wheel 16
+    2300136: wheel 17
+    2300138: wheel 18
+    2300140: wheel 19
+    2300142: wheel 2
+    2300144: wheel 20
+    2300146: wheel 21
+    2300148: wheel 22
+    2300150: wheel 23
+    2300152: wheel 24
+    2300154: wheel 25
+    2300156: wheel 26
+    2300158: wheel 27
+    2300160: wheel 28
+    2300162: wheel 29
+    2300164: wheel 3
+    2300166: wheel 30
+    2300168: wheel 31
+    2300170: wheel 4
+    2300172: wheel 5
+    2300174: wheel 6
+    2300176: wheel 7
+    2300178: wheel 8
+    2300180: wheel 9
+    3300000: Group 106
+    3300002: Group 11
+    3300004: Group 114
+    3300006: Group 116
+    3300008: Group 119
+    3300010: Group 121
+    3300012: Group 123
+    3300014: Group 13
+    3300016: Group 135
+    3300018: Group 137
+    3300020: Group 139
+    3300022: Group 142
+    3300024: Group 144
+    3300026: Group 15
+    3300028: Group 154
+    3300030: Group 157
+    3300032: Group 159
+    3300034: Group 162
+    3300036: Group 164
+    3300038: Group 166
+    3300040: Group 168
+    3300042: Group 177
+    3300044: Group 180
+    3300046: Group 182
+    3300048: Group 185
+    3300050: Group 187
+    3300052: Group 199
+    3300054: Group 201
+    3300056: Group 203
+    3300058: Group 206
+    3300060: Group 208
+    3300062: Group 218
+    3300064: Group 27
+    3300066: Group 29
+    3300068: Group 31
+    3300070: Group 34
+    3300072: Group 36
+    3300074: Group 46
+    3300076: Group 49
+    3300078: Group 51
+    3300080: Group 54
+    3300082: Group 56
+    3300084: Group 58
+    3300086: Group 6
+    3300088: Group 60
+    3300090: Group 65
+    3300092: Group 68
+    3300094: Group 70
+    3300096: Group 73
+    3300098: Group 75
+    3300100: Group 8
+    3300102: Group 87
+    3300104: Group 89
+    3300106: Group 91
+    3300108: Group 94
+    3300110: Group 96
+    3300112: rubber-section
+    3300114: rubber-section 1
+    3300116: rubber-section 2
+    3300118: wheel
+    3300120: wheel 1
+    3300122: wheel 10
+    3300124: wheel 11
+    3300126: wheel 12
+    3300128: wheel 13
+    3300130: wheel 14
+    3300132: wheel 15
+    3300134: wheel 16
+    3300136: wheel 17
+    3300138: wheel 18
+    3300140: wheel 19
+    3300142: wheel 2
+    3300144: wheel 20
+    3300146: wheel 21
+    3300148: wheel 22
+    3300150: wheel 23
+    3300152: wheel 24
+    3300154: wheel 25
+    3300156: wheel 26
+    3300158: wheel 27
+    3300160: wheel 28
+    3300162: wheel 29
+    3300164: wheel 3
+    3300166: wheel 30
+    3300168: wheel 31
+    3300170: wheel 4
+    3300172: wheel 5
+    3300174: wheel 6
+    3300176: wheel 7
+    3300178: wheel 8
+    3300180: wheel 9
+    4300000: Mesh Group 6
+    4300002: Mesh Group 15
+    4300004: Mesh wheel
+    4300006: Mesh Group 46
+    4300008: Mesh Group 49
+    4300010: Mesh Group 51
+    4300012: Mesh Group 54
+    4300014: Mesh Group 58
+    4300016: Mesh Group 60
+    4300018: Mesh Group 106
+    4300020: Mesh rubber-section
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
