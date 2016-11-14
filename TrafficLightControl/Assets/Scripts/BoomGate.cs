@@ -14,9 +14,13 @@ public class BoomGate : TrafficLight {
 
     private float multiplier = 1f;
 
+    private AudioSource audioSource;
+
     // Use this for initialization
     void Start () {
         state = States.Closed;
+
+        audioSource = new AudioSource();
 
     }
 	
@@ -27,7 +31,6 @@ public class BoomGate : TrafficLight {
 	}
 
     public override void switchToGreen() {
-        print("open boomgate!");
         isOpen = true;
     }
 

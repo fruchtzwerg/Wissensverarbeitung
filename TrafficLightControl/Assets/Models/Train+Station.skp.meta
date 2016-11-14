@@ -1,0 +1,764 @@
+fileFormatVersion: 2
+guid: b49999129822a54458993ee9da641451
+timeCreated: 1479151746
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005d0000005e0000005f000000600000006100000062000000630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a0000007b0000007c0000007d0000007e0000007f000000800000008100000082000000830000008400000085000000860000008700000088000000890000008a0000008b0000008c0000008d0000008e0000008f000000900000009100000092000000930000009400000095000000960000009700000098000000990000009a0000009b0000009c0000009d0000009e0000009f000000a0000000a1000000a2000000a3000000a4000000a5000000a6000000a7000000a8000000a9000000aa000000ab000000ac000000ad000000ae000000af000000b0000000b1000000b2000000b3000000b4000000b5000000b6000000b7000000b8000000b9000000ba000000bb000000bc000000bd000000be000000bf000000c0000000c1000000c2000000c3000000c4000000c5000000c6000000c7000000c8000000c9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000d3000000d4000000d5000000d6000000d7000000d8000000d9000000da000000db000000dc000000dd000000de000000df000000e0000000e1000000e2000000e3000000e4000000e5000000e6000000e7000000e8000000e9000000ea000000eb000000ec000000ed000000ee000000ef000000f0000000f1000000f2000000f3000000f4000000f5000000f6000000f7000000f8000000f9000000fa000000fb000000fc000000fd000000fe000000ff000000000100000101000002010000030100000401000005010000060100000701000008010000090100000a0100000b0100000c0100000d0100000e0100000f010000100100001101000012010000130100001401000015010000160100001701000018010000190100001a0100001b0100001c0100001d0100001e0100001f010000200100002101000022010000230100002401000025010000260100002701000028010000290100002a0100002b0100002c0100002d0100002e0100002f010000300100003101000032010000330100003401000035010000360100003701000038010000390100003a0100003b0100003c0100003d0100003e0100003f010000400100004101000042010000430100004401000045010000460100004701000048010000490100004a0100004b010000
+  assetHash:
+    serializedVersion: 2
+    Hash: b41c7ff0c1e40e747e9a07429352c0d9
+  longitude: -105.283
+  latitude: 40.017
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: -10.580143, y: 0.852897, z: 4.8895764}
+      lookAt: {x: 3.2908692, y: 3.8124747, z: -1.5188591}
+      up: {x: -0.17262498, y: 0.9817536, z: 0.079753086}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Component#1
+    100002: Component#1 1
+    100004: Component#1 10
+    100006: Component#1 11
+    100008: Component#1 12
+    100010: Component#1 13
+    100012: Component#1 14
+    100014: Component#1 15
+    100016: Component#1 16
+    100018: Component#1 17
+    100020: Component#1 18
+    100022: Component#1 19
+    100024: Component#1 2
+    100026: Component#1 20
+    100028: Component#1 21
+    100030: Component#1 22
+    100032: Component#1 23
+    100034: Component#1 24
+    100036: Component#1 25
+    100038: Component#1 26
+    100040: Component#1 27
+    100042: Component#1 28
+    100044: Component#1 29
+    100046: Component#1 3
+    100048: Component#1 30
+    100050: Component#1 31
+    100052: Component#1 32
+    100054: Component#1 33
+    100056: Component#1 34
+    100058: Component#1 35
+    100060: Component#1 36
+    100062: Component#1 37
+    100064: Component#1 38
+    100066: Component#1 39
+    100068: Component#1 4
+    100070: Component#1 40
+    100072: Component#1 41
+    100074: Component#1 42
+    100076: Component#1 43
+    100078: Component#1 44
+    100080: Component#1 45
+    100082: Component#1 46
+    100084: Component#1 47
+    100086: Component#1 5
+    100088: Component#1 6
+    100090: Component#1 7
+    100092: Component#1 8
+    100094: Component#1 9
+    100096: Component#3
+    100098: Component#3 1
+    100100: Component#3 2
+    100102: Component#3 3
+    100104: Component#3 4
+    100106: Component#3 5
+    100108: Group 2
+    100110: Group 4
+    100112: Group#3
+    100114: Group#3 1
+    100116: Group#3 10
+    100118: Group#3 11
+    100120: Group#3 2
+    100122: Group#3 3
+    100124: Group#3 4
+    100126: Group#3 5
+    100128: Group#3 6
+    100130: Group#3 7
+    100132: Group#3 8
+    100134: Group#3 9
+    100136: Sang
+    100138: sphere
+    100140: sphere 1
+    100142: sphere 10
+    100144: sphere 11
+    100146: sphere 12
+    100148: sphere 13
+    100150: sphere 14
+    100152: sphere 15
+    100154: sphere 16
+    100156: sphere 17
+    100158: sphere 18
+    100160: sphere 19
+    100162: sphere 2
+    100164: sphere 20
+    100166: sphere 21
+    100168: sphere 22
+    100170: sphere 23
+    100172: sphere 24
+    100174: sphere 25
+    100176: sphere 26
+    100178: sphere 27
+    100180: sphere 28
+    100182: sphere 29
+    100184: sphere 3
+    100186: sphere 30
+    100188: sphere 31
+    100190: sphere 32
+    100192: sphere 33
+    100194: sphere 34
+    100196: sphere 35
+    100198: sphere 36
+    100200: sphere 37
+    100202: sphere 38
+    100204: sphere 39
+    100206: sphere 4
+    100208: sphere 40
+    100210: sphere 41
+    100212: sphere 42
+    100214: sphere 43
+    100216: sphere 44
+    100218: sphere 45
+    100220: sphere 46
+    100222: sphere 47
+    100224: sphere 48
+    100226: sphere 49
+    100228: sphere 5
+    100230: sphere 50
+    100232: sphere 51
+    100234: sphere 52
+    100236: sphere 53
+    100238: sphere 54
+    100240: sphere 55
+    100242: sphere 56
+    100244: sphere 57
+    100246: sphere 58
+    100248: sphere 59
+    100250: sphere 6
+    100252: sphere 60
+    100254: sphere 61
+    100256: sphere 62
+    100258: sphere 63
+    100260: sphere 64
+    100262: sphere 65
+    100264: sphere 66
+    100266: sphere 67
+    100268: sphere 68
+    100270: sphere 69
+    100272: sphere 7
+    100274: sphere 70
+    100276: sphere 71
+    100278: sphere 72
+    100280: sphere 73
+    100282: sphere 74
+    100284: sphere 75
+    100286: sphere 76
+    100288: sphere 77
+    100290: sphere 78
+    100292: sphere 79
+    100294: sphere 8
+    100296: sphere 80
+    100298: sphere 81
+    100300: sphere 82
+    100302: sphere 83
+    100304: sphere 84
+    100306: sphere 85
+    100308: sphere 86
+    100310: sphere 87
+    100312: sphere 88
+    100314: sphere 89
+    100316: sphere 9
+    100318: sphere 90
+    100320: sphere 91
+    100322: sphere 92
+    100324: sphere 93
+    100326: sphere 94
+    100328: sphere 95
+    100330: //RootNode
+    400000: Component#1
+    400002: Component#1 1
+    400004: Component#1 10
+    400006: Component#1 11
+    400008: Component#1 12
+    400010: Component#1 13
+    400012: Component#1 14
+    400014: Component#1 15
+    400016: Component#1 16
+    400018: Component#1 17
+    400020: Component#1 18
+    400022: Component#1 19
+    400024: Component#1 2
+    400026: Component#1 20
+    400028: Component#1 21
+    400030: Component#1 22
+    400032: Component#1 23
+    400034: Component#1 24
+    400036: Component#1 25
+    400038: Component#1 26
+    400040: Component#1 27
+    400042: Component#1 28
+    400044: Component#1 29
+    400046: Component#1 3
+    400048: Component#1 30
+    400050: Component#1 31
+    400052: Component#1 32
+    400054: Component#1 33
+    400056: Component#1 34
+    400058: Component#1 35
+    400060: Component#1 36
+    400062: Component#1 37
+    400064: Component#1 38
+    400066: Component#1 39
+    400068: Component#1 4
+    400070: Component#1 40
+    400072: Component#1 41
+    400074: Component#1 42
+    400076: Component#1 43
+    400078: Component#1 44
+    400080: Component#1 45
+    400082: Component#1 46
+    400084: Component#1 47
+    400086: Component#1 5
+    400088: Component#1 6
+    400090: Component#1 7
+    400092: Component#1 8
+    400094: Component#1 9
+    400096: Component#3
+    400098: Component#3 1
+    400100: Component#3 2
+    400102: Component#3 3
+    400104: Component#3 4
+    400106: Component#3 5
+    400108: Group 2
+    400110: Group 4
+    400112: Group#3
+    400114: Group#3 1
+    400116: Group#3 10
+    400118: Group#3 11
+    400120: Group#3 2
+    400122: Group#3 3
+    400124: Group#3 4
+    400126: Group#3 5
+    400128: Group#3 6
+    400130: Group#3 7
+    400132: Group#3 8
+    400134: Group#3 9
+    400136: Sang
+    400138: sphere
+    400140: sphere 1
+    400142: sphere 10
+    400144: sphere 11
+    400146: sphere 12
+    400148: sphere 13
+    400150: sphere 14
+    400152: sphere 15
+    400154: sphere 16
+    400156: sphere 17
+    400158: sphere 18
+    400160: sphere 19
+    400162: sphere 2
+    400164: sphere 20
+    400166: sphere 21
+    400168: sphere 22
+    400170: sphere 23
+    400172: sphere 24
+    400174: sphere 25
+    400176: sphere 26
+    400178: sphere 27
+    400180: sphere 28
+    400182: sphere 29
+    400184: sphere 3
+    400186: sphere 30
+    400188: sphere 31
+    400190: sphere 32
+    400192: sphere 33
+    400194: sphere 34
+    400196: sphere 35
+    400198: sphere 36
+    400200: sphere 37
+    400202: sphere 38
+    400204: sphere 39
+    400206: sphere 4
+    400208: sphere 40
+    400210: sphere 41
+    400212: sphere 42
+    400214: sphere 43
+    400216: sphere 44
+    400218: sphere 45
+    400220: sphere 46
+    400222: sphere 47
+    400224: sphere 48
+    400226: sphere 49
+    400228: sphere 5
+    400230: sphere 50
+    400232: sphere 51
+    400234: sphere 52
+    400236: sphere 53
+    400238: sphere 54
+    400240: sphere 55
+    400242: sphere 56
+    400244: sphere 57
+    400246: sphere 58
+    400248: sphere 59
+    400250: sphere 6
+    400252: sphere 60
+    400254: sphere 61
+    400256: sphere 62
+    400258: sphere 63
+    400260: sphere 64
+    400262: sphere 65
+    400264: sphere 66
+    400266: sphere 67
+    400268: sphere 68
+    400270: sphere 69
+    400272: sphere 7
+    400274: sphere 70
+    400276: sphere 71
+    400278: sphere 72
+    400280: sphere 73
+    400282: sphere 74
+    400284: sphere 75
+    400286: sphere 76
+    400288: sphere 77
+    400290: sphere 78
+    400292: sphere 79
+    400294: sphere 8
+    400296: sphere 80
+    400298: sphere 81
+    400300: sphere 82
+    400302: sphere 83
+    400304: sphere 84
+    400306: sphere 85
+    400308: sphere 86
+    400310: sphere 87
+    400312: sphere 88
+    400314: sphere 89
+    400316: sphere 9
+    400318: sphere 90
+    400320: sphere 91
+    400322: sphere 92
+    400324: sphere 93
+    400326: sphere 94
+    400328: sphere 95
+    400330: //RootNode
+    2300000: Component#1
+    2300002: Component#1 1
+    2300004: Component#1 10
+    2300006: Component#1 11
+    2300008: Component#1 12
+    2300010: Component#1 13
+    2300012: Component#1 14
+    2300014: Component#1 15
+    2300016: Component#1 16
+    2300018: Component#1 17
+    2300020: Component#1 18
+    2300022: Component#1 19
+    2300024: Component#1 2
+    2300026: Component#1 20
+    2300028: Component#1 21
+    2300030: Component#1 22
+    2300032: Component#1 23
+    2300034: Component#1 24
+    2300036: Component#1 25
+    2300038: Component#1 26
+    2300040: Component#1 27
+    2300042: Component#1 28
+    2300044: Component#1 29
+    2300046: Component#1 3
+    2300048: Component#1 30
+    2300050: Component#1 31
+    2300052: Component#1 32
+    2300054: Component#1 33
+    2300056: Component#1 34
+    2300058: Component#1 35
+    2300060: Component#1 36
+    2300062: Component#1 37
+    2300064: Component#1 38
+    2300066: Component#1 39
+    2300068: Component#1 4
+    2300070: Component#1 40
+    2300072: Component#1 41
+    2300074: Component#1 42
+    2300076: Component#1 43
+    2300078: Component#1 44
+    2300080: Component#1 45
+    2300082: Component#1 46
+    2300084: Component#1 47
+    2300086: Component#1 5
+    2300088: Component#1 6
+    2300090: Component#1 7
+    2300092: Component#1 8
+    2300094: Component#1 9
+    2300096: Component#3
+    2300098: Component#3 1
+    2300100: Component#3 2
+    2300102: Component#3 3
+    2300104: Component#3 4
+    2300106: Component#3 5
+    2300108: Group 2
+    2300110: Group 4
+    2300112: Group#3
+    2300114: Group#3 1
+    2300116: Group#3 10
+    2300118: Group#3 11
+    2300120: Group#3 2
+    2300122: Group#3 3
+    2300124: Group#3 4
+    2300126: Group#3 5
+    2300128: Group#3 6
+    2300130: Group#3 7
+    2300132: Group#3 8
+    2300134: Group#3 9
+    2300136: Sang
+    2300138: sphere
+    2300140: sphere 1
+    2300142: sphere 10
+    2300144: sphere 11
+    2300146: sphere 12
+    2300148: sphere 13
+    2300150: sphere 14
+    2300152: sphere 15
+    2300154: sphere 16
+    2300156: sphere 17
+    2300158: sphere 18
+    2300160: sphere 19
+    2300162: sphere 2
+    2300164: sphere 20
+    2300166: sphere 21
+    2300168: sphere 22
+    2300170: sphere 23
+    2300172: sphere 24
+    2300174: sphere 25
+    2300176: sphere 26
+    2300178: sphere 27
+    2300180: sphere 28
+    2300182: sphere 29
+    2300184: sphere 3
+    2300186: sphere 30
+    2300188: sphere 31
+    2300190: sphere 32
+    2300192: sphere 33
+    2300194: sphere 34
+    2300196: sphere 35
+    2300198: sphere 36
+    2300200: sphere 37
+    2300202: sphere 38
+    2300204: sphere 39
+    2300206: sphere 4
+    2300208: sphere 40
+    2300210: sphere 41
+    2300212: sphere 42
+    2300214: sphere 43
+    2300216: sphere 44
+    2300218: sphere 45
+    2300220: sphere 46
+    2300222: sphere 47
+    2300224: sphere 48
+    2300226: sphere 49
+    2300228: sphere 5
+    2300230: sphere 50
+    2300232: sphere 51
+    2300234: sphere 52
+    2300236: sphere 53
+    2300238: sphere 54
+    2300240: sphere 55
+    2300242: sphere 56
+    2300244: sphere 57
+    2300246: sphere 58
+    2300248: sphere 59
+    2300250: sphere 6
+    2300252: sphere 60
+    2300254: sphere 61
+    2300256: sphere 62
+    2300258: sphere 63
+    2300260: sphere 64
+    2300262: sphere 65
+    2300264: sphere 66
+    2300266: sphere 67
+    2300268: sphere 68
+    2300270: sphere 69
+    2300272: sphere 7
+    2300274: sphere 70
+    2300276: sphere 71
+    2300278: sphere 72
+    2300280: sphere 73
+    2300282: sphere 74
+    2300284: sphere 75
+    2300286: sphere 76
+    2300288: sphere 77
+    2300290: sphere 78
+    2300292: sphere 79
+    2300294: sphere 8
+    2300296: sphere 80
+    2300298: sphere 81
+    2300300: sphere 82
+    2300302: sphere 83
+    2300304: sphere 84
+    2300306: sphere 85
+    2300308: sphere 86
+    2300310: sphere 87
+    2300312: sphere 88
+    2300314: sphere 89
+    2300316: sphere 9
+    2300318: sphere 90
+    2300320: sphere 91
+    2300322: sphere 92
+    2300324: sphere 93
+    2300326: sphere 94
+    2300328: sphere 95
+    2300330: //RootNode
+    3300000: Component#1
+    3300002: Component#1 1
+    3300004: Component#1 10
+    3300006: Component#1 11
+    3300008: Component#1 12
+    3300010: Component#1 13
+    3300012: Component#1 14
+    3300014: Component#1 15
+    3300016: Component#1 16
+    3300018: Component#1 17
+    3300020: Component#1 18
+    3300022: Component#1 19
+    3300024: Component#1 2
+    3300026: Component#1 20
+    3300028: Component#1 21
+    3300030: Component#1 22
+    3300032: Component#1 23
+    3300034: Component#1 24
+    3300036: Component#1 25
+    3300038: Component#1 26
+    3300040: Component#1 27
+    3300042: Component#1 28
+    3300044: Component#1 29
+    3300046: Component#1 3
+    3300048: Component#1 30
+    3300050: Component#1 31
+    3300052: Component#1 32
+    3300054: Component#1 33
+    3300056: Component#1 34
+    3300058: Component#1 35
+    3300060: Component#1 36
+    3300062: Component#1 37
+    3300064: Component#1 38
+    3300066: Component#1 39
+    3300068: Component#1 4
+    3300070: Component#1 40
+    3300072: Component#1 41
+    3300074: Component#1 42
+    3300076: Component#1 43
+    3300078: Component#1 44
+    3300080: Component#1 45
+    3300082: Component#1 46
+    3300084: Component#1 47
+    3300086: Component#1 5
+    3300088: Component#1 6
+    3300090: Component#1 7
+    3300092: Component#1 8
+    3300094: Component#1 9
+    3300096: Component#3
+    3300098: Component#3 1
+    3300100: Component#3 2
+    3300102: Component#3 3
+    3300104: Component#3 4
+    3300106: Component#3 5
+    3300108: Group 2
+    3300110: Group 4
+    3300112: Group#3
+    3300114: Group#3 1
+    3300116: Group#3 10
+    3300118: Group#3 11
+    3300120: Group#3 2
+    3300122: Group#3 3
+    3300124: Group#3 4
+    3300126: Group#3 5
+    3300128: Group#3 6
+    3300130: Group#3 7
+    3300132: Group#3 8
+    3300134: Group#3 9
+    3300136: Sang
+    3300138: sphere
+    3300140: sphere 1
+    3300142: sphere 10
+    3300144: sphere 11
+    3300146: sphere 12
+    3300148: sphere 13
+    3300150: sphere 14
+    3300152: sphere 15
+    3300154: sphere 16
+    3300156: sphere 17
+    3300158: sphere 18
+    3300160: sphere 19
+    3300162: sphere 2
+    3300164: sphere 20
+    3300166: sphere 21
+    3300168: sphere 22
+    3300170: sphere 23
+    3300172: sphere 24
+    3300174: sphere 25
+    3300176: sphere 26
+    3300178: sphere 27
+    3300180: sphere 28
+    3300182: sphere 29
+    3300184: sphere 3
+    3300186: sphere 30
+    3300188: sphere 31
+    3300190: sphere 32
+    3300192: sphere 33
+    3300194: sphere 34
+    3300196: sphere 35
+    3300198: sphere 36
+    3300200: sphere 37
+    3300202: sphere 38
+    3300204: sphere 39
+    3300206: sphere 4
+    3300208: sphere 40
+    3300210: sphere 41
+    3300212: sphere 42
+    3300214: sphere 43
+    3300216: sphere 44
+    3300218: sphere 45
+    3300220: sphere 46
+    3300222: sphere 47
+    3300224: sphere 48
+    3300226: sphere 49
+    3300228: sphere 5
+    3300230: sphere 50
+    3300232: sphere 51
+    3300234: sphere 52
+    3300236: sphere 53
+    3300238: sphere 54
+    3300240: sphere 55
+    3300242: sphere 56
+    3300244: sphere 57
+    3300246: sphere 58
+    3300248: sphere 59
+    3300250: sphere 6
+    3300252: sphere 60
+    3300254: sphere 61
+    3300256: sphere 62
+    3300258: sphere 63
+    3300260: sphere 64
+    3300262: sphere 65
+    3300264: sphere 66
+    3300266: sphere 67
+    3300268: sphere 68
+    3300270: sphere 69
+    3300272: sphere 7
+    3300274: sphere 70
+    3300276: sphere 71
+    3300278: sphere 72
+    3300280: sphere 73
+    3300282: sphere 74
+    3300284: sphere 75
+    3300286: sphere 76
+    3300288: sphere 77
+    3300290: sphere 78
+    3300292: sphere 79
+    3300294: sphere 8
+    3300296: sphere 80
+    3300298: sphere 81
+    3300300: sphere 82
+    3300302: sphere 83
+    3300304: sphere 84
+    3300306: sphere 85
+    3300308: sphere 86
+    3300310: sphere 87
+    3300312: sphere 88
+    3300314: sphere 89
+    3300316: sphere 9
+    3300318: sphere 90
+    3300320: sphere 91
+    3300322: sphere 92
+    3300324: sphere 93
+    3300326: sphere 94
+    3300328: sphere 95
+    3300330: //RootNode
+    4300000: Mesh Train+Station
+    4300002: Mesh Group 2
+    4300004: Mesh Group 4
+    4300006: Mesh Group#3
+    4300008: Mesh Component#1
+    4300010: Mesh sphere
+    4300012: Mesh sphere
+    4300014: Mesh Component#3
+    4300016: Mesh Sang
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

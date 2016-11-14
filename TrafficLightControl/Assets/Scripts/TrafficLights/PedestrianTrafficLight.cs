@@ -9,6 +9,10 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
     public long Interval = 2000;
 
+    private AudioSource audioSource;
+    private AudioClip clip1;
+    private AudioClip clip2;
+
     protected override void InitTimerGreen() {
         timerGreen = new Timer
         {
@@ -16,6 +20,40 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
             AutoReset = false
         };
         timerGreen.Elapsed += timerEventToGreen;
+
+        initAudio();
+    }
+
+    private void initAudio() {
+        gameObject.AddComponent<AudioSource>();
+
+        try {           
+            clip1 = Resources.Load("pedestrian-crossing_1") as AudioClip;
+            clip2 = Resources.Load("pedestrian-crossing_2") as AudioClip;
+        }
+        catch(Exception e) {
+            print("ERROR: " + e);
+        }
+
+        if (clip1 != null)
+            clip1.LoadAudioData();
+        else
+            print("clip1 is null");
+        if(clip2 != null)
+            clip2.LoadAudioData();
+        else
+            print("clip2 is null");
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.playOnAwake = true;
+        audioSource.loop = true;
+        audioSource.maxDistance = 10;
+        audioSource.minDistance = 0.3f;
+        audioSource.clip = clip1;
+        audioSource.spatialBlend = 1f;
+        audioSource.Play();
+
+        print("Sounds: " + audioSource.clip);
     }
 
     /// <summary>
@@ -50,6 +88,8 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
                 case States.Red:
                     rendRed.material.SetColor("_EmissionColor", Color.white);
                     rendGreen.material.SetColor("_EmissionColor", Color.black);
+
+                    changeAudioClip(true);
                     break;
                 case States.Orange:
                     rendRed.material.SetColor("_EmissionColor", Color.black);
@@ -60,6 +100,8 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
                     rendGreen.material.SetColor("_EmissionColor", Color.white);
 
                     switchOffPedestrianTrafficLightLights();
+
+                    changeAudioClip(false);
                     break;
                 case States.RedAndOrange:
                     rendRed.material.SetColor("_EmissionColor", Color.white);
@@ -75,6 +117,14 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
                     break;
             }
         }
+    }
+
+    private void changeAudioClip(bool clip) {
+        if (clip)
+            audioSource.clip = clip2;
+        else
+            audioSource.clip = clip1;
+        audioSource.Play();
     }
 
     /// <summary>
