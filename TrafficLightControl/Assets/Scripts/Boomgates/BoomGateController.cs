@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class BoomGateController : TrafficLight {
+public class BoomGateController : TrafficLight, IIntervalMultiplierUpdate {
 
     public BoomGate[] boomgates;
 
@@ -91,5 +91,9 @@ public class BoomGateController : TrafficLight {
         audioSource.clip = clip1;
         audioSource.spatialBlend = 1f;
         audioSource.Play();        
+    }
+
+    public new void updateMultiplier(float value) {
+        audioSource.pitch = 1f/value;
     }
 }

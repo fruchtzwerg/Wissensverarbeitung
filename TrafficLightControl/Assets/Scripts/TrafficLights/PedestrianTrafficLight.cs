@@ -160,5 +160,6 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     public new void updateMultiplier(float value)
     {
         timerGreen.Interval = (long)(Interval * value);
+        audioSource.pitch = 1f / value;
     }
 }
