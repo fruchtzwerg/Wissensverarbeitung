@@ -8,7 +8,9 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     public PedestrianButton[] PedestrianTrafficLightButtons;
 
     public long Interval = 2000;
+    public float OffsetAudioSource = 25;
 
+    private GameObject audioSourceHolder;
     private AudioSource audioSource;
     private AudioClip clip1;
     private AudioClip clip2;
@@ -24,8 +26,21 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
         initAudio();
     }
 
+    /// <summary>
+    /// Initialise the audiosource
+    /// </summary>
     private void initAudio() {
-        gameObject.AddComponent<AudioSource>();
+
+        //Gameobject to hold the audiosource
+        //this gameobject is + Offset over the pedestrian gameobject
+        audioSourceHolder = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        audioSourceHolder.GetComponent<MeshRenderer>().enabled = false;
+        audioSourceHolder.name = this.name + "_AudioSource";
+        audioSourceHolder.transform.position = new Vector3(transform.position.x, transform.position.y + OffsetAudioSource, transform.position.z);
+
+        audioSourceHolder.transform.SetParent(gameObject.transform);
+
+        audioSourceHolder.AddComponent<AudioSource>();
 
         try {           
             clip1 = Resources.Load("pedestrian-crossing_1") as AudioClip;
@@ -44,11 +59,19 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
         else
             print("clip2 is null");
 
-        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = audioSourceHolder.GetComponent<AudioSource>();
         audioSource.playOnAwake = true;
         audioSource.loop = true;
-        audioSource.maxDistance = 10;
-        audioSource.minDistance = 0.3f;
+        audioSource.maxDistance = 8.0f;
+        audioSource.minDistance = 0.1f;
+
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0, 1);
+        curve.AddKey(7, 0.1f);
+        curve.AddKey(8, 0);
+
+        audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
+        audioSource.rolloffMode = AudioRolloffMode.Custom;
         audioSource.clip = clip1;
         audioSource.spatialBlend = 1f;
         audioSource.Play();
@@ -121,9 +144,9 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
     private void changeAudioClip(bool clip) {
         if (clip)
-            audioSource.clip = clip2;
-        else
             audioSource.clip = clip1;
+        else
+            audioSource.clip = clip2;
         audioSource.Play();
     }
 
