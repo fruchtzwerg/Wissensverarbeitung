@@ -75,8 +75,6 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
         audioSource.clip = clip1;
         audioSource.spatialBlend = 1f;
         audioSource.Play();
-
-        print("Sounds: " + audioSource.clip);
     }
 
     /// <summary>

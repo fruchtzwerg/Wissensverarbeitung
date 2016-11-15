@@ -14,14 +14,9 @@ public class BoomGate : TrafficLight {
 
     private float multiplier = 1f;
 
-    private AudioSource audioSource;
-
     // Use this for initialization
     void Start () {
         state = States.Closed;
-
-        audioSource = new AudioSource();
-
     }
 	
 	// Update is called once per frame
@@ -30,12 +25,8 @@ public class BoomGate : TrafficLight {
   
 	}
 
-    public override void switchToGreen() {
-        isOpen = true;
-    }
-
-    public override void switchToRed() {
-        isOpen = false;
+    public void setIsOpen(bool _isOpen) {
+        isOpen = _isOpen;
     }
 
     private void rotatePivot(bool open) {        
@@ -73,7 +64,6 @@ public class BoomGate : TrafficLight {
             state = States.Closing;
         }
     }
-
     public new void updateMultiplier(float value) {
         multiplier = value;
     }

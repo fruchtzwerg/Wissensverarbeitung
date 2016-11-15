@@ -21,9 +21,7 @@ public class UI : MonoBehaviour
     public TrafficLightControl CrossroadControl_A;
     public TrafficLightControl CrossroadControl_B;
 
-    public CamMoving Cam;
-
-    public Toggle toggleBoomGates;
+    public CamMoving Cam;    
 
     public Slider paceSlider;
     public InputField paceInput;
@@ -44,8 +42,6 @@ public class UI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        toggleBoomGates.onValueChanged.AddListener(boomGateEvent);
-
         buttonCamPos1.onClick.AddListener(() => Cam.SetCamPosition(camPos1));
         buttonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(camPos2));
         buttonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(camPos3));
@@ -144,17 +140,7 @@ public class UI : MonoBehaviour
 
 
     //########################################## Events  ##########################################################
-    void boomGateEvent(bool value)
-    {
-        foreach (var boomGate in GameObject.FindGameObjectsWithTag("BoomGate"))
-        {
-            boomGate.GetComponent<BoomGate>().isOpen = value;
-        }
-    }
-
-
-
-
+    
     private void OnButtonClicked(string @event, TrafficLightControl control)
     {
         control.EventWasTriggered(@event);
