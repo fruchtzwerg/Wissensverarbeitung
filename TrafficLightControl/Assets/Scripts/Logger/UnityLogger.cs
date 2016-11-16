@@ -9,9 +9,13 @@ public class UnityLogger : MonoBehaviour {
     private Queue<string> prologQueue;
     public int maxQueueCount = 10;
 
+    StreamWriter swProlog;
+
     // Use this for initialization
     void Start () {
         prologQueue = new Queue<string>();
+
+        swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
     }
 	
 	// Update is called once per frame
@@ -22,11 +26,8 @@ public class UnityLogger : MonoBehaviour {
 
         message = DateTime.Now + ": " + message;
 
-        using (StreamWriter sw2 = new StreamWriter(@".\Assets\Prolog\prolog.log", true))
-        {
-            sw2.WriteLine(message);
-            sw2.Flush();
-        }
+        swProlog.WriteLine(message);
+        swProlog.Flush();
 
         prologQueue.Enqueue(message);
 
@@ -39,21 +40,5 @@ public class UnityLogger : MonoBehaviour {
 
     public void logEvents(string eventMessage){
 
-    }
-
-
-    /// <summary>
-    /// Write to logfile
-    /// </summary>
-    /// <param name="message"></param>
-    private void WriteLogFile(string message)
-    {
-        using (StreamWriter sw2 = new StreamWriter(@".\Assets\Prolog\prolog.log", true))
-        {
-            sw2.WriteLine(DateTime.Now + ": " + message);
-            sw2.Flush();
-        }
-
-        Debug.Log(message);
-    }    
+    }  
 }
