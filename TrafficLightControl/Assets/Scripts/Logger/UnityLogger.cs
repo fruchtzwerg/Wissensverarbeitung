@@ -1,44 +1,44 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
 using System;
 using System.Collections.Generic;
 
 public class UnityLogger : MonoBehaviour {
 
-    private Queue<string> prologQueue;
-    public int maxQueueCount = 10;
+    private Queue<string> _prologQueue;
+    public int MaxQueueCount = 10;
 
-    StreamWriter swProlog;
+    private StreamWriter _swProlog;
 
     // Use this for initialization
     void Start () {
-        prologQueue = new Queue<string>();
+        _prologQueue = new Queue<string>();
 
-        swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
+        _swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
-    public void logProlog(string message){
+    void OnApplicationQuit()
+    {
+        _swProlog.Close();
+    }
+
+    public void LogProlog(string message){
 
         message = DateTime.Now + ": " + message;
 
-        swProlog.WriteLine(message);
-        swProlog.Flush();
+        _swProlog.WriteLine(message);
+        _swProlog.Flush();
 
-        prologQueue.Enqueue(message);
+        _prologQueue.Enqueue(message);
 
-        if (prologQueue.Count > maxQueueCount){
-            prologQueue.Dequeue();
+        if (_prologQueue.Count > MaxQueueCount){
+            _prologQueue.Dequeue();
         }
 
         //Debug.Log(message);
     }
 
-    public void logEvents(string eventMessage){
+    public void LogEvents(string eventMessage){
 
-    }  
+    }
 }

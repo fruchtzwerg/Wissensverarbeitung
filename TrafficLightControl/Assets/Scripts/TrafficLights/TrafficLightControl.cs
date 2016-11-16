@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Timers;
 
 public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate
 {
@@ -21,16 +17,17 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     public PrologWrapper PrologInterface;
 
     private const string GREEN = "G = ";
-    private const string AMPEL = "ampel";
-    private const string NEXT_PHASE = "getnextPhase(";
-    private const string NEUES_EREIGNIS = "neuesEreignis(";
+    private const string LIGHT_PREFIX = "ampel";
+    private const string NEXT_PHASE_PREFIX = "getnextPhase(";
+    private const string NEW_EVENT_PREFIX = "neuesEreignis(";
 
     public Crossroads Crossroad = Crossroads.a;
 
     private List<string> _greenTrafficLights;
-    
+
     private Timer _phaseTimer;
     private float _multiplier = 1.0f;
+    private string _recivedDataWithOutVar;
 
     // Use this for initialization
     void Start()
@@ -42,7 +39,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             Interval = 2000,
             AutoReset = true
         };
-        _phaseTimer.Elapsed += TimerEvent;
+        _phaseTimer.Elapsed += NextState;
         _phaseTimer.Start();
     }
 
@@ -66,8 +63,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     public void ReciveDataFromProlog(string recivedData)
     {
         //recivedData is emtry or empty list
-        if (string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") ||
-            recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false."))
+        if (IsValidData(recivedData))
             return;
 
 
@@ -75,65 +71,22 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         //print("R:" + recivedData);
         try
         {
-            var recivedDataWithOutVar = recivedData.Replace(GREEN, "");
+            _recivedDataWithOutVar = recivedData.Replace(GREEN, "");
 
             //print("Rwov:" + recivedData);
 
-            var arrayStart = recivedDataWithOutVar.LastIndexOf("[");
-            var arrayEnd = recivedDataWithOutVar.IndexOf("]");
-            var arrayLength = arrayEnd - arrayStart;
+            // get string array from prolog return string
+            var splits = ArrayFromData();
+            if (splits == null) return;
 
-            //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
+            // put green lights in list
+            RebuildLightsList(splits);
 
-            var greenTrafficLightsArray = recivedDataWithOutVar.Substring(arrayStart, arrayLength);
-            greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
+            //change states
+            ChangeStates();
 
-            var stringSeparators = new string[] {","};
-            var splits = greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
-
-            //clear old green elements
-            _greenTrafficLights.Clear();
-
-            //remove unnecessary symbols and elements and add element to list
-            foreach (var s in splits)
-            {
-                string tmp;
-
-                if (string.IsNullOrEmpty(tmp = Parse(s)))
-                    continue;
-
-                _greenTrafficLights.Add(tmp);
-            }
-
-            //change states...
-            foreach (var l in TrafficLights)
-            {
-                //entry trafficlight in green trafficlight list?
-                var name = l.Name.ToString().ToLower();
-                if (_greenTrafficLights.Contains(name)){
-                    //print(name + " to green.");
-                    l.switchToGreen();
-                }
-
-                else {
-                    l.switchToRed();
-                }
-                    
-            }
-
-            //phase time from response
-            var phaseTimeStartIndex = recivedDataWithOutVar.LastIndexOf(",");
-
-            var nextPhaseTimeString =
-                recivedDataWithOutVar.Substring(phaseTimeStartIndex).Replace("].", "").Replace(",", "").Trim();
-
-
-            var nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
-
-            _phaseTimer.Interval = (long) (nextPhaseTime*1000*_multiplier);
-            // wait because asych
-            Thread.Sleep(100);
-            _phaseTimer.Start();
+            // reset the timer for the next phase
+            SetTimer();
         }
         catch (Exception ex)
         {
@@ -147,7 +100,113 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         }
     }
 
-    private static string Parse(string s)
+
+    /// <summary>
+    /// Checks if recivedData is a valid response from prolog.
+    /// </summary>
+    /// <param name="recivedData"></param>
+    /// <returns>true: valid | false: invalid</returns>
+    private static bool IsValidData(string recivedData)
+    {
+        return string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") ||
+               recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false.");
+    }
+
+
+    /// <summary>
+    /// Converts a single prolog response string into a
+    /// string array.
+    /// </summary>
+    /// <returns>prolog response as string[]</returns>
+    private string[] ArrayFromData()
+    {
+        var arrayStart = _recivedDataWithOutVar.LastIndexOf("[");
+        var arrayEnd = _recivedDataWithOutVar.IndexOf("]");
+        var arrayLength = arrayEnd - arrayStart;
+
+        // if start, end or length is negative -> return
+        if (arrayStart < 0 || arrayEnd < 0 || arrayLength < 0)
+            return null;
+
+        //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
+
+        var greenTrafficLightsArray = _recivedDataWithOutVar.Substring(arrayStart, arrayLength);
+        greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
+
+        var stringSeparators = new[] {","};
+        return greenTrafficLightsArray.Split(stringSeparators, StringSplitOptions.None);
+    }
+
+
+    /// <summary>
+    /// Sets the phase-timer accoarding to prolog response.
+    /// </summary>
+    private void SetTimer()
+    {
+        //phase time from response
+        var phaseTimeStartIndex = _recivedDataWithOutVar.LastIndexOf(",");
+        var nextPhaseTimeString = _recivedDataWithOutVar.Substring(phaseTimeStartIndex)
+            .Replace("].", "")
+            .Replace(",", "")
+            .Trim();
+
+
+        var nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
+
+        _phaseTimer.Interval = (long) (nextPhaseTime*1000*_multiplier);
+        // wait because asych
+        Thread.Sleep(100);
+        _phaseTimer.Start();
+    }
+
+
+    /// <summary>
+    /// Clears the list of green lights and rebuilds it with new
+    /// lights from a string[].
+    /// </summary>
+    /// <param name="splits">string[] of lights</param>
+    private void RebuildLightsList(IEnumerable<string> splits)
+    {
+        //clear old green elements
+        _greenTrafficLights.Clear();
+
+        //remove unnecessary symbols and elements and add element to list
+        foreach (var s in splits)
+        {
+            string tmp;
+
+            if (string.IsNullOrEmpty(tmp = Trim(s)))
+                continue;
+
+            _greenTrafficLights.Add(tmp);
+        }
+    }
+
+
+    /// <summary>
+    /// Advances states of all lights in TrafficLights
+    /// </summary>
+    private void ChangeStates()
+    {
+        foreach (var l in TrafficLights)
+        {
+            //entry trafficlight in green trafficlight list?
+            var name = l.Name.ToString().ToLower();
+
+            if (_greenTrafficLights.Contains(name))
+                l.switchToGreen();
+            else
+                l.switchToRed();
+        }
+    }
+
+
+    /// <summary>
+    /// Replaces useless delimiters with empty strings.
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    private static string Trim(string s)
     {
         return s.Replace(")", "").Replace(".", "").Replace(",", "").Trim();
     }
@@ -155,17 +214,12 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <summary>
     /// Call this function to got to the next state
     /// </summary>
-    private void NextState()
+    private void NextState(object sender = null, EventArgs e = null)
     {
-        var query = NEXT_PHASE + Crossroad + ", G).";
+        var query = NEXT_PHASE_PREFIX + Crossroad + ", G).";
         PrologInterface.QueryProlog(query, this);
     }
 
-
-    private void TimerEvent(object sender, System.EventArgs e)
-    {
-        NextState();
-    }
 
     /// <summary>
     /// Call prolog, that a new event was triggered at this crossroad
@@ -173,17 +227,19 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <param name="trigger"></param>
     public void EventWasTriggered(string trigger)
     {
-        var query = NEUES_EREIGNIS + Crossroad + ", " + trigger + ").";
+        var query = NEW_EVENT_PREFIX + Crossroad + ", " + trigger + ").";
         PrologInterface.QueryProlog(query);
 
         if (!_phaseTimer.Enabled)
-            print(">>>>>>>>>>>>>>>>>> TIMER IS NOT RUNNING <<<<<<<<<<<<<<<<<<<<<<<<<");
+            print(">>>>>>>>>>>>>>>>>>>>>>>>> TIMER IS NOT RUNNING <<<<<<<<<<<<<<<<<<<<<<<<<");
     }
+
 
     public void updateMultiplier(float value)
     {
         _multiplier = value;
         //print("LightControlValue" + value);
+
         if (_phaseTimer != null)
             _phaseTimer.Remaining *= value;
     }

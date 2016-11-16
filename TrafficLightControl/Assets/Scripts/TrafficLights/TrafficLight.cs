@@ -242,6 +242,9 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 
     public void updateMultiplier(float value)
     {
+        if(timerGreen == null || timerRed == null)
+            return;
+
         timerGreen.Interval = (long) (IntervalGreen*value);
         timerRed.Interval = (long) (IntervalRed*value);
     }

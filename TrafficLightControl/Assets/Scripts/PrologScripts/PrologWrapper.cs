@@ -7,11 +7,15 @@ public class PrologWrapper : MonoBehaviour
     public string[] PrologFiles;
     private Job _prolog;
 
-    public UnityLogger unityLogger;
+    public UnityLogger UnityLogger;
+
 
     //Use this for initialization
     void Start()
     {
+        if (UnityLogger == null)
+            UnityLogger = GetComponent<UnityLogger>();
+
         // create new backround worker
         var worker = new BackgroundWorker();
         // register listeners
@@ -21,6 +25,7 @@ public class PrologWrapper : MonoBehaviour
         // execute worker asynchronously
         worker.RunWorkerAsync();
     }
+
 
     /// <summary>
     /// Executed on Main-Thread when worker is done.
@@ -33,9 +38,10 @@ public class PrologWrapper : MonoBehaviour
         print("SWI-Prolog is running...");        
         
         //consult all given prolog knowledge base files
-        for (int i = 0; i < PrologFiles.Length; i++)
-            _prolog.ConsultFile(PrologFiles[i]);
+        foreach (var pl in PrologFiles)
+            _prolog.ConsultFile(pl);
     }
+
 
     /// <summary>
     /// Executed asynchronously during run of worker.
@@ -47,20 +53,12 @@ public class PrologWrapper : MonoBehaviour
         print("Launching SWI-Prolog...");
 
          // start create job object
-         _prolog = new Job();
-
-         // run swi-prolog inside cmd
-         _prolog.initPrologProcess(unityLogger);
+         _prolog = new Job(UnityLogger);
         
         // query for something
         //_prolog.Query("X is 2+6.");
     }
-
     
-    //Update is called once per frame
-    void Update()
-    {
-    }
 
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit()
@@ -68,14 +66,18 @@ public class PrologWrapper : MonoBehaviour
         _prolog.Kill();
     }
 
+
     /// <summary>
     /// Query prolog without respons
     /// </summary>
     /// <param name="query"></param>
-    public void QueryProlog(string query) {
-        if(!string.IsNullOrEmpty(query))
-            _prolog.Query(query);
+    public void QueryProlog(string query)
+    {
+        if (string.IsNullOrEmpty(query)) return;
+
+        _prolog.Query(query);
     }
+
 
     /// <summary>
     /// Query prolog with respons

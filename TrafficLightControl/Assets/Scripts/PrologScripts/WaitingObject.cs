@@ -1,23 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WaitingObject{
-
-    private string query;
-    private IProlog sender;
-
+public class WaitingObject
+{
+    public string Query { get; private set; }
+    public IProlog Sender { get; private set; }
 
 
     public WaitingObject(string query, IProlog sender) {
-        this.query = query;
-        this.sender = sender;
-    }
-
-    public string Query {
-        get {return query;}
-    }
-
-    public IProlog Sender {
-        get { return sender; }        
+        Query = query;
+        Sender = sender;
     }
 }

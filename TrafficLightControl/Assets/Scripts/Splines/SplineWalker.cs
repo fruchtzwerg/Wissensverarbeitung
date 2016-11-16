@@ -42,6 +42,9 @@ public class SplineWalker : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -50)
+            Destroy();
+
         // get the spline to walk on
         _spline = Waypoint.Spline;
 
@@ -67,7 +70,12 @@ public class SplineWalker : MonoBehaviour
         // else turn model
         LookAt(position);
     }
-    
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
+        VehicleSpawner.Count--;
+    }
 
 
     /// <summary>
@@ -135,8 +143,15 @@ public class SplineWalker : MonoBehaviour
             case SplineWalkerMode.Connected:
                 if (Waypoint.NextWaypoint.IsDestination)
                 {
-                    Destroy(gameObject);
-                    VehicleSpawner.Count--;
+                    // moving the vehicle out of the way before destroying it
+                    // is necessary because on high speeds it is possible
+                    // for following vehicles to hit his cars collider and stop.
+                    // once the this vehicle is destroyed, the follower will remain
+                    // stuck because OnTriggerExit() is never fired.
+                    // because of this we move the vehicle below y = -50 and check
+                    // in the update if this vehicle is below that threshold,
+                    // then destroy it.
+                    transform.Translate(Vector3.down * 100);
                     return true;
                 }
 
