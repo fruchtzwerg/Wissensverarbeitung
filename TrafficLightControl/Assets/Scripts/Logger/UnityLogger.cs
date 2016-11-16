@@ -25,7 +25,7 @@ public class UnityLogger : MonoBehaviour {
 
     public void LogProlog(string message){
 
-        ConsoleView.Log(message);
+        //ConsoleView.Log(message);
 
         message = DateTime.Now + ": " + message;
 
