@@ -80,7 +80,7 @@ public class PrologWrapper : MonoBehaviour
 
 
     /// <summary>
-    /// Query prolog with respons
+    /// Query prolog with response
     /// </summary>
     /// <param name="query">Query string</param>
     /// <param name="sender">Sender Object</param>

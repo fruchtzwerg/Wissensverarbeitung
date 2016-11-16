@@ -14,7 +14,6 @@ public class UnityLogger : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _prologQueue = new Queue<string>();
-
         _swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
     }
 
@@ -25,13 +24,15 @@ public class UnityLogger : MonoBehaviour {
 
     public void LogProlog(string message){
 
-        //ConsoleView.Log(message);
+        //ConsoleView.LogMessage(message);
+        var msg = message;
+        ConsoleView.Processor.QueueEvent(() => ConsoleView.LogMessage(msg));
 
         message = DateTime.Now + ": " + message;
 
         _swProlog.WriteLine(message);
         _swProlog.Flush();
-
+        
         _prologQueue.Enqueue(message);
 
         if (_prologQueue.Count > MaxQueueCount){

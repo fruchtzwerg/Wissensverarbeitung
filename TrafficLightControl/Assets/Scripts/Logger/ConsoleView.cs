@@ -2,33 +2,40 @@
 /// Marshals events and data between ConsoleController and uGUI.
 /// Copyright (c) 2014-2015 Eliot Lash
 /// </summary>
+
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ConsoleView : MonoBehaviour
 {
-    ConsoleController console = new ConsoleController();
+    ConsoleController _console = new ConsoleController();
 
-    bool didShow = false;
+    bool _didShow = false;
 
-    public GameObject viewContainer; //Container for console view, should be a child of this GameObject
-    public Text logTextArea;
-    public InputField inputField;
+    public GameObject ViewContainer; //Container for console view, should be a child of this GameObject
+    public Text LogTextArea;
+    public EventProcessor Processor;
+
 
     void Start()
     {
-        if (console != null)
+        if (_console != null)
         {
-            console.VisibilityChanged += onVisibilityChanged;
-            console.LogChanged += onLogChanged;
+            _console.VisibilityChanged += OnVisibilityChanged;
+            _console.LogChanged += OnLogChanged;
         }
-        updateLogStr(console.ScrollbackAry);
+        //if (Logger != null) Logger.Log += LogMessage;
+        UpdateLogStr(_console.ScrollbackAry);
+
+        if(Processor == null)
+        Processor = gameObject.AddComponent<EventProcessor>();
     }
 
     ~ConsoleView()
     {
-        console.VisibilityChanged -= onVisibilityChanged;
-        console.LogChanged -= onLogChanged;
+        _console.VisibilityChanged -= OnVisibilityChanged;
+        _console.LogChanged -= OnLogChanged;
     }
 
     void Update()
@@ -36,67 +43,58 @@ public class ConsoleView : MonoBehaviour
         //Toggle visibility when tilde key pressed
         if (Input.GetKeyUp("^"))
         {
-            toggleVisibility();
+            ToggleVisibility();
         }
 
         //Toggle visibility when 5 fingers touch.
         if (Input.touches.Length == 5)
         {
-            if (!didShow)
+            if (!_didShow)
             {
-                toggleVisibility();
-                didShow = true;
+                ToggleVisibility();
+                _didShow = true;
             }
         }
         else
         {
-            didShow = false;
+            _didShow = false;
         }
     }
 
-    void toggleVisibility()
+    void ToggleVisibility()
     {
-        setVisibility(!viewContainer.activeSelf);
+        SetVisibility(!ViewContainer.activeSelf);
     }
 
-    void setVisibility(bool visible)
+    void SetVisibility(bool visible)
     {
-        viewContainer.SetActive(visible);
+        ViewContainer.SetActive(visible);
     }
 
-    void onVisibilityChanged(bool visible)
+    void OnVisibilityChanged(bool visible)
     {
-        setVisibility(visible);
+        SetVisibility(visible);
     }
 
-    void onLogChanged(string[] newLog)
+    void OnLogChanged(string[] newLog)
     {
-        updateLogStr(newLog);
+        UpdateLogStr(newLog);
     }
 
-    void updateLogStr(string[] newLog)
+    void UpdateLogStr(string[] newLog)
     {
         if (newLog == null)
         {
-            logTextArea.text = "";
+            LogTextArea.text = "";
         }
         else
         {
-            logTextArea.text = string.Join("\n", newLog);
+            LogTextArea.text = string.Join("\n", newLog);
         }
     }
 
-    /// <summary>
-    /// Event that should be called by anything wanting to submit the current input to the console.
-    /// </summary>
-    public void runCommand()
+    public void LogMessage(string message)
     {
-        console.Log(inputField.text);
-        inputField.text = "";
-    }
-
-    public void Log(string message)
-    {
-        console.Log(message);
+        _console.Log(message);
     }
 }
