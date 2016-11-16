@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Zulässige und nicht Zulässige Phasenübergänge                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-:- module(checkifzulaessig, [checkifzulaessig/4]).
+:- module('phaseTransition', [checkifzulaessig/4]).
 :- use_module(facts).
 
 %Kreuzung A

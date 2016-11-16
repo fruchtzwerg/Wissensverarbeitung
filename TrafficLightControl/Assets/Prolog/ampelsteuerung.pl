@@ -22,11 +22,11 @@
 %                         Attribute zur Überwachung                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Überwachung der momentanen Phase für beide Ampelanlagen ,Anfangszustand
-momentanePhase(a, facts:phase11).
-momentanePhase(b, facts:phase1).
+momentanePhase(a, phase11).
+momentanePhase(b, phase1).
 
-standardPhase(a, facts:phase11).
-standardPhase(b, facts:phase1).
+standardPhase(a, phase11).
+standardPhase(b, phase1).
 
 %zwei queues für die Berechnung der nächsten Ampelphase
 queue(a,[]).
@@ -197,7 +197,7 @@ getnextPhase(Kreuzung,Gruenegesamt):-
 checkQueueIsEmpty(b,[],Phaseneu):-
                                momentanePhase(b,MomPhase)
                                ,
-                               (facts:phase2 = MomPhase ; facts:phase3 = MomPhase)
+                               (phase2 = MomPhase ; phase3 = MomPhase)
                                ,
                                Phaseneu=MomPhase
                                ,
@@ -264,14 +264,14 @@ checkQueueHead([H|T],Kreuzung,_):-
 checkQueueComplete([],b,Phaseneu):-
                                momentanePhase(b, MomPhase)
                                ,
-                               (facts:phase2 = MomPhase ; facts:phase3 = MomPhase)
+                               (phase2 = MomPhase ; phase3 = MomPhase)
                                ,
                                Phaseneu=MomPhase
                                ,
                                !.
 
-checkQueueComplete([], b, facts:phase1):-!.
-checkQueueComplete([], a, facts:phase11):-!.
+checkQueueComplete([], b, phase1):-!.
+checkQueueComplete([], a, phase11):-!.
 checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phaseneu):-
                                          falsch=Zulaessig
                                          ,

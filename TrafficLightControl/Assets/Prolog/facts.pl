@@ -5,8 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   Definition der Ampelanlagen                                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-:- module(facts, [phase1/2,
-                  phase1/2,
+:- module('facts', [phase1/2,
                   phase2/2,
                   phase3/2,
                   phase4/2,
@@ -15,7 +14,8 @@
                   phase11/2,
                   phase12/2,
                   phase13/2,
-                  phase14/2  ]).
+                  phase14/2,
+                  ausloeser/3  ]).
 
 
 %Ampel Logik
