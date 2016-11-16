@@ -13,17 +13,18 @@ public class Job
     private StreamWriter sw;
     public const string DELIMITERSEND = "--> ";
     public const string DELIMITERRECIVE = "<-- ";
-    private UnityLogger unityLogger = new UnityLogger();
-
-    private IProlog sender;
-
+    
     private Queue<WaitingObject> waitingObjects;
+
+    private UnityLogger unityLogger;
 
     /// <summary>
     /// Init the swi-prolog.exe in a console window
     /// </summary>
-    public void initPrologProcess()
+    public void initPrologProcess(UnityLogger _unityLogger)
     {
+        unityLogger = _unityLogger;
+
         waitingObjects = new Queue<WaitingObject>();
 
         prolog = new Process();

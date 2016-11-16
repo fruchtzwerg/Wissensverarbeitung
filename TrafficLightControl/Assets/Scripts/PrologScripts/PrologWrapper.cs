@@ -7,18 +7,19 @@ public class PrologWrapper : MonoBehaviour
     public string[] PrologFiles;
     private Job _prolog;
 
+    public UnityLogger unityLogger;
+
     //Use this for initialization
     void Start()
     {
-        
         // create new backround worker
         var worker = new BackgroundWorker();
         // register listeners
         worker.DoWork += DoWork;
         worker.RunWorkerCompleted += RunWorkerInitCompleted;
-        
+
         // execute worker asynchronously
-        worker.RunWorkerAsync();            
+        worker.RunWorkerAsync();
     }
 
     /// <summary>
@@ -49,7 +50,7 @@ public class PrologWrapper : MonoBehaviour
          _prolog = new Job();
 
          // run swi-prolog inside cmd
-         _prolog.initPrologProcess();
+         _prolog.initPrologProcess(unityLogger);
         
         // query for something
         //_prolog.Query("X is 2+6.");
