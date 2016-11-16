@@ -13,6 +13,7 @@ public class Job
     private StreamWriter sw;
     public const string DELIMITERSEND = "--> ";
     public const string DELIMITERRECIVE = "<-- ";
+    private UnityLogger unityLogger = new UnityLogger();
 
     private IProlog sender;
 
@@ -37,6 +38,7 @@ public class Job
         else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
             prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
         else {
+            prolog.StartInfo.FileName = "swipl.exe";
             Debug.Log("SWI not found!");
             return;
         }
@@ -75,8 +77,8 @@ public class Job
         string query = "consult('" + path + "').";
         sw.WriteLine(query);
         sw.Flush();
-
-        WriteLogFile(DELIMITERSEND + query);       
+        
+        unityLogger.logProlog(DELIMITERSEND + query);
     }
 
     /// <summary>
@@ -92,7 +94,7 @@ public class Job
         // print to console and use delimiter
         //print(DELIMITERRECIVE + message);
 
-        WriteLogFile(DELIMITERRECIVE + message);
+        unityLogger.logProlog(DELIMITERRECIVE + message);
 
 
         if (waitingObjects.Count > 0) {
@@ -121,8 +123,8 @@ public class Job
 
             sw.WriteLine(next.Query);
             sw.Flush();
-
-            WriteLogFile(DELIMITERSEND + next.Query);
+            
+            unityLogger.logProlog(DELIMITERSEND + next.Query);
 
             Debug.Log("Process Name: "+ prolog.ProcessName +", Exit: " +prolog.HasExited);
         }
@@ -165,7 +167,7 @@ public class Job
             sw.WriteLine(message);
             sw.Flush();
 
-            WriteLogFile(DELIMITERSEND + message); 
+            unityLogger.logProlog(DELIMITERSEND + message);
         }
 
         Debug.Log("Queue Count: " + waitingObjects.Count + ", Process Name: " + prolog.ProcessName + ", IsRunning: " + !prolog.HasExited);
@@ -175,21 +177,6 @@ public class Job
             sw.WriteLine(waitingObjects.Peek().Query);
             sw.Flush();
         }
-    }
-
-
-
-    /// <summary>
-    /// Write to logfile
-    /// </summary>
-    /// <param name="message"></param>
-    private void WriteLogFile(string message) {        
-        using (StreamWriter sw2 = new StreamWriter(@".\Assets\Prolog\prolog.log", true)) {
-            sw2.WriteLine(DateTime.Now + ": "+ message);
-            sw2.Flush();
-        }
-
-        Debug.Log(message);
     }
 
     /// <summary>
