@@ -163,7 +163,7 @@ public class Job
     public void Query(string message, IProlog sender = null)
     {
         // std-in of prolog still registered?
-        // OR: message not null or empty?
+        // OR: message null or empty?
         if (_sw == null || string.IsNullOrEmpty(message.Trim()))
             return;
 

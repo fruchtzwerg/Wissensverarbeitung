@@ -7,6 +7,7 @@ public class UnityLogger : MonoBehaviour {
 
     private Queue<string> _prologQueue;
     public int MaxQueueCount = 10;
+    public ConsoleView ConsoleView;
 
     private StreamWriter _swProlog;
 
@@ -23,6 +24,8 @@ public class UnityLogger : MonoBehaviour {
     }
 
     public void LogProlog(string message){
+
+        ConsoleView.Log(message);
 
         message = DateTime.Now + ": " + message;
 
