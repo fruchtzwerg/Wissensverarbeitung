@@ -1,29 +1,68 @@
-% Autor:
+% Autor: Hannes Boers ,Tilo Zuelske nach Buchvorlage von Ivan Bratko
 % Datum: 14.11.2016
+
+:-dynamic h/2.
+:-dynamic s/3.
+:-dynamic goal/1.
+
 
 %Definition des Zieles
 goal(t).
 
+liste([arc(e,f,5,7),arc(s,e,2,6),arc(s,a,2,6),arc(a,b,2,5),arc(b,c,2,4),arc(c,d,3,4),arc(d,t,3,3),arc(f,g,2,4),arc(g,t,2,2),arc(t,g,2,0)]).
+
+setNewGraph(List):-
+              retractall(h(_,_))
+              ,
+              retractall(s(_,_,_))
+              ,
+              createGraph(List).
+                                    
+createGraph([]).
+createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
+                                     assert(s(N,N1,Cost))
+                                     %,
+                                     %not(h(N,_))
+                                     %,
+                                     %assert(h(N,HeuristicValue))
+                                     %,
+                                     %createGraph(Tail).
+                                     ,
+                                     not(h(N,_)) ->
+                                     assert(h(N,HeuristicValue))
+                                     ,
+                                     createGraph(Tail)
+                                     ;
+                                     createGraph(Tail).
+
+
+getPath(Start,Goal,Path):-
+                      retract(goal(_))
+                      ,
+                      assert(goal(Goal))
+                      ,
+                      bestfirst(Start,Path).
+                                     
 %arcs
-s(e,f,5).
-s(s,e,2).
-s(s,a,2).
-s(a,b,2).
-s(b,c,2).
-s(c,d,3).
-s(d,t,3).
-s(f,g,2).
-s(g,t,2).
+%s(e,f,5).
+%s(s,e,2).
+%s(s,a,2).
+%s(a,b,2).
+%s(b,c,2).
+%s(c,d,3).
+%s(d,t,3).
+%s(f,g,2).
+%s(g,t,2).
 
 %Funktionswerte der Heuristik
-h(e,7).
-h(a,5).
-h(b,4).
-h(c,4).
-h(f,4).
-h(g,2).
-h(d,3).
-h(t,0).
+%h(e,7).
+%h(a,5).
+%h(b,4).
+%h(c,4).
+%h(f,4).
+%h(g,2).
+%h(d,3).
+%h(t,0).
 
 % bestfirst(Start, Solution): Solution is a path from Start to a goal
 bestfirst(Start, Solution):- expand([],l(Start,0/0),9999,_,yes,Solution),!.   %Assume 9999 is > any f-value
@@ -34,7 +73,7 @@ bestfirst(Start, Solution):- expand([],l(Start,0/0),9999,_,yes,Solution),!.   %A
 %if goal found then Solution is solution path and Solved = yes
 
 %Case 1: goal leaf-node, construct a solution path
-expand(P,l(N,_),_,_,yes,[N|P]):- goal(N),!.
+expand(P,l(N,_),_,_,yes,[N|P]):- goal(N).
 
 %Case 2: leaf-node, f-value less than Bound
 %Generate successors and expand them within Bound
