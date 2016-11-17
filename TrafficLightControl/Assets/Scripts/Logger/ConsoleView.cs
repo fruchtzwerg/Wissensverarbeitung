@@ -4,6 +4,7 @@
 /// </summary>
 
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,6 @@ public class ConsoleView : MonoBehaviour
 
     public GameObject ViewContainer; //Container for console view, should be a child of this GameObject
     public Text LogTextArea;
-    public EventProcessor Processor;
 
 
     void Start()
@@ -27,9 +27,6 @@ public class ConsoleView : MonoBehaviour
         }
         //if (Logger != null) Logger.Log += LogMessage;
         UpdateLogStr(_console.ScrollbackAry);
-
-        if(Processor == null)
-        Processor = gameObject.AddComponent<EventProcessor>();
     }
 
     ~ConsoleView()
@@ -93,8 +90,9 @@ public class ConsoleView : MonoBehaviour
         }
     }
 
-    public void LogMessage(string message)
+    public IEnumerator LogMessage(string message)
     {
         _console.Log(message);
+        yield return null;
     }
 }

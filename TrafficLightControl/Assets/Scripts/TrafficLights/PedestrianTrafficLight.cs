@@ -110,7 +110,7 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
                     changeAudioClip(true);
                     break;
-                case States.Orange:
+                case States.Yellow:
                     rendRed.material.SetColor("_EmissionColor", Color.black);
                     rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;

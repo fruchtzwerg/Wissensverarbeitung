@@ -22,11 +22,10 @@ public class UnityLogger : MonoBehaviour {
         _swProlog.Close();
     }
 
-    public void LogProlog(string message){
-
+    public void LogProlog(string message)
+    {
         //ConsoleView.LogMessage(message);
-        var msg = message;
-        ConsoleView.Processor.QueueEvent(() => ConsoleView.LogMessage(msg));
+        UnityMainThreadDispatcher.Instance().Enqueue(ConsoleView.LogMessage(message));
 
         message = DateTime.Now + ": " + message;
 

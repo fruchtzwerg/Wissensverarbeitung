@@ -6,7 +6,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public enum States
     {
         Red,
-        Orange,
+        Yellow,
         Green,
         RedAndOrange,
         Off,
@@ -152,9 +152,9 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public virtual void switchToRed()
     {
         //only if red or in some sec red
-        if (State != States.Orange && State != States.Red)
+        if (State != States.Yellow && State != States.Red)
         {
-            state = States.Orange;
+            state = States.Yellow;
             //switchState();
             timerRed.Start();
         }
@@ -193,7 +193,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
                     rendOrange.material.SetColor("_EmissionColor", Color.black);
                     rendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
-                case States.Orange:
+                case States.Yellow:
                     rendRed.material.SetColor("_EmissionColor", Color.black);
                     rendOrange.material.SetColor("_EmissionColor", Color.white);
                     rendGreen.material.SetColor("_EmissionColor", Color.black);

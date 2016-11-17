@@ -118,7 +118,27 @@ public class UI : MonoBehaviour
         for (var i = 0; i < lights.Count; i++)
         {
             var name = rows[i].GetComponentInChildren<InputField>();
-            name.text = lights[i].State.ToString();
+            var state = lights[i].State;
+            var background = name.GetComponent<Image>();
+            name.text = state.ToString();
+
+            switch (state)
+            {
+                case TrafficLight.States.Closed:
+                case TrafficLight.States.Red:
+                    background.color = Color.red;
+                    break;
+                case TrafficLight.States.Open:
+                case TrafficLight.States.Green:
+                    background.color = Color.green;
+                    break;
+                case TrafficLight.States.Off:
+                    background.color = Color.white;
+                    break;
+                default:
+                    background.color = Color.yellow;
+                    break;
+            }
         }
     }
 
@@ -138,9 +158,8 @@ public class UI : MonoBehaviour
     }
 
 
-
     //########################################## Events  ##########################################################
-    
+
     private void OnButtonClicked(string @event, TrafficLightControl control)
     {
         control.EventWasTriggered(@event);
@@ -176,6 +195,6 @@ public class UI : MonoBehaviour
 
     public void EndEditText(string text)
     {
-        paceSlider.value = (float)Convert.ToDouble(text);
+        paceSlider.value = (float) Convert.ToDouble(text);
     }
 }

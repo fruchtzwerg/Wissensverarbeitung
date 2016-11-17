@@ -3,6 +3,7 @@ using System.IO;
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading;
 using Debug = UnityEngine.Debug;
 
 public class Job
@@ -11,7 +12,7 @@ public class Job
     private Process _prolog;
     private StreamWriter _sw;
     public const string DELIMITER_SEND = "?- ";
-    public const string DELIMITER_RECIVE = "Answer: ";
+    public const string DELIMITER_RECIVE = "   ";
 
     private Queue<WaitingObject> _queue;
 
