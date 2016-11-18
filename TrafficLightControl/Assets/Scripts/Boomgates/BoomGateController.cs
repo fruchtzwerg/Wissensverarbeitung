@@ -8,6 +8,8 @@ public class BoomGateController : TrafficLight, IIntervalMultiplierUpdate {
 
     public Vector3 AudioSourcePostion = new Vector3(26.232f, 31.86f, 31.58f);
 
+    public TrainSpawner trainSpawner;
+
     private GameObject audioSourceHolder;
     private AudioSource audioSource;
     private AudioClip clip1;
@@ -30,6 +32,9 @@ public class BoomGateController : TrafficLight, IIntervalMultiplierUpdate {
                     audioSource.Play();
                 else
                     audioSource.Stop();
+
+                if (state == States.Closed)
+                    trainSpawner.SpawnTrain();
             }
         }
     }
