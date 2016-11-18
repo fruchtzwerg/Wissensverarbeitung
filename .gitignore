@@ -50,6 +50,8 @@ ExportedObj/
 *.svd
 *prolog.log
 *prolog.log.meta
+*.BAK
+*.BAK.meta
 
 # Unity3D generated meta files
 *.pidb.meta

@@ -8,13 +8,17 @@ public class PrologWrapper : MonoBehaviour
     private Job _prolog;
 
     public UnityLogger UnityLogger;
+    public AStar aStar;
 
+    private string aStarTree;
 
     //Use this for initialization
     void Start()
     {
         if (UnityLogger == null)
             UnityLogger = GetComponent<UnityLogger>();
+
+        aStarTree = aStar.buildAStarTreeString();
 
         // create new backround worker
         var worker = new BackgroundWorker();
@@ -40,6 +44,8 @@ public class PrologWrapper : MonoBehaviour
         //consult all given prolog knowledge base files
         foreach (var pl in PrologFiles)
             _prolog.ConsultFile(pl);
+
+        _prolog.Query(aStarTree); ;
     }
 
 

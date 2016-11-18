@@ -21,7 +21,7 @@ public class TrainSpawner : MonoBehaviour {
     private Timer timer;
     private int run = 0;
 
-    public long timerInterval = 800;
+    public long timerInterval = 100;
 
     public enum TrainDirection {
         HRO,
@@ -74,6 +74,7 @@ public class TrainSpawner : MonoBehaviour {
         switch (run) {
             case 0:
                 var l1 = Instantiate(trainLocomotive1, start) as GameObject;
+                l1.transform.Rotate(0, 180, 0);
                 var walkerL1 = l1.GetComponent<SplineWalker>();
                 walkerL1.Waypoint = waypoint;
                 walkerL1.Move = true;
@@ -86,13 +87,15 @@ public class TrainSpawner : MonoBehaviour {
                 walkerW1.Move = true;
                 break;
             case 2:
+                break;
+            case 3:
                 var w2 = Instantiate(trainWagon2, start) as GameObject;
                 var walkerW2 = w2.GetComponent<SplineWalker>();
                 walkerW2.Waypoint = waypoint;
                 walkerW2.Move = true;
 
                 break;
-            case 3:
+            case 4:
                 var l2 = Instantiate(trainLocomotive2, start) as GameObject;
                 var walkerL2 = l2.GetComponent<SplineWalker>();
                 walkerL2.Waypoint = waypoint;
@@ -111,7 +114,6 @@ public class TrainSpawner : MonoBehaviour {
     
 
     private void timerElapsed(object sender, EventArgs e) {
-        print("in event!");
         buildTrain(BERWayPoint.transform, BERWayPoint.GetComponent<SplineWaypoint>());
         run++;
     }
