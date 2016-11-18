@@ -49,8 +49,8 @@ public class UI : MonoBehaviour
 
         paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
 
-        rowPrefab = Resources.Load<HorizontalLayoutGroup>("Row");
-        buttonPrefab = Resources.Load<Button>("Button");
+        rowPrefab = Resources.Load<HorizontalLayoutGroup>("UI/Row");
+        buttonPrefab = Resources.Load<Button>("UI/Button");
 
         InitRows(CrossroadControl_A.TrafficLights, _rowsA, RowsAParent);
         InitRows(CrossroadControl_B.TrafficLights, _rowsB, RowsBParent);

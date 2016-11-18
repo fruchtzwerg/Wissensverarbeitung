@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = System.Random;
 
 public class SplineWalker : MonoBehaviour
@@ -42,6 +41,10 @@ public class SplineWalker : MonoBehaviour
 
     private void Update()
     {
+        // due to collider mechanics we have to move
+        // objects to trigger OnTriggerExit() before
+        // destroying them.
+        // any object below y=-50 should be destroyed.
         if (transform.position.y < -50)
             Destroy();
 
@@ -155,6 +158,7 @@ public class SplineWalker : MonoBehaviour
                     return true;
                 }
 
+                // get a the next waypoint randomly
                 Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
 
                 _spline = Waypoint.Spline;
@@ -190,7 +194,9 @@ public class SplineWalker : MonoBehaviour
     /// <returns></returns>
     private SplineWaypoint GetRandomWaypoint(SplineWaypoint waypoint)
     {
+        // get waypoints registered with this waypoint
         var waypoints = waypoint.GetComponents<SplineWaypoint>();
+        // get random index of waypoint
         var rand = _rnd.Next(0, waypoints.Length);
 
         return waypoints[rand];

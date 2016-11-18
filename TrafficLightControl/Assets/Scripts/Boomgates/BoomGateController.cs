@@ -64,7 +64,7 @@ public class BoomGateController : TrafficLight, IIntervalMultiplierUpdate {
         audioSourceHolder.AddComponent<AudioSource>();
 
         try {
-            clip1 = Resources.Load("train_crossing") as AudioClip;
+            clip1 = Resources.Load("/Sound/train_crossing") as AudioClip;
         }
         catch (Exception e) {
             print("ERROR: " + e);

@@ -27,7 +27,11 @@ public class AStar : MonoBehaviour {
 	
 	}
 
-    public string buildAStarTreeString() {
+    public string buildAStarTreeString()
+    {
+        if (sb == null)
+            Start();
+
         //clear stringbuilder
         sb.Remove(0, sb.Length);
 

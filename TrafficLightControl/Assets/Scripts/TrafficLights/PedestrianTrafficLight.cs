@@ -41,8 +41,8 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
         audioSourceHolder.AddComponent<AudioSource>();
 
         try {           
-            clip1 = Resources.Load("pedestrian-crossing_1") as AudioClip;
-            clip2 = Resources.Load("pedestrian-crossing_2") as AudioClip;
+            clip1 = Resources.Load("Sound/pedestrian-crossing_1") as AudioClip;
+            clip2 = Resources.Load("Sound/pedestrian-crossing_2") as AudioClip;
         }
         catch(Exception e) {
             print("ERROR: " + e);

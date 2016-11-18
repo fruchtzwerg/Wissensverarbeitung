@@ -61,10 +61,10 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
         }
 
         // load prefabs from /Assets/Resources/<name>
-        carPrefab = Resources.Load("Car", typeof(GameObject)) as GameObject;
-        suvPrefab = Resources.Load("Suv", typeof(GameObject)) as GameObject;
-        busPrefab = Resources.Load("Bus", typeof(GameObject)) as GameObject;
-        truckPrefab = Resources.Load("Truck", typeof(GameObject)) as GameObject;
+        carPrefab = Resources.Load("Vehicles/Car", typeof(GameObject)) as GameObject;
+        suvPrefab = Resources.Load("Vehicles/Suv", typeof(GameObject)) as GameObject;
+        busPrefab = Resources.Load("Vehicles/Bus", typeof(GameObject)) as GameObject;
+        truckPrefab = Resources.Load("Vehicles/Truck", typeof(GameObject)) as GameObject;
 
         UpdateThresholds();
     }
