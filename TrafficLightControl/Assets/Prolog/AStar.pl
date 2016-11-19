@@ -42,6 +42,11 @@ getPath(Start,Goal,Path):-
                       assert(goal(Goal))
                       ,
                       bestfirst(Start,Path).
+
+updateNode(Node,Node1,NewCost):-
+                      retract(s(Node,Node1,_))
+                      ,
+                      assert(s(Node,Node1,NewCost)).
                                      
 %arcs
 %s(e,f,5).
