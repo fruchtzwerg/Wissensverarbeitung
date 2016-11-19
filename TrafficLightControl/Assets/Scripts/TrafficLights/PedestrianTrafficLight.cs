@@ -14,12 +14,12 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     private AudioClip clip2;
 
     protected override void InitTimerGreen() {
-        timerGreen = new Timer
+        TimerGreen = new Timer
         {
             Interval = Interval,
             AutoReset = false
         };
-        timerGreen.Elapsed += timerEventToGreen;
+        TimerGreen.Elapsed += TimerEventToGreen;
 
         initAudio();
     }
@@ -78,61 +78,57 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
     /// <summary>
     /// switch state from red to green
     /// </summary>
-    public override void switchToGreen() {
+    public override void SwitchToGreen() {
         //only if red or in some sec red
         if (State != States.Green) {
-            timerGreen.Start();
+            TimerGreen.Start();
         }
     }
 
     /// <summary>
     /// switch strate from green to red
     /// </summary>
-    public override void switchToRed() {
+    public override void SwitchToRed() {
         //only if red or in some sec red
         if (State != States.Red) {
-            state = States.Red;
+            State = States.Red;
         }
     }
 
     /// <summary>
     /// switch state and emission
     /// </summary>
-    protected override void switchState() {
+    protected override void SwitchState() {
 
-        if (oldState != State) {
-            oldState = State;
+        if (OldState != State) {
+            OldState = State;
             //switch emissioncolor of gameobjects
             switch (State) {
                 case States.Red:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.white);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
 
                     changeAudioClip(true);
                     break;
                 case States.Yellow:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.Green:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.white);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.white);
 
                     switchOffPedestrianTrafficLightLights();
 
                     changeAudioClip(false);
                     break;
                 case States.RedAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
-                    break;
-                case States.On:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.white);
+                    RendRed.material.SetColor("_EmissionColor", Color.white);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 default:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
             }
         }
@@ -157,7 +153,7 @@ public class PedestrianTrafficLight : TrafficLight, IIntervalMultiplierUpdate {
 
     public new void updateMultiplier(float value)
     {
-        timerGreen.Interval = (long)(Interval * value);
+        TimerGreen.Interval = (long)(Interval * value);
         audioSource.pitch = 1f / value;
     }
 }

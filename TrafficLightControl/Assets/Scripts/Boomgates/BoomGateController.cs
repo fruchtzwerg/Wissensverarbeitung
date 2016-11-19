@@ -1,104 +1,109 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
-public class BoomGateController : TrafficLight, IIntervalMultiplierUpdate {
+public class BoomGateController : BoomGate, IIntervalMultiplierUpdate {
 
-    public BoomGate[] boomgates;
+    public BoomGate[] Boomgates;
 
     public Vector3 AudioSourcePostion = new Vector3(26.232f, 31.86f, 31.58f);
 
-    public TrainSpawner trainSpawner;
+    public TrainSpawner TrainSpawner;
 
-    private GameObject audioSourceHolder;
-    private AudioSource audioSource;
-    private AudioClip clip1;
+    private GameObject _audioSourceHolder;
+    private AudioSource _audioSource;
+    private AudioClip _clip1;
 
     // Use this for initialization
     void Start() {
-        state = States.Closed;
-
-        initAudio();
+        State = States.Closed;
+        InitAudio();
     }
 
     // Update is called once per frame
-    void Update() {
-        if(boomgates[0]) {
-            if(state != boomgates[0].State) {
-                state = boomgates[0].State;
+    void Update()
+    {
+        if (!Boomgates[0]) return;
 
-                //Play sound
-                if (state != States.Open)
-                    audioSource.Play();
-                else
-                    audioSource.Stop();
+        if(State != Boomgates[0].State) {
+            State = Boomgates[0].State;
 
-                if (state == States.Closed)
-                    trainSpawner.SpawnTrain();
-            }
+            //Play sound
+            if (State != States.Open)
+                _audioSource.Play();
+            else
+                _audioSource.Stop();
+
+            if (State == States.Closed)
+                TrainSpawner.SpawnTrain();
         }
     }
 
 
-    public override void switchToGreen() {
-        foreach(var tmp in boomgates) {
-            tmp.setIsOpen(true);
+    public override void SwitchToGreen()
+    {
+        foreach (var gate in Boomgates)
+        {
+            if(gate.State == States.Closed)
+                gate.State = States.Opening;
         }
     }
 
-    public override void switchToRed() {
-        foreach (var tmp in boomgates) {
-            tmp.setIsOpen(false);
+    public override void SwitchToRed()
+    {
+        foreach (var gate in Boomgates)
+        {
+            if(gate.State == States.Open)
+                gate.State = States.Closing;
         }
     }
 
     /// <summary>
     /// Initialise the audiosource
     /// </summary>
-    private void initAudio() {
+    private void InitAudio() {
 
         //Gameobject to hold the audiosource
         //this gameobject is + Offset over the pedestrian gameobject
-        audioSourceHolder = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        audioSourceHolder.GetComponent<MeshRenderer>().enabled = false;
-        audioSourceHolder.name = this.name + "_AudioSource";
-        audioSourceHolder.transform.position = AudioSourcePostion;
+        _audioSourceHolder = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        _audioSourceHolder.GetComponent<MeshRenderer>().enabled = false;
+        _audioSourceHolder.name = this.name + "_AudioSource";
+        _audioSourceHolder.transform.position = AudioSourcePostion;
 
-        audioSourceHolder.transform.SetParent(gameObject.transform);
+        _audioSourceHolder.transform.SetParent(gameObject.transform);
 
-        audioSourceHolder.AddComponent<AudioSource>();
+        _audioSourceHolder.AddComponent<AudioSource>();
 
         try {
-            clip1 = Resources.Load("/Sound/train_crossing") as AudioClip;
+            _clip1 = Resources.Load("/Sound/train_crossing") as AudioClip;
         }
         catch (Exception e) {
             print("ERROR: " + e);
         }
 
-        if (clip1 != null)
-            clip1.LoadAudioData();
+        if (_clip1 != null)
+            _clip1.LoadAudioData();
         else
             print("clip1 is null");       
 
-        audioSource = audioSourceHolder.GetComponent<AudioSource>();
-        audioSource.playOnAwake = true;
-        audioSource.loop = true;
-        audioSource.maxDistance = 10.0f;
-        audioSource.minDistance = 0.3f;
+        _audioSource = _audioSourceHolder.GetComponent<AudioSource>();
+        _audioSource.playOnAwake = true;
+        _audioSource.loop = true;
+        _audioSource.maxDistance = 10.0f;
+        _audioSource.minDistance = 0.3f;
 
         AnimationCurve curve = new AnimationCurve();
         curve.AddKey(0, 1);
         curve.AddKey(8, 0.1f);
         curve.AddKey(10, 0);
 
-        audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
-        audioSource.rolloffMode = AudioRolloffMode.Custom;
-        audioSource.clip = clip1;
-        audioSource.spatialBlend = 1f;
-        audioSource.Play();        
+        _audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
+        _audioSource.rolloffMode = AudioRolloffMode.Custom;
+        _audioSource.clip = _clip1;
+        _audioSource.spatialBlend = 1f;
+        _audioSource.Play();        
     }
 
     public new void updateMultiplier(float value) {
-        audioSource.pitch = 1f/value;
+        _audioSource.pitch = 1f/value;
     }
 }

@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BoomGate : TrafficLight {
 
+    public new enum States
+    {
+        Open,
+        Opening,
+        Closed,
+        Closing
+    }
+
+    public new States State;
+
     public GameObject pivot;
-    public bool isOpen = false;
-    private bool isEnable = false;
-    private bool isEnableOld = false;
 
     private Vector3 pivotVector3;
     private Quaternion openPosition; 
@@ -18,60 +24,55 @@ public class BoomGate : TrafficLight {
 
     // Use this for initialization
     void Start () {
-        state = States.Closed;
+        State = States.Closed;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        rotatePivot(isOpen);
-        
-        if(isEnable != isEnableOld && _collider != null) {
-            isEnableOld = isEnable;
+        if(State == States.Closed || State == States.Open)
+            return;
 
-            EnableCollider(isEnable);
-        }
+        rotatePivot();
 	}
 
-    public void setIsOpen(bool _isOpen) {
-        isOpen = _isOpen;
-        isEnable = _isOpen;     
-    }
-
-    private void rotatePivot(bool open) {        
-                
-        if (state == States.Closed && open) {
-
-            state = States.Opening;
-        }
+    private void rotatePivot()
+    {
         //State opening -> opening barrier
-        else if(state == States.Opening && open) {
-            pivot.transform.Rotate(0,1 * multiplier, 0);
-
+        if (State == States.Opening)
+        {
+            pivot.transform.Rotate(0, 1*multiplier, 0);
             degreeCounter++;
 
-            if (degreeCounter == 90) {
+            if (degreeCounter == 90)
+            {
                 degreeCounter = 0;
+                State = States.Open;
 
-                state = States.Open;
+                if (Collider != null)
+                    EnableCollider(false);
             }
-        }
-        //State closing -> closing barrier
-        else if (state == States.Closing && !open) {
-            pivot.transform.Rotate(0, -1* multiplier, 0);
-
+        } //State closing -> closing barrier
+        else if (State == States.Closing)
+        {
+            pivot.transform.Rotate(0, -1*multiplier, 0);
             degreeCounter++;
 
-            if(degreeCounter == 90) {
+            if (degreeCounter == 90)
+            {
                 degreeCounter = 0;
+                State = States.Closed;
 
-                state = States.Closed;
+                if (Collider != null)
+                    EnableCollider();
             }
         }
-        else if(state == States.Open && !open) {
-            pivot.transform.Rotate(-1,0,0);
-            state = States.Closing;
-        }
+        //else if (State == States.Open && !open)
+        //{
+        //    pivot.transform.Rotate(-1, 0, 0);
+        //    State = States.Closing;
+        //}
     }
+
     public new void updateMultiplier(float value) {
         multiplier = value;
     }

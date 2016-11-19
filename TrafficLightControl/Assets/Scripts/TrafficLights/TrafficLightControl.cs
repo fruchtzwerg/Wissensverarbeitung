@@ -194,9 +194,9 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             var name = l.Name.ToString().ToLower();
 
             if (_greenTrafficLights.Contains(name))
-                l.switchToGreen();
+                l.SwitchToGreen();
             else
-                l.switchToRed();
+                l.SwitchToRed();
         }
     }
 

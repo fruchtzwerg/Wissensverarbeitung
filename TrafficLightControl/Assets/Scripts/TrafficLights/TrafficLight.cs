@@ -5,16 +5,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 {
     public enum States
     {
+        Off,
         Red,
         Yellow,
         Green,
-        RedAndOrange,
-        Off,
-        On,
-        Open,
-        Opening,
-        Closed,
-        Closing
+        RedAndOrange
     }
 
     public enum Lights
@@ -54,41 +49,37 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     public GameObject OrangeLight;
     public GameObject GreenLight;
 
-    protected Renderer rendRed;
-    protected Renderer rendOrange;
-    protected Renderer rendGreen;
+    protected Renderer RendRed;
+    protected Renderer RendOrange;
+    protected Renderer RendGreen;
     
-    protected Timer timerGreen;
-    protected Timer timerRed;
+    protected Timer TimerGreen;
+    protected Timer TimerRed;
 
-    protected BoxCollider _collider;
-
-    protected States state = States.Off;
-    protected States oldState = States.Off;
+    protected BoxCollider Collider;
+    
+    protected States OldState = States.Off;
 
     public long IntervalGreen = 3000;
     public long IntervalRed = 2000;
 
-    public States State
-    {
-        get { return state; }
-    }
+    public States State { get; protected set; }
 
     // Use this for initialization
     void Awake()
     {
         // init collider
-        _collider = GetComponent<BoxCollider>();
+        Collider = GetComponent<BoxCollider>();
 
         //init Rendere with different materials
         if (RedLight)
-            rendRed = RedLight.GetComponent<Renderer>();
+            RendRed = RedLight.GetComponent<Renderer>();
 
         if (OrangeLight)
-            rendOrange = OrangeLight.GetComponent<Renderer>();
+            RendOrange = OrangeLight.GetComponent<Renderer>();
 
         if (GreenLight)
-            rendGreen = GreenLight.GetComponent<Renderer>();
+            RendGreen = GreenLight.GetComponent<Renderer>();
 
         InitTimerGreen();
         InitTimerRed();
@@ -98,29 +89,29 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     void Start()
     {
 
-        state = States.Red;
-        switchState();
+        State = States.Red;
+        SwitchState();
     }
 
 
     protected virtual void InitTimerGreen()
     {
-        timerGreen = new Timer
+        TimerGreen = new Timer
         {
             Interval = IntervalGreen,
             AutoReset = false
         };
-        timerGreen.Elapsed += timerEventToGreen;
+        TimerGreen.Elapsed += TimerEventToGreen;
     }
 
     protected virtual void InitTimerRed()
     {
-        timerRed = new Timer
+        TimerRed = new Timer
         {
             Interval = IntervalRed,
             AutoReset = false
         };
-        timerRed.Elapsed += timerEventToRed;
+        TimerRed.Elapsed += TimerEventToRed;
     }
 
 
@@ -130,23 +121,22 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     {
         //print("green:delta=" + Time.deltaTime + ", remaining=" + timerGreen.Remaining + ", doCount=" + timerGreen._doCount);
         //print("red:delta=" + Time.deltaTime + ", remaining=" + timerRed.Remaining + ", doCount=" + timerRed._doCount);
-        timerGreen.Update(Time.deltaTime);
-        timerRed.Update(Time.deltaTime);
-        switchState();
+        TimerGreen.Update(Time.deltaTime);
+        TimerRed.Update(Time.deltaTime);
+        SwitchState();
     }
 
 
     /// <summary>
     /// switch state from red to green
     /// </summary>
-    public virtual void switchToGreen()
+    public virtual void SwitchToGreen()
     {
         //only if red or in some sec red
         if (State != States.RedAndOrange && State != States.Green)
         {
-            state = States.RedAndOrange;
-            //switchState();
-            timerGreen.Start();
+            State = States.RedAndOrange;
+            TimerGreen.Start();
         }
     }
 
@@ -154,76 +144,70 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     /// <summary>
     /// switch strate from green to red
     /// </summary>
-    public virtual void switchToRed()
+    public virtual void SwitchToRed()
     {
         //only if red or in some sec red
         if (State != States.Yellow && State != States.Red)
         {
-            state = States.Yellow;
-            //switchState();
-            timerRed.Start();
+            State = States.Yellow;
+            TimerRed.Start();
         }
     }
 
 
-    protected virtual void timerEventToGreen(object source, EventArgs e)
+    protected virtual void TimerEventToGreen(object source, EventArgs e)
     {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
-        state = States.Green;
-        timerGreen.Stop();
+        State = States.Green;
+        TimerGreen.Stop();
     }
 
-    protected virtual void timerEventToRed(object source, EventArgs e)
+    protected virtual void TimerEventToRed(object source, EventArgs e)
     {
         //only state -> update called switchState -> timer has one thread and can't call to main thread
-        state = States.Red;
-        timerRed.Stop();
+        State = States.Red;
+        TimerRed.Stop();
     }
 
 
     /// <summary>
     /// switch state and emission
     /// </summary>
-    protected virtual void switchState()
+    protected virtual void SwitchState()
     {
 
-        if (oldState != State)
+        if (OldState != State)
         {
-            oldState = State;
+            OldState = State;
             //switch emissioncolor of gameobjects
             switch (State)
             {
                 case States.Red:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendOrange.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.white);
+                    RendOrange.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 case States.Yellow:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendOrange.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendOrange.material.SetColor("_EmissionColor", Color.white);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     EnableCollider();
                     break;
                 case States.Green:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendOrange.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.white);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendOrange.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.white);
                     EnableCollider(false);
                     break;
                 case States.RedAndOrange:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendOrange.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
-                    break;
-                case States.On:
-                    rendRed.material.SetColor("_EmissionColor", Color.white);
-                    rendOrange.material.SetColor("_EmissionColor", Color.white);
-                    rendGreen.material.SetColor("_EmissionColor", Color.white);
+                    RendRed.material.SetColor("_EmissionColor", Color.white);
+                    RendOrange.material.SetColor("_EmissionColor", Color.white);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
                 default:
-                    rendRed.material.SetColor("_EmissionColor", Color.black);
-                    rendOrange.material.SetColor("_EmissionColor", Color.black);
-                    rendGreen.material.SetColor("_EmissionColor", Color.black);
+                    RendRed.material.SetColor("_EmissionColor", Color.black);
+                    RendOrange.material.SetColor("_EmissionColor", Color.black);
+                    RendGreen.material.SetColor("_EmissionColor", Color.black);
                     break;
             }
 
@@ -240,17 +224,17 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         var offset = new Vector3(0, 100, 0);
 
         if (enable)
-            _collider.center += offset;
+            Collider.center += offset;
         else
-            _collider.center -= offset;
+            Collider.center -= offset;
     }
 
     public void updateMultiplier(float value)
     {
-        if(timerGreen == null || timerRed == null)
+        if(TimerGreen == null || TimerRed == null)
             return;
 
-        timerGreen.Interval = (long) (IntervalGreen*value);
-        timerRed.Interval = (long) (IntervalRed*value);
+        TimerGreen.Interval = (long) (IntervalGreen*value);
+        TimerRed.Interval = (long) (IntervalRed*value);
     }
 }

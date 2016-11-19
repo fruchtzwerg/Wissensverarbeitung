@@ -123,27 +123,48 @@ public class UI : MonoBehaviour
         for (var i = 0; i < lights.Count; i++)
         {
             var name = rows[i].GetComponentInChildren<InputField>();
-            var state = lights[i].State;
             var background = name.GetComponent<Image>();
-            name.text = state.ToString();
-
-            switch (state)
+            
+            if (lights[i].GetType() == typeof(BoomGateController))
             {
-                case TrafficLight.States.Closed:
-                case TrafficLight.States.Red:
-                    background.color = Color.red;
-                    break;
-                case TrafficLight.States.Open:
-                case TrafficLight.States.Green:
-                    background.color = Color.green;
-                    break;
-                case TrafficLight.States.Off:
-                    background.color = Color.white;
-                    break;
-                default:
-                    background.color = Color.yellow;
-                    break;
+                var entry = (BoomGate) lights[i];
+                name.text = entry.State.ToString();
+
+                switch (entry.State)
+                {
+                    case BoomGate.States.Open:
+                        background.color = Color.green;
+                        break;
+                    case BoomGate.States.Closed:
+                        background.color = Color.red;
+                        break;
+                    default:
+                        background.color = Color.yellow;
+                        break;
+                }
             }
+            else
+            {
+                var state = lights[i].State;
+                name.text = state.ToString();
+
+                switch (state)
+                {
+                    case TrafficLight.States.Red:
+                        background.color = Color.red;
+                        break;
+                    case TrafficLight.States.Green:
+                        background.color = Color.green;
+                        break;
+                    case TrafficLight.States.Off:
+                        background.color = Color.white;
+                        break;
+                    default:
+                        background.color = Color.yellow;
+                        break;
+                }
+            }
+
         }
     }
 
