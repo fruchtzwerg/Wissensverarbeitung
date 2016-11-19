@@ -5,12 +5,14 @@ public class BoomGate : TrafficLight {
 
     public GameObject pivot;
     public bool isOpen = false;
+    private bool isEnable = false;
+    private bool isEnableOld = false;
 
     private Vector3 pivotVector3;
     private Quaternion openPosition; 
     private Quaternion closePosition;
 
-    private int degreeCopunter = 0;
+    private int degreeCounter = 0;
 
     private float multiplier = 1f;
 
@@ -22,11 +24,17 @@ public class BoomGate : TrafficLight {
 	// Update is called once per frame
 	void Update () {
         rotatePivot(isOpen);
-  
+        
+        if(isEnable != isEnableOld && _collider != null) {
+            isEnableOld = isEnable;
+
+            EnableCollider(isEnable);
+        }
 	}
 
     public void setIsOpen(bool _isOpen) {
         isOpen = _isOpen;
+        isEnable = _isOpen;     
     }
 
     private void rotatePivot(bool open) {        
@@ -39,10 +47,10 @@ public class BoomGate : TrafficLight {
         else if(state == States.Opening && open) {
             pivot.transform.Rotate(0,1 * multiplier, 0);
 
-            degreeCopunter++;
+            degreeCounter++;
 
-            if (degreeCopunter == 90) {
-                degreeCopunter = 0;
+            if (degreeCounter == 90) {
+                degreeCounter = 0;
 
                 state = States.Open;
             }
@@ -51,10 +59,10 @@ public class BoomGate : TrafficLight {
         else if (state == States.Closing && !open) {
             pivot.transform.Rotate(0, -1* multiplier, 0);
 
-            degreeCopunter++;
+            degreeCounter++;
 
-            if(degreeCopunter == 90) {
-                degreeCopunter = 0;
+            if(degreeCounter == 90) {
+                degreeCounter = 0;
 
                 state = States.Closed;
             }

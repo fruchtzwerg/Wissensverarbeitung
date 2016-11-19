@@ -61,7 +61,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     protected Timer timerGreen;
     protected Timer timerRed;
 
-    private BoxCollider _collider;
+    protected BoxCollider _collider;
 
     protected States state = States.Off;
     protected States oldState = States.Off;
@@ -235,7 +235,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     /// Move the collider out of the way.
     /// </summary>
     /// <param name="enable"></param>
-    private void EnableCollider(bool enable = true)
+    protected void EnableCollider(bool enable = true)
     {
         var offset = new Vector3(0, 100, 0);
 
