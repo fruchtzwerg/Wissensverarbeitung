@@ -81,15 +81,19 @@ public class Job
             _prolog.StartInfo.FileName = path.Split(';')
                 .Select(split => Path.Combine(split, EXE))
                 .FirstOrDefault(File.Exists);
-        } // if not found in path get exe at default install dirs
-        else if (string.IsNullOrEmpty(_prolog.StartInfo.FileName))
+        } 
+        
+        // if not found in path get exe at default install dirs
+        if (string.IsNullOrEmpty(_prolog.StartInfo.FileName))
         {
             if (File.Exists(@"C:\Program Files\swipl\bin\swipl.exe"))
                 _prolog.StartInfo.FileName = @"C:\Program Files\swipl\bin\swipl.exe";
             else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
-                _prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
+                _prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe"; 
         }
-        else // swipl.exe not found
+
+        // swipl.exe not found
+        if (string.IsNullOrEmpty(_prolog.StartInfo.FileName)) 
         {
             Debug.Log("SWI-Prolog executable not found!");
             return false;
