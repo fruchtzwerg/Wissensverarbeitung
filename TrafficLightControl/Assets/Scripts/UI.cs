@@ -40,13 +40,13 @@ public class UI : MonoBehaviour
     public GameObject[] TimerMultiplier;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         buttonCamPos1.onClick.AddListener(() => Cam.SetCamPosition(camPos1));
         buttonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(camPos2));
         buttonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(camPos3));
         buttonCamPos4.onClick.AddListener(() => Cam.SetCamPosition(camPos4));
-
+        
         paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
 
         rowPrefab = Resources.Load<HorizontalLayoutGroup>("UI/Row");
@@ -57,6 +57,11 @@ public class UI : MonoBehaviour
 
         InitButtons(CrossroadControl_A, ButtonsAParent);
         InitButtons(CrossroadControl_B, ButtonsBParent);
+    }
+
+    void Start()
+    {
+        SliderEvent();
     }
 
     private void InitRows(IEnumerable<TrafficLight> lights, ICollection<HorizontalLayoutGroup> rows, Component parent)

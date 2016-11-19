@@ -1,0 +1,169 @@
+fileFormatVersion: 2
+guid: 80fa31fbbc8df524494e23af4931f5f8
+timeCreated: 1479506376
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box164
+    100002: Cylinder039
+    100004: Cylinder041
+    100006: Cylinder042
+    100008: Cylinder043
+    100010: Cylinder044
+    100012: Cylinder045
+    100014: Object018
+    100016: Object042
+    100018: Object043
+    100020: Object044
+    100022: //RootNode
+    100024: wheel_1
+    100026: wheel_2
+    100028: wheel_3
+    100030: wheel_4
+    100032: wheel_5
+    100034: wheel_6
+    100036: chassis
+    100038: windows
+    400000: Box164
+    400002: Cylinder039
+    400004: Cylinder041
+    400006: Cylinder042
+    400008: Cylinder043
+    400010: Cylinder044
+    400012: Cylinder045
+    400014: Object018
+    400016: Object042
+    400018: Object043
+    400020: Object044
+    400022: //RootNode
+    400024: wheel_1
+    400026: wheel_2
+    400028: wheel_3
+    400030: wheel_4
+    400032: wheel_5
+    400034: wheel_6
+    400036: chassis
+    400038: windows
+    2300000: Box164
+    2300002: Cylinder039
+    2300004: Cylinder041
+    2300006: Cylinder042
+    2300008: Cylinder043
+    2300010: Cylinder044
+    2300012: Cylinder045
+    2300014: Object018
+    2300016: Object042
+    2300018: Object043
+    2300020: Object044
+    2300022: wheel_1
+    2300024: wheel_2
+    2300026: wheel_3
+    2300028: wheel_4
+    2300030: wheel_5
+    2300032: wheel_6
+    2300034: chassis
+    2300036: windows
+    3300000: Box164
+    3300002: Cylinder039
+    3300004: Cylinder041
+    3300006: Cylinder042
+    3300008: Cylinder043
+    3300010: Cylinder044
+    3300012: Cylinder045
+    3300014: Object018
+    3300016: Object042
+    3300018: Object043
+    3300020: Object044
+    3300022: wheel_1
+    3300024: wheel_2
+    3300026: wheel_3
+    3300028: wheel_4
+    3300030: wheel_5
+    3300032: wheel_6
+    3300034: chassis
+    3300036: windows
+    4300000: Cylinder039
+    4300002: Object043
+    4300004: Box164
+    4300006: Cylinder044
+    4300008: Cylinder043
+    4300010: Cylinder045
+    4300012: Cylinder041
+    4300014: Object042
+    4300016: Object044
+    4300018: Object018
+    4300020: Cylinder042
+    4300022: wheel_3
+    4300024: wheel_2
+    4300026: wheel_6
+    4300028: wheel_4
+    4300030: wheel_5
+    4300032: wheel_1
+    4300034: chassis
+    4300036: windows
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

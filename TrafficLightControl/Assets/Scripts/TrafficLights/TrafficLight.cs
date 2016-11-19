@@ -75,7 +75,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
     }
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         // init collider
         _collider = GetComponent<BoxCollider>();
@@ -92,6 +92,11 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 
         InitTimerGreen();
         InitTimerRed();
+
+    }
+
+    void Start()
+    {
 
         state = States.Red;
         switchState();

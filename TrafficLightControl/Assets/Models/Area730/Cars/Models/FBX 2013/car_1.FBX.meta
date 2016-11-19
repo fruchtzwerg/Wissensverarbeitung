@@ -1,0 +1,364 @@
+fileFormatVersion: 2
+guid: 221897652a91e2844b672e0f8a86399c
+timeCreated: 1479506376
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box1392
+    100002: Box1393
+    100004: Box1394
+    100006: Box1395
+    100008: Box1396
+    100010: car1_a
+    100012: //RootNode
+    100014: disc1
+    100016: disk2
+    100018: disk3
+    100020: disk4
+    100022: glass
+    100024: gun
+    100026: Object259
+    100028: Object263
+    100030: soldier
+    100032: w1
+    100034: w2
+    100036: w3
+    100038: w4
+    100040: wheel1
+    100042: wheel2
+    100044: wheel3
+    100046: wheel4
+    100048: windows_inside
+    100050: chassis
+    100052: windows
+    400000: Box1392
+    400002: Box1393
+    400004: Box1394
+    400006: Box1395
+    400008: Box1396
+    400010: car1_a
+    400012: //RootNode
+    400014: disc1
+    400016: disk2
+    400018: disk3
+    400020: disk4
+    400022: glass
+    400024: gun
+    400026: Object259
+    400028: Object263
+    400030: soldier
+    400032: w1
+    400034: w2
+    400036: w3
+    400038: w4
+    400040: wheel1
+    400042: wheel2
+    400044: wheel3
+    400046: wheel4
+    400048: windows_inside
+    400050: chassis
+    400052: windows
+    2300000: Box1392
+    2300002: Box1393
+    2300004: Box1394
+    2300006: Box1395
+    2300008: Box1396
+    2300010: disc1
+    2300012: disk2
+    2300014: disk3
+    2300016: disk4
+    2300018: glass
+    2300020: Object259
+    2300022: Object263
+    2300024: wheel1
+    2300026: wheel2
+    2300028: wheel3
+    2300030: wheel4
+    2300032: windows_inside
+    2300034: chassis
+    2300036: windows
+    3300000: Box1392
+    3300002: Box1393
+    3300004: Box1394
+    3300006: Box1395
+    3300008: Box1396
+    3300010: disc1
+    3300012: disk2
+    3300014: disk3
+    3300016: disk4
+    3300018: glass
+    3300020: Object259
+    3300022: Object263
+    3300024: wheel1
+    3300026: wheel2
+    3300028: wheel3
+    3300030: wheel4
+    3300032: windows_inside
+    3300034: chassis
+    3300036: windows
+    4300000: Box1392
+    4300002: Box1394
+    4300004: Object259
+    4300006: glass
+    4300008: Object263
+    4300010: windows_inside
+    4300012: Box1396
+    4300014: Box1393
+    4300016: Box1395
+    4300018: disk4
+    4300020: wheel4
+    4300022: wheel3
+    4300024: disk3
+    4300026: disk2
+    4300028: wheel2
+    4300030: disc1
+    4300032: wheel1
+    4300034: chassis
+    4300036: windows
+    7400000: Take 001
+    7400002: w2|disk2|Take 001|BaseLayer
+    7400004: w2|disk2|Take 001|BaseLayer.001
+    7400006: w2|w1|Take 001|BaseLayer
+    7400008: w2|w1|Take 001|BaseLayer.001
+    7400010: w2|w2|Take 001|BaseLayer
+    7400012: w2|w2|Take 001|BaseLayer.001
+    7400014: w2|w3|Take 001|BaseLayer
+    7400016: w2|w3|Take 001|BaseLayer.001
+    7400018: w2|w4|Take 001|BaseLayer
+    7400020: w2|w4|Take 001|BaseLayer.001
+    7400022: w2|wheel2|Take 001|BaseLayer
+    7400024: w2|wheel2|Take 001|BaseLayer.001
+    7400026: w2|wheel_1|Take 001|BaseLayer
+    7400028: w2|wheel_1|Take 001|BaseLayer.001
+    7400030: w2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400032: w2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400034: w2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400036: w2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400038: w2|wheel_2|Take 001|BaseLayer
+    7400040: w2|wheel_2|Take 001|BaseLayer.001
+    7400042: w2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400044: w2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400046: w2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400048: w2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400050: w2|wheel_3|Take 001|BaseLayer
+    7400052: w2|wheel_3|Take 001|BaseLayer.001
+    7400054: w2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400056: w2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400058: w2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400060: w2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400062: w2|wheel_4|Take 001|BaseLayer
+    7400064: w2|wheel_4|Take 001|BaseLayer.001
+    7400066: w2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400068: w2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400070: w2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400072: w2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400074: w4|disk2|Take 001|BaseLayer
+    7400076: w4|disk2|Take 001|BaseLayer.001
+    7400078: w4|w1|Take 001|BaseLayer
+    7400080: w4|w1|Take 001|BaseLayer.001
+    7400082: w4|w2|Take 001|BaseLayer
+    7400084: w4|w2|Take 001|BaseLayer.001
+    7400086: w4|w3|Take 001|BaseLayer
+    7400088: w4|w3|Take 001|BaseLayer.001
+    7400090: w4|w4|Take 001|BaseLayer
+    7400092: w4|w4|Take 001|BaseLayer.001
+    7400094: w4|wheel2|Take 001|BaseLayer
+    7400096: w4|wheel2|Take 001|BaseLayer.001
+    7400098: w4|wheel_1|Take 001|BaseLayer
+    7400100: w4|wheel_1|Take 001|BaseLayer.001
+    7400102: w4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400104: w4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400106: w4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400108: w4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400110: w4|wheel_2|Take 001|BaseLayer
+    7400112: w4|wheel_2|Take 001|BaseLayer.001
+    7400114: w4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400116: w4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400118: w4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400120: w4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400122: w4|wheel_3|Take 001|BaseLayer
+    7400124: w4|wheel_3|Take 001|BaseLayer.001
+    7400126: w4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400128: w4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400130: w4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400132: w4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400134: w4|wheel_4|Take 001|BaseLayer
+    7400136: w4|wheel_4|Take 001|BaseLayer.001
+    7400138: w4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400140: w4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400142: w4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400144: w4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400146: disk2|disk2|Take 001|BaseLayer
+    7400148: disk2|disk2|Take 001|BaseLayer.001
+    7400150: disk2|w1|Take 001|BaseLayer
+    7400152: disk2|w1|Take 001|BaseLayer.001
+    7400154: disk2|w2|Take 001|BaseLayer
+    7400156: disk2|w2|Take 001|BaseLayer.001
+    7400158: disk2|w3|Take 001|BaseLayer
+    7400160: disk2|w3|Take 001|BaseLayer.001
+    7400162: disk2|w4|Take 001|BaseLayer
+    7400164: disk2|w4|Take 001|BaseLayer.001
+    7400166: disk2|wheel2|Take 001|BaseLayer
+    7400168: disk2|wheel2|Take 001|BaseLayer.001
+    7400170: disk2|wheel_1|Take 001|BaseLayer
+    7400172: disk2|wheel_1|Take 001|BaseLayer.001
+    7400174: disk2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400176: disk2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400178: disk2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400180: disk2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400182: disk2|wheel_2|Take 001|BaseLayer
+    7400184: disk2|wheel_2|Take 001|BaseLayer.001
+    7400186: disk2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400188: disk2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400190: disk2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400192: disk2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400194: disk2|wheel_3|Take 001|BaseLayer
+    7400196: disk2|wheel_3|Take 001|BaseLayer.001
+    7400198: disk2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400200: disk2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400202: disk2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400204: disk2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400206: disk2|wheel_4|Take 001|BaseLayer
+    7400208: disk2|wheel_4|Take 001|BaseLayer.001
+    7400210: disk2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400212: disk2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400214: disk2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400216: disk2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400218: w3|disk2|Take 001|BaseLayer
+    7400220: w3|disk2|Take 001|BaseLayer.001
+    7400222: w3|w1|Take 001|BaseLayer
+    7400224: w3|w1|Take 001|BaseLayer.001
+    7400226: w3|w2|Take 001|BaseLayer
+    7400228: w3|w2|Take 001|BaseLayer.001
+    7400230: w3|w3|Take 001|BaseLayer
+    7400232: w3|w3|Take 001|BaseLayer.001
+    7400234: w3|w4|Take 001|BaseLayer
+    7400236: w3|w4|Take 001|BaseLayer.001
+    7400238: w3|wheel2|Take 001|BaseLayer
+    7400240: w3|wheel2|Take 001|BaseLayer.001
+    7400242: w3|wheel_1|Take 001|BaseLayer
+    7400244: w3|wheel_1|Take 001|BaseLayer.001
+    7400246: w3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400248: w3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400250: w3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400252: w3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400254: w3|wheel_2|Take 001|BaseLayer
+    7400256: w3|wheel_2|Take 001|BaseLayer.001
+    7400258: w3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400260: w3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400262: w3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400264: w3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400266: w3|wheel_3|Take 001|BaseLayer
+    7400268: w3|wheel_3|Take 001|BaseLayer.001
+    7400270: w3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400272: w3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400274: w3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400276: w3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400278: w3|wheel_4|Take 001|BaseLayer
+    7400280: w3|wheel_4|Take 001|BaseLayer.001
+    7400282: w3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400284: w3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400286: w3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400288: w3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400290: w1|disk2|Take 001|BaseLayer
+    7400292: w1|disk2|Take 001|BaseLayer.001
+    7400294: w1|w1|Take 001|BaseLayer
+    7400296: w1|w1|Take 001|BaseLayer.001
+    7400298: w1|w2|Take 001|BaseLayer
+    7400300: w1|w2|Take 001|BaseLayer.001
+    7400302: w1|w3|Take 001|BaseLayer
+    7400304: w1|w3|Take 001|BaseLayer.001
+    7400306: w1|w4|Take 001|BaseLayer
+    7400308: w1|w4|Take 001|BaseLayer.001
+    7400310: w1|wheel2|Take 001|BaseLayer
+    7400312: w1|wheel2|Take 001|BaseLayer.001
+    7400314: w1|wheel_1|Take 001|BaseLayer
+    7400316: w1|wheel_1|Take 001|BaseLayer.001
+    7400318: w1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400320: w1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400322: w1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400324: w1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400326: w1|wheel_2|Take 001|BaseLayer
+    7400328: w1|wheel_2|Take 001|BaseLayer.001
+    7400330: w1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400332: w1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400334: w1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400336: w1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400338: w1|wheel_3|Take 001|BaseLayer
+    7400340: w1|wheel_3|Take 001|BaseLayer.001
+    7400342: w1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400344: w1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400346: w1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400348: w1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400350: w1|wheel_4|Take 001|BaseLayer
+    7400352: w1|wheel_4|Take 001|BaseLayer.001
+    7400354: w1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400356: w1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400358: w1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400360: w1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

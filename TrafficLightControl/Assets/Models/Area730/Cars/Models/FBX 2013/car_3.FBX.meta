@@ -1,0 +1,740 @@
+fileFormatVersion: 2
+guid: ee37a8e28506cc74da76f6baf257c442
+timeCreated: 1479506376
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: body
+    100002: Box1491
+    100004: Box1492
+    100006: //RootNode
+    100008: Cylinder316
+    100010: Object329
+    100012: Object330
+    100014: Object331
+    100016: Object332
+    100018: Object333
+    100020: Object334
+    100022: Object335
+    100024: Object336
+    100026: Object337
+    100028: Object338
+    100030: wheel1
+    100032: wheel2
+    100034: wheel3
+    100036: wheel4
+    100038: chassis
+    100040: wheel_1
+    100042: wheel_2
+    100044: wheel_3
+    100046: wheel_4
+    100048: chassis.001
+    400000: body
+    400002: Box1491
+    400004: Box1492
+    400006: //RootNode
+    400008: Cylinder316
+    400010: Object329
+    400012: Object330
+    400014: Object331
+    400016: Object332
+    400018: Object333
+    400020: Object334
+    400022: Object335
+    400024: Object336
+    400026: Object337
+    400028: Object338
+    400030: wheel1
+    400032: wheel2
+    400034: wheel3
+    400036: wheel4
+    400038: chassis
+    400040: wheel_1
+    400042: wheel_2
+    400044: wheel_3
+    400046: wheel_4
+    400048: chassis.001
+    2300000: Box1491
+    2300002: Box1492
+    2300004: Cylinder316
+    2300006: Object329
+    2300008: Object330
+    2300010: Object331
+    2300012: Object332
+    2300014: Object333
+    2300016: Object334
+    2300018: Object335
+    2300020: Object336
+    2300022: Object337
+    2300024: Object338
+    2300026: chassis
+    2300028: wheel_1
+    2300030: wheel_2
+    2300032: wheel_3
+    2300034: wheel_4
+    2300036: chassis.001
+    3300000: Box1491
+    3300002: Box1492
+    3300004: Cylinder316
+    3300006: Object329
+    3300008: Object330
+    3300010: Object331
+    3300012: Object332
+    3300014: Object333
+    3300016: Object334
+    3300018: Object335
+    3300020: Object336
+    3300022: Object337
+    3300024: Object338
+    3300026: chassis
+    3300028: wheel_1
+    3300030: wheel_2
+    3300032: wheel_3
+    3300034: wheel_4
+    3300036: chassis.001
+    4300000: Object329
+    4300002: Box1491
+    4300004: Object330
+    4300006: Box1492
+    4300008: Object332
+    4300010: Object338
+    4300012: Cylinder316
+    4300014: Object335
+    4300016: Object331
+    4300018: Object336
+    4300020: Object334
+    4300022: Object333
+    4300024: Object337
+    4300026: wheel_2
+    4300028: wheel_3
+    4300030: wheel_1
+    4300032: wheel_4
+    4300034: chassis
+    4300036: chassis.001
+    7400000: Take 001
+    7400002: wheel4|wheel1|Take 001|BaseLayer
+    7400004: wheel4|wheel1|Take 001|BaseLayer.001
+    7400006: wheel4|wheel1|Take 001|BaseLayer.002
+    7400008: wheel4|wheel2|Take 001|BaseLayer
+    7400010: wheel4|wheel2|Take 001|BaseLayer.001
+    7400012: wheel4|wheel2|Take 001|BaseLayer.002
+    7400014: wheel4|wheel3|Take 001|BaseLayer
+    7400016: wheel4|wheel3|Take 001|BaseLayer.001
+    7400018: wheel4|wheel3|Take 001|BaseLayer.002
+    7400020: wheel4|wheel4|Take 001|BaseLayer
+    7400022: wheel4|wheel4|Take 001|BaseLayer.001
+    7400024: wheel4|wheel4|Take 001|BaseLayer.002
+    7400026: wheel4|wheel_1|Take 001|BaseLayer
+    7400028: wheel4|wheel_1|wheel_1|disk2|Take 001|BaseLayer|wheel_1|disk2|Take 001
+    7400030: wheel4|wheel_1|wheel_1|w1|Take 001|BaseLayer|wheel_1|w1|Take 001|BaseL
+    7400032: wheel4|wheel_1|wheel_1|w2|Take 001|BaseLayer|wheel_1|w2|Take 001|BaseL
+    7400034: wheel4|wheel_1|wheel_1|w3|Take 001|BaseLayer|wheel_1|w3|Take 001|BaseL
+    7400036: wheel4|wheel_1|wheel_1|w4|Take 001|BaseLayer|wheel_1|w4|Take 001|BaseL
+    7400038: wheel4|wheel_1|wheel_1|wheel2|Take 001|BaseLayer|wheel_1|wheel2|Take
+      0
+    7400040: wheel4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer.001|wheel_1|wheel_1|
+    7400042: wheel4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400044: wheel4|wheel_1|wheel_1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400046: wheel4|wheel_1|wheel_1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400048: wheel4|wheel_1|wheel_1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400050: wheel4|wheel_1|wheel_1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400052: wheel4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer.001|wheel_1|wheel_2|
+    7400054: wheel4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400056: wheel4|wheel_1|wheel_1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400058: wheel4|wheel_1|wheel_1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400060: wheel4|wheel_1|wheel_1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400062: wheel4|wheel_1|wheel_1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400064: wheel4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer.001|wheel_1|wheel_3|
+    7400066: wheel4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400068: wheel4|wheel_1|wheel_1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400070: wheel4|wheel_1|wheel_1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400072: wheel4|wheel_1|wheel_1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400074: wheel4|wheel_1|wheel_1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400076: wheel4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer.001|wheel_1|wheel_4|
+    7400078: wheel4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400080: wheel4|wheel_1|wheel_1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400082: wheel4|wheel_1|wheel_1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400084: wheel4|wheel_1|wheel_1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400086: wheel4|wheel_1|wheel_1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400088: wheel4|wheel_2|Take 001|BaseLayer
+    7400090: wheel4|wheel_2|wheel_2|disk2|Take 001|BaseLayer|wheel_2|disk2|Take 001
+    7400092: wheel4|wheel_2|wheel_2|w1|Take 001|BaseLayer|wheel_2|w1|Take 001|BaseL
+    7400094: wheel4|wheel_2|wheel_2|w2|Take 001|BaseLayer|wheel_2|w2|Take 001|BaseL
+    7400096: wheel4|wheel_2|wheel_2|w3|Take 001|BaseLayer|wheel_2|w3|Take 001|BaseL
+    7400098: wheel4|wheel_2|wheel_2|w4|Take 001|BaseLayer|wheel_2|w4|Take 001|BaseL
+    7400100: wheel4|wheel_2|wheel_2|wheel2|Take 001|BaseLayer|wheel_2|wheel2|Take
+      0
+    7400102: wheel4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer.001|wheel_2|wheel_1|
+    7400104: wheel4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400106: wheel4|wheel_2|wheel_2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400108: wheel4|wheel_2|wheel_2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400110: wheel4|wheel_2|wheel_2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400112: wheel4|wheel_2|wheel_2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400114: wheel4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer.001|wheel_2|wheel_2|
+    7400116: wheel4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400118: wheel4|wheel_2|wheel_2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400120: wheel4|wheel_2|wheel_2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400122: wheel4|wheel_2|wheel_2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400124: wheel4|wheel_2|wheel_2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400126: wheel4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer.001|wheel_2|wheel_3|
+    7400128: wheel4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400130: wheel4|wheel_2|wheel_2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400132: wheel4|wheel_2|wheel_2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400134: wheel4|wheel_2|wheel_2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400136: wheel4|wheel_2|wheel_2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400138: wheel4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer.001|wheel_2|wheel_4|
+    7400140: wheel4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400142: wheel4|wheel_2|wheel_2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400144: wheel4|wheel_2|wheel_2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400146: wheel4|wheel_2|wheel_2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400148: wheel4|wheel_2|wheel_2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400150: wheel4|wheel_3|Take 001|BaseLayer
+    7400152: wheel4|wheel_3|wheel_3|disk2|Take 001|BaseLayer|wheel_3|disk2|Take 001
+    7400154: wheel4|wheel_3|wheel_3|w1|Take 001|BaseLayer|wheel_3|w1|Take 001|BaseL
+    7400156: wheel4|wheel_3|wheel_3|w2|Take 001|BaseLayer|wheel_3|w2|Take 001|BaseL
+    7400158: wheel4|wheel_3|wheel_3|w3|Take 001|BaseLayer|wheel_3|w3|Take 001|BaseL
+    7400160: wheel4|wheel_3|wheel_3|w4|Take 001|BaseLayer|wheel_3|w4|Take 001|BaseL
+    7400162: wheel4|wheel_3|wheel_3|wheel2|Take 001|BaseLayer|wheel_3|wheel2|Take
+      0
+    7400164: wheel4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer.001|wheel_3|wheel_1|
+    7400166: wheel4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400168: wheel4|wheel_3|wheel_3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400170: wheel4|wheel_3|wheel_3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400172: wheel4|wheel_3|wheel_3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400174: wheel4|wheel_3|wheel_3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400176: wheel4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer.001|wheel_3|wheel_2|
+    7400178: wheel4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400180: wheel4|wheel_3|wheel_3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400182: wheel4|wheel_3|wheel_3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400184: wheel4|wheel_3|wheel_3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400186: wheel4|wheel_3|wheel_3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400188: wheel4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer.001|wheel_3|wheel_3|
+    7400190: wheel4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400192: wheel4|wheel_3|wheel_3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400194: wheel4|wheel_3|wheel_3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400196: wheel4|wheel_3|wheel_3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400198: wheel4|wheel_3|wheel_3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400200: wheel4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer.001|wheel_3|wheel_4|
+    7400202: wheel4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400204: wheel4|wheel_3|wheel_3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400206: wheel4|wheel_3|wheel_3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400208: wheel4|wheel_3|wheel_3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400210: wheel4|wheel_3|wheel_3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400212: wheel4|wheel_4|Take 001|BaseLayer
+    7400214: wheel4|wheel_4|wheel_4|disk2|Take 001|BaseLayer|wheel_4|disk2|Take 001
+    7400216: wheel4|wheel_4|wheel_4|w1|Take 001|BaseLayer|wheel_4|w1|Take 001|BaseL
+    7400218: wheel4|wheel_4|wheel_4|w2|Take 001|BaseLayer|wheel_4|w2|Take 001|BaseL
+    7400220: wheel4|wheel_4|wheel_4|w3|Take 001|BaseLayer|wheel_4|w3|Take 001|BaseL
+    7400222: wheel4|wheel_4|wheel_4|w4|Take 001|BaseLayer|wheel_4|w4|Take 001|BaseL
+    7400224: wheel4|wheel_4|wheel_4|wheel2|Take 001|BaseLayer|wheel_4|wheel2|Take
+      0
+    7400226: wheel4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer.001|wheel_4|wheel_1|
+    7400228: wheel4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400230: wheel4|wheel_4|wheel_4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400232: wheel4|wheel_4|wheel_4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400234: wheel4|wheel_4|wheel_4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400236: wheel4|wheel_4|wheel_4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400238: wheel4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer.001|wheel_4|wheel_2|
+    7400240: wheel4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400242: wheel4|wheel_4|wheel_4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400244: wheel4|wheel_4|wheel_4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400246: wheel4|wheel_4|wheel_4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400248: wheel4|wheel_4|wheel_4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400250: wheel4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer.001|wheel_4|wheel_3|
+    7400252: wheel4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400254: wheel4|wheel_4|wheel_4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400256: wheel4|wheel_4|wheel_4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400258: wheel4|wheel_4|wheel_4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400260: wheel4|wheel_4|wheel_4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400262: wheel4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer.001|wheel_4|wheel_4|
+    7400264: wheel4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400266: wheel4|wheel_4|wheel_4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400268: wheel4|wheel_4|wheel_4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400270: wheel4|wheel_4|wheel_4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400272: wheel4|wheel_4|wheel_4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400274: wheel3|wheel1|Take 001|BaseLayer
+    7400276: wheel3|wheel1|Take 001|BaseLayer.001
+    7400278: wheel3|wheel1|Take 001|BaseLayer.002
+    7400280: wheel3|wheel2|Take 001|BaseLayer
+    7400282: wheel3|wheel2|Take 001|BaseLayer.001
+    7400284: wheel3|wheel2|Take 001|BaseLayer.002
+    7400286: wheel3|wheel3|Take 001|BaseLayer
+    7400288: wheel3|wheel3|Take 001|BaseLayer.001
+    7400290: wheel3|wheel3|Take 001|BaseLayer.002
+    7400292: wheel3|wheel4|Take 001|BaseLayer
+    7400294: wheel3|wheel4|Take 001|BaseLayer.001
+    7400296: wheel3|wheel4|Take 001|BaseLayer.002
+    7400298: wheel3|wheel_1|Take 001|BaseLayer
+    7400300: wheel3|wheel_1|wheel_1|disk2|Take 001|BaseLayer|wheel_1|disk2|Take 001
+    7400302: wheel3|wheel_1|wheel_1|w1|Take 001|BaseLayer|wheel_1|w1|Take 001|BaseL
+    7400304: wheel3|wheel_1|wheel_1|w2|Take 001|BaseLayer|wheel_1|w2|Take 001|BaseL
+    7400306: wheel3|wheel_1|wheel_1|w3|Take 001|BaseLayer|wheel_1|w3|Take 001|BaseL
+    7400308: wheel3|wheel_1|wheel_1|w4|Take 001|BaseLayer|wheel_1|w4|Take 001|BaseL
+    7400310: wheel3|wheel_1|wheel_1|wheel2|Take 001|BaseLayer|wheel_1|wheel2|Take
+      0
+    7400312: wheel3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer.001|wheel_1|wheel_1|
+    7400314: wheel3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400316: wheel3|wheel_1|wheel_1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400318: wheel3|wheel_1|wheel_1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400320: wheel3|wheel_1|wheel_1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400322: wheel3|wheel_1|wheel_1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400324: wheel3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer.001|wheel_1|wheel_2|
+    7400326: wheel3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400328: wheel3|wheel_1|wheel_1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400330: wheel3|wheel_1|wheel_1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400332: wheel3|wheel_1|wheel_1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400334: wheel3|wheel_1|wheel_1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400336: wheel3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer.001|wheel_1|wheel_3|
+    7400338: wheel3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400340: wheel3|wheel_1|wheel_1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400342: wheel3|wheel_1|wheel_1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400344: wheel3|wheel_1|wheel_1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400346: wheel3|wheel_1|wheel_1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400348: wheel3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer.001|wheel_1|wheel_4|
+    7400350: wheel3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400352: wheel3|wheel_1|wheel_1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400354: wheel3|wheel_1|wheel_1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400356: wheel3|wheel_1|wheel_1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400358: wheel3|wheel_1|wheel_1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400360: wheel3|wheel_2|Take 001|BaseLayer
+    7400362: wheel3|wheel_2|wheel_2|disk2|Take 001|BaseLayer|wheel_2|disk2|Take 001
+    7400364: wheel3|wheel_2|wheel_2|w1|Take 001|BaseLayer|wheel_2|w1|Take 001|BaseL
+    7400366: wheel3|wheel_2|wheel_2|w2|Take 001|BaseLayer|wheel_2|w2|Take 001|BaseL
+    7400368: wheel3|wheel_2|wheel_2|w3|Take 001|BaseLayer|wheel_2|w3|Take 001|BaseL
+    7400370: wheel3|wheel_2|wheel_2|w4|Take 001|BaseLayer|wheel_2|w4|Take 001|BaseL
+    7400372: wheel3|wheel_2|wheel_2|wheel2|Take 001|BaseLayer|wheel_2|wheel2|Take
+      0
+    7400374: wheel3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer.001|wheel_2|wheel_1|
+    7400376: wheel3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400378: wheel3|wheel_2|wheel_2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400380: wheel3|wheel_2|wheel_2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400382: wheel3|wheel_2|wheel_2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400384: wheel3|wheel_2|wheel_2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400386: wheel3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer.001|wheel_2|wheel_2|
+    7400388: wheel3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400390: wheel3|wheel_2|wheel_2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400392: wheel3|wheel_2|wheel_2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400394: wheel3|wheel_2|wheel_2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400396: wheel3|wheel_2|wheel_2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400398: wheel3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer.001|wheel_2|wheel_3|
+    7400400: wheel3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400402: wheel3|wheel_2|wheel_2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400404: wheel3|wheel_2|wheel_2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400406: wheel3|wheel_2|wheel_2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400408: wheel3|wheel_2|wheel_2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400410: wheel3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer.001|wheel_2|wheel_4|
+    7400412: wheel3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400414: wheel3|wheel_2|wheel_2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400416: wheel3|wheel_2|wheel_2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400418: wheel3|wheel_2|wheel_2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400420: wheel3|wheel_2|wheel_2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400422: wheel3|wheel_3|Take 001|BaseLayer
+    7400424: wheel3|wheel_3|wheel_3|disk2|Take 001|BaseLayer|wheel_3|disk2|Take 001
+    7400426: wheel3|wheel_3|wheel_3|w1|Take 001|BaseLayer|wheel_3|w1|Take 001|BaseL
+    7400428: wheel3|wheel_3|wheel_3|w2|Take 001|BaseLayer|wheel_3|w2|Take 001|BaseL
+    7400430: wheel3|wheel_3|wheel_3|w3|Take 001|BaseLayer|wheel_3|w3|Take 001|BaseL
+    7400432: wheel3|wheel_3|wheel_3|w4|Take 001|BaseLayer|wheel_3|w4|Take 001|BaseL
+    7400434: wheel3|wheel_3|wheel_3|wheel2|Take 001|BaseLayer|wheel_3|wheel2|Take
+      0
+    7400436: wheel3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer.001|wheel_3|wheel_1|
+    7400438: wheel3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400440: wheel3|wheel_3|wheel_3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400442: wheel3|wheel_3|wheel_3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400444: wheel3|wheel_3|wheel_3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400446: wheel3|wheel_3|wheel_3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400448: wheel3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer.001|wheel_3|wheel_2|
+    7400450: wheel3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400452: wheel3|wheel_3|wheel_3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400454: wheel3|wheel_3|wheel_3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400456: wheel3|wheel_3|wheel_3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400458: wheel3|wheel_3|wheel_3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400460: wheel3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer.001|wheel_3|wheel_3|
+    7400462: wheel3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400464: wheel3|wheel_3|wheel_3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400466: wheel3|wheel_3|wheel_3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400468: wheel3|wheel_3|wheel_3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400470: wheel3|wheel_3|wheel_3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400472: wheel3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer.001|wheel_3|wheel_4|
+    7400474: wheel3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400476: wheel3|wheel_3|wheel_3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400478: wheel3|wheel_3|wheel_3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400480: wheel3|wheel_3|wheel_3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400482: wheel3|wheel_3|wheel_3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400484: wheel3|wheel_4|Take 001|BaseLayer
+    7400486: wheel3|wheel_4|wheel_4|disk2|Take 001|BaseLayer|wheel_4|disk2|Take 001
+    7400488: wheel3|wheel_4|wheel_4|w1|Take 001|BaseLayer|wheel_4|w1|Take 001|BaseL
+    7400490: wheel3|wheel_4|wheel_4|w2|Take 001|BaseLayer|wheel_4|w2|Take 001|BaseL
+    7400492: wheel3|wheel_4|wheel_4|w3|Take 001|BaseLayer|wheel_4|w3|Take 001|BaseL
+    7400494: wheel3|wheel_4|wheel_4|w4|Take 001|BaseLayer|wheel_4|w4|Take 001|BaseL
+    7400496: wheel3|wheel_4|wheel_4|wheel2|Take 001|BaseLayer|wheel_4|wheel2|Take
+      0
+    7400498: wheel3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer.001|wheel_4|wheel_1|
+    7400500: wheel3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400502: wheel3|wheel_4|wheel_4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400504: wheel3|wheel_4|wheel_4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400506: wheel3|wheel_4|wheel_4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400508: wheel3|wheel_4|wheel_4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400510: wheel3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer.001|wheel_4|wheel_2|
+    7400512: wheel3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400514: wheel3|wheel_4|wheel_4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400516: wheel3|wheel_4|wheel_4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400518: wheel3|wheel_4|wheel_4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400520: wheel3|wheel_4|wheel_4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400522: wheel3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer.001|wheel_4|wheel_3|
+    7400524: wheel3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400526: wheel3|wheel_4|wheel_4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400528: wheel3|wheel_4|wheel_4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400530: wheel3|wheel_4|wheel_4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400532: wheel3|wheel_4|wheel_4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400534: wheel3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer.001|wheel_4|wheel_4|
+    7400536: wheel3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400538: wheel3|wheel_4|wheel_4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400540: wheel3|wheel_4|wheel_4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400542: wheel3|wheel_4|wheel_4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400544: wheel3|wheel_4|wheel_4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400546: wheel1|wheel1|Take 001|BaseLayer
+    7400548: wheel1|wheel1|Take 001|BaseLayer.001
+    7400550: wheel1|wheel1|Take 001|BaseLayer.002
+    7400552: wheel1|wheel2|Take 001|BaseLayer
+    7400554: wheel1|wheel2|Take 001|BaseLayer.001
+    7400556: wheel1|wheel2|Take 001|BaseLayer.002
+    7400558: wheel1|wheel3|Take 001|BaseLayer
+    7400560: wheel1|wheel3|Take 001|BaseLayer.001
+    7400562: wheel1|wheel3|Take 001|BaseLayer.002
+    7400564: wheel1|wheel4|Take 001|BaseLayer
+    7400566: wheel1|wheel4|Take 001|BaseLayer.001
+    7400568: wheel1|wheel4|Take 001|BaseLayer.002
+    7400570: wheel1|wheel_1|Take 001|BaseLayer
+    7400572: wheel1|wheel_1|wheel_1|disk2|Take 001|BaseLayer|wheel_1|disk2|Take 001
+    7400574: wheel1|wheel_1|wheel_1|w1|Take 001|BaseLayer|wheel_1|w1|Take 001|BaseL
+    7400576: wheel1|wheel_1|wheel_1|w2|Take 001|BaseLayer|wheel_1|w2|Take 001|BaseL
+    7400578: wheel1|wheel_1|wheel_1|w3|Take 001|BaseLayer|wheel_1|w3|Take 001|BaseL
+    7400580: wheel1|wheel_1|wheel_1|w4|Take 001|BaseLayer|wheel_1|w4|Take 001|BaseL
+    7400582: wheel1|wheel_1|wheel_1|wheel2|Take 001|BaseLayer|wheel_1|wheel2|Take
+      0
+    7400584: wheel1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer.001|wheel_1|wheel_1|
+    7400586: wheel1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400588: wheel1|wheel_1|wheel_1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400590: wheel1|wheel_1|wheel_1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400592: wheel1|wheel_1|wheel_1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400594: wheel1|wheel_1|wheel_1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400596: wheel1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer.001|wheel_1|wheel_2|
+    7400598: wheel1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400600: wheel1|wheel_1|wheel_1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400602: wheel1|wheel_1|wheel_1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400604: wheel1|wheel_1|wheel_1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400606: wheel1|wheel_1|wheel_1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400608: wheel1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer.001|wheel_1|wheel_3|
+    7400610: wheel1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400612: wheel1|wheel_1|wheel_1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400614: wheel1|wheel_1|wheel_1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400616: wheel1|wheel_1|wheel_1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400618: wheel1|wheel_1|wheel_1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400620: wheel1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer.001|wheel_1|wheel_4|
+    7400622: wheel1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400624: wheel1|wheel_1|wheel_1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400626: wheel1|wheel_1|wheel_1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400628: wheel1|wheel_1|wheel_1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400630: wheel1|wheel_1|wheel_1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400632: wheel1|wheel_2|Take 001|BaseLayer
+    7400634: wheel1|wheel_2|wheel_2|disk2|Take 001|BaseLayer|wheel_2|disk2|Take 001
+    7400636: wheel1|wheel_2|wheel_2|w1|Take 001|BaseLayer|wheel_2|w1|Take 001|BaseL
+    7400638: wheel1|wheel_2|wheel_2|w2|Take 001|BaseLayer|wheel_2|w2|Take 001|BaseL
+    7400640: wheel1|wheel_2|wheel_2|w3|Take 001|BaseLayer|wheel_2|w3|Take 001|BaseL
+    7400642: wheel1|wheel_2|wheel_2|w4|Take 001|BaseLayer|wheel_2|w4|Take 001|BaseL
+    7400644: wheel1|wheel_2|wheel_2|wheel2|Take 001|BaseLayer|wheel_2|wheel2|Take
+      0
+    7400646: wheel1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer.001|wheel_2|wheel_1|
+    7400648: wheel1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400650: wheel1|wheel_2|wheel_2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400652: wheel1|wheel_2|wheel_2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400654: wheel1|wheel_2|wheel_2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400656: wheel1|wheel_2|wheel_2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400658: wheel1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer.001|wheel_2|wheel_2|
+    7400660: wheel1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400662: wheel1|wheel_2|wheel_2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400664: wheel1|wheel_2|wheel_2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400666: wheel1|wheel_2|wheel_2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400668: wheel1|wheel_2|wheel_2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400670: wheel1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer.001|wheel_2|wheel_3|
+    7400672: wheel1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400674: wheel1|wheel_2|wheel_2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400676: wheel1|wheel_2|wheel_2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400678: wheel1|wheel_2|wheel_2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400680: wheel1|wheel_2|wheel_2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400682: wheel1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer.001|wheel_2|wheel_4|
+    7400684: wheel1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400686: wheel1|wheel_2|wheel_2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400688: wheel1|wheel_2|wheel_2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400690: wheel1|wheel_2|wheel_2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400692: wheel1|wheel_2|wheel_2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400694: wheel1|wheel_3|Take 001|BaseLayer
+    7400696: wheel1|wheel_3|wheel_3|disk2|Take 001|BaseLayer|wheel_3|disk2|Take 001
+    7400698: wheel1|wheel_3|wheel_3|w1|Take 001|BaseLayer|wheel_3|w1|Take 001|BaseL
+    7400700: wheel1|wheel_3|wheel_3|w2|Take 001|BaseLayer|wheel_3|w2|Take 001|BaseL
+    7400702: wheel1|wheel_3|wheel_3|w3|Take 001|BaseLayer|wheel_3|w3|Take 001|BaseL
+    7400704: wheel1|wheel_3|wheel_3|w4|Take 001|BaseLayer|wheel_3|w4|Take 001|BaseL
+    7400706: wheel1|wheel_3|wheel_3|wheel2|Take 001|BaseLayer|wheel_3|wheel2|Take
+      0
+    7400708: wheel1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer.001|wheel_3|wheel_1|
+    7400710: wheel1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400712: wheel1|wheel_3|wheel_3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400714: wheel1|wheel_3|wheel_3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400716: wheel1|wheel_3|wheel_3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400718: wheel1|wheel_3|wheel_3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400720: wheel1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer.001|wheel_3|wheel_2|
+    7400722: wheel1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400724: wheel1|wheel_3|wheel_3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400726: wheel1|wheel_3|wheel_3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400728: wheel1|wheel_3|wheel_3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400730: wheel1|wheel_3|wheel_3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400732: wheel1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer.001|wheel_3|wheel_3|
+    7400734: wheel1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7400736: wheel1|wheel_3|wheel_3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400738: wheel1|wheel_3|wheel_3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400740: wheel1|wheel_3|wheel_3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400742: wheel1|wheel_3|wheel_3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400744: wheel1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer.001|wheel_3|wheel_4|
+    7400746: wheel1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7400748: wheel1|wheel_3|wheel_3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400750: wheel1|wheel_3|wheel_3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400752: wheel1|wheel_3|wheel_3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400754: wheel1|wheel_3|wheel_3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400756: wheel1|wheel_4|Take 001|BaseLayer
+    7400758: wheel1|wheel_4|wheel_4|disk2|Take 001|BaseLayer|wheel_4|disk2|Take 001
+    7400760: wheel1|wheel_4|wheel_4|w1|Take 001|BaseLayer|wheel_4|w1|Take 001|BaseL
+    7400762: wheel1|wheel_4|wheel_4|w2|Take 001|BaseLayer|wheel_4|w2|Take 001|BaseL
+    7400764: wheel1|wheel_4|wheel_4|w3|Take 001|BaseLayer|wheel_4|w3|Take 001|BaseL
+    7400766: wheel1|wheel_4|wheel_4|w4|Take 001|BaseLayer|wheel_4|w4|Take 001|BaseL
+    7400768: wheel1|wheel_4|wheel_4|wheel2|Take 001|BaseLayer|wheel_4|wheel2|Take
+      0
+    7400770: wheel1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer.001|wheel_4|wheel_1|
+    7400772: wheel1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7400774: wheel1|wheel_4|wheel_4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400776: wheel1|wheel_4|wheel_4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400778: wheel1|wheel_4|wheel_4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400780: wheel1|wheel_4|wheel_4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400782: wheel1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer.001|wheel_4|wheel_2|
+    7400784: wheel1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7400786: wheel1|wheel_4|wheel_4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400788: wheel1|wheel_4|wheel_4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400790: wheel1|wheel_4|wheel_4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400792: wheel1|wheel_4|wheel_4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400794: wheel1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer.001|wheel_4|wheel_3|
+    7400796: wheel1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7400798: wheel1|wheel_4|wheel_4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400800: wheel1|wheel_4|wheel_4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400802: wheel1|wheel_4|wheel_4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400804: wheel1|wheel_4|wheel_4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400806: wheel1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer.001|wheel_4|wheel_4|
+    7400808: wheel1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7400810: wheel1|wheel_4|wheel_4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400812: wheel1|wheel_4|wheel_4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400814: wheel1|wheel_4|wheel_4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400816: wheel1|wheel_4|wheel_4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400818: wheel2|wheel1|Take 001|BaseLayer
+    7400820: wheel2|wheel1|Take 001|BaseLayer.001
+    7400822: wheel2|wheel1|Take 001|BaseLayer.002
+    7400824: wheel2|wheel2|Take 001|BaseLayer
+    7400826: wheel2|wheel2|Take 001|BaseLayer.001
+    7400828: wheel2|wheel2|Take 001|BaseLayer.002
+    7400830: wheel2|wheel3|Take 001|BaseLayer
+    7400832: wheel2|wheel3|Take 001|BaseLayer.001
+    7400834: wheel2|wheel3|Take 001|BaseLayer.002
+    7400836: wheel2|wheel4|Take 001|BaseLayer
+    7400838: wheel2|wheel4|Take 001|BaseLayer.001
+    7400840: wheel2|wheel4|Take 001|BaseLayer.002
+    7400842: wheel2|wheel_1|Take 001|BaseLayer
+    7400844: wheel2|wheel_1|wheel_1|disk2|Take 001|BaseLayer|wheel_1|disk2|Take 001
+    7400846: wheel2|wheel_1|wheel_1|w1|Take 001|BaseLayer|wheel_1|w1|Take 001|BaseL
+    7400848: wheel2|wheel_1|wheel_1|w2|Take 001|BaseLayer|wheel_1|w2|Take 001|BaseL
+    7400850: wheel2|wheel_1|wheel_1|w3|Take 001|BaseLayer|wheel_1|w3|Take 001|BaseL
+    7400852: wheel2|wheel_1|wheel_1|w4|Take 001|BaseLayer|wheel_1|w4|Take 001|BaseL
+    7400854: wheel2|wheel_1|wheel_1|wheel2|Take 001|BaseLayer|wheel_1|wheel2|Take
+      0
+    7400856: wheel2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer.001|wheel_1|wheel_1|
+    7400858: wheel2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|wheel_1|wheel_1|Take
+    7400860: wheel2|wheel_1|wheel_1|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400862: wheel2|wheel_1|wheel_1|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400864: wheel2|wheel_1|wheel_1|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400866: wheel2|wheel_1|wheel_1|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400868: wheel2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer.001|wheel_1|wheel_2|
+    7400870: wheel2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|wheel_1|wheel_2|Take
+    7400872: wheel2|wheel_1|wheel_1|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400874: wheel2|wheel_1|wheel_1|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400876: wheel2|wheel_1|wheel_1|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400878: wheel2|wheel_1|wheel_1|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400880: wheel2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer.001|wheel_1|wheel_3|
+    7400882: wheel2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|wheel_1|wheel_3|Take
+    7400884: wheel2|wheel_1|wheel_1|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400886: wheel2|wheel_1|wheel_1|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400888: wheel2|wheel_1|wheel_1|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400890: wheel2|wheel_1|wheel_1|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400892: wheel2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer.001|wheel_1|wheel_4|
+    7400894: wheel2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|wheel_1|wheel_4|Take
+    7400896: wheel2|wheel_1|wheel_1|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400898: wheel2|wheel_1|wheel_1|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400900: wheel2|wheel_1|wheel_1|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400902: wheel2|wheel_1|wheel_1|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400904: wheel2|wheel_2|Take 001|BaseLayer
+    7400906: wheel2|wheel_2|wheel_2|disk2|Take 001|BaseLayer|wheel_2|disk2|Take 001
+    7400908: wheel2|wheel_2|wheel_2|w1|Take 001|BaseLayer|wheel_2|w1|Take 001|BaseL
+    7400910: wheel2|wheel_2|wheel_2|w2|Take 001|BaseLayer|wheel_2|w2|Take 001|BaseL
+    7400912: wheel2|wheel_2|wheel_2|w3|Take 001|BaseLayer|wheel_2|w3|Take 001|BaseL
+    7400914: wheel2|wheel_2|wheel_2|w4|Take 001|BaseLayer|wheel_2|w4|Take 001|BaseL
+    7400916: wheel2|wheel_2|wheel_2|wheel2|Take 001|BaseLayer|wheel_2|wheel2|Take
+      0
+    7400918: wheel2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer.001|wheel_2|wheel_1|
+    7400920: wheel2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|wheel_2|wheel_1|Take
+    7400922: wheel2|wheel_2|wheel_2|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400924: wheel2|wheel_2|wheel_2|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400926: wheel2|wheel_2|wheel_2|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400928: wheel2|wheel_2|wheel_2|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400930: wheel2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer.001|wheel_2|wheel_2|
+    7400932: wheel2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|wheel_2|wheel_2|Take
+    7400934: wheel2|wheel_2|wheel_2|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400936: wheel2|wheel_2|wheel_2|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7400938: wheel2|wheel_2|wheel_2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7400940: wheel2|wheel_2|wheel_2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7400942: wheel2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer.001|wheel_2|wheel_3|
+    7400944: wheel2|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|wheel_2|wheel_3|Take
+    7400946: wheel2|wheel_2|wheel_2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7400948: wheel2|wheel_2|wheel_2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7400950: wheel2|wheel_2|wheel_2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7400952: wheel2|wheel_2|wheel_2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7400954: wheel2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer.001|wheel_2|wheel_4|
+    7400956: wheel2|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|wheel_2|wheel_4|Take
+    7400958: wheel2|wheel_2|wheel_2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7400960: wheel2|wheel_2|wheel_2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7400962: wheel2|wheel_2|wheel_2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7400964: wheel2|wheel_2|wheel_2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7400966: wheel2|wheel_3|Take 001|BaseLayer
+    7400968: wheel2|wheel_3|wheel_3|disk2|Take 001|BaseLayer|wheel_3|disk2|Take 001
+    7400970: wheel2|wheel_3|wheel_3|w1|Take 001|BaseLayer|wheel_3|w1|Take 001|BaseL
+    7400972: wheel2|wheel_3|wheel_3|w2|Take 001|BaseLayer|wheel_3|w2|Take 001|BaseL
+    7400974: wheel2|wheel_3|wheel_3|w3|Take 001|BaseLayer|wheel_3|w3|Take 001|BaseL
+    7400976: wheel2|wheel_3|wheel_3|w4|Take 001|BaseLayer|wheel_3|w4|Take 001|BaseL
+    7400978: wheel2|wheel_3|wheel_3|wheel2|Take 001|BaseLayer|wheel_3|wheel2|Take
+      0
+    7400980: wheel2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer.001|wheel_3|wheel_1|
+    7400982: wheel2|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|wheel_3|wheel_1|Take
+    7400984: wheel2|wheel_3|wheel_3|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7400986: wheel2|wheel_3|wheel_3|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7400988: wheel2|wheel_3|wheel_3|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7400990: wheel2|wheel_3|wheel_3|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7400992: wheel2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer.001|wheel_3|wheel_2|
+    7400994: wheel2|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|wheel_3|wheel_2|Take
+    7400996: wheel2|wheel_3|wheel_3|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7400998: wheel2|wheel_3|wheel_3|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7401000: wheel2|wheel_3|wheel_3|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7401002: wheel2|wheel_3|wheel_3|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7401004: wheel2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer.001|wheel_3|wheel_3|
+    7401006: wheel2|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|wheel_3|wheel_3|Take
+    7401008: wheel2|wheel_3|wheel_3|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7401010: wheel2|wheel_3|wheel_3|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7401012: wheel2|wheel_3|wheel_3|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7401014: wheel2|wheel_3|wheel_3|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7401016: wheel2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer.001|wheel_3|wheel_4|
+    7401018: wheel2|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|wheel_3|wheel_4|Take
+    7401020: wheel2|wheel_3|wheel_3|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7401022: wheel2|wheel_3|wheel_3|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7401024: wheel2|wheel_3|wheel_3|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7401026: wheel2|wheel_3|wheel_3|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    7401028: wheel2|wheel_4|Take 001|BaseLayer
+    7401030: wheel2|wheel_4|wheel_4|disk2|Take 001|BaseLayer|wheel_4|disk2|Take 001
+    7401032: wheel2|wheel_4|wheel_4|w1|Take 001|BaseLayer|wheel_4|w1|Take 001|BaseL
+    7401034: wheel2|wheel_4|wheel_4|w2|Take 001|BaseLayer|wheel_4|w2|Take 001|BaseL
+    7401036: wheel2|wheel_4|wheel_4|w3|Take 001|BaseLayer|wheel_4|w3|Take 001|BaseL
+    7401038: wheel2|wheel_4|wheel_4|w4|Take 001|BaseLayer|wheel_4|w4|Take 001|BaseL
+    7401040: wheel2|wheel_4|wheel_4|wheel2|Take 001|BaseLayer|wheel_4|wheel2|Take
+      0
+    7401042: wheel2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer.001|wheel_4|wheel_1|
+    7401044: wheel2|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|wheel_4|wheel_1|Take
+    7401046: wheel2|wheel_4|wheel_4|wheel_1|wheel_1|wheel_1|Take 001|BaseLayer|whee
+    7401048: wheel2|wheel_4|wheel_4|wheel_1|wheel_1|wheel_2|Take 001|BaseLayer|whee
+    7401050: wheel2|wheel_4|wheel_4|wheel_1|wheel_1|wheel_3|Take 001|BaseLayer|whee
+    7401052: wheel2|wheel_4|wheel_4|wheel_1|wheel_1|wheel_4|Take 001|BaseLayer|whee
+    7401054: wheel2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer.001|wheel_4|wheel_2|
+    7401056: wheel2|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|wheel_4|wheel_2|Take
+    7401058: wheel2|wheel_4|wheel_4|wheel_2|wheel_2|wheel_1|Take 001|BaseLayer|whee
+    7401060: wheel2|wheel_4|wheel_4|wheel_2|wheel_2|wheel_2|Take 001|BaseLayer|whee
+    7401062: wheel2|wheel_4|wheel_4|wheel_2|wheel_2|wheel_3|Take 001|BaseLayer|whee
+    7401064: wheel2|wheel_4|wheel_4|wheel_2|wheel_2|wheel_4|Take 001|BaseLayer|whee
+    7401066: wheel2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer.001|wheel_4|wheel_3|
+    7401068: wheel2|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|wheel_4|wheel_3|Take
+    7401070: wheel2|wheel_4|wheel_4|wheel_3|wheel_3|wheel_1|Take 001|BaseLayer|whee
+    7401072: wheel2|wheel_4|wheel_4|wheel_3|wheel_3|wheel_2|Take 001|BaseLayer|whee
+    7401074: wheel2|wheel_4|wheel_4|wheel_3|wheel_3|wheel_3|Take 001|BaseLayer|whee
+    7401076: wheel2|wheel_4|wheel_4|wheel_3|wheel_3|wheel_4|Take 001|BaseLayer|whee
+    7401078: wheel2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer.001|wheel_4|wheel_4|
+    7401080: wheel2|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|wheel_4|wheel_4|Take
+    7401082: wheel2|wheel_4|wheel_4|wheel_4|wheel_4|wheel_1|Take 001|BaseLayer|whee
+    7401084: wheel2|wheel_4|wheel_4|wheel_4|wheel_4|wheel_2|Take 001|BaseLayer|whee
+    7401086: wheel2|wheel_4|wheel_4|wheel_4|wheel_4|wheel_3|Take 001|BaseLayer|whee
+    7401088: wheel2|wheel_4|wheel_4|wheel_4|wheel_4|wheel_4|Take 001|BaseLayer|whee
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
