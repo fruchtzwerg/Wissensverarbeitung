@@ -3,7 +3,7 @@ using System.IO;
 using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using Debug = UnityEngine.Debug;
 
 public class Job
@@ -11,8 +11,9 @@ public class Job
 
     private Process _prolog;
     private StreamWriter _sw;
+    private const string EXE = "swipl.exe";
     public const string DELIMITER_SEND = "?- ";
-    public const string DELIMITER_RECIVE = "   ";
+    public const string DELIMITER_RECIVE = "    ";
 
     private Queue<WaitingObject> _queue;
 
@@ -21,13 +22,13 @@ public class Job
     public Job(UnityLogger logger)
     {
         _unityLogger = logger;
-
         _queue = new Queue<WaitingObject>();
 
         _prolog = new Process
         {
             StartInfo =
             {
+                FileName = EXE,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
@@ -36,16 +37,8 @@ public class Job
             }
         };
 
-        if (File.Exists(@"C:\Program Files\swipl\bin\swipl.exe"))
-            _prolog.StartInfo.FileName = @"C:\Program Files\swipl\bin\swipl.exe";
-        else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
-            _prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
-        else
-        {
-            _prolog.StartInfo.FileName = "swipl.exe";
-            Debug.Log("SWI not found!");
-            return;
-        }
+        // find the exe path
+        if (!FindSwiExe()) return;
 
 
         // start the process
@@ -68,6 +61,40 @@ public class Job
 
         // start listening on STDOUT
         _prolog.BeginOutputReadLine();
+    }
+
+    /// <summary>
+    /// Searches for the swipl.exe path by different means.
+    /// 
+    /// exe search pattern:
+    /// current dir > path env-var > default install dir > not found
+    /// </summary>
+    /// <returns>true if found, else false</returns>
+    private bool FindSwiExe()
+    {
+        // if file not exists in current folder
+        if (!File.Exists(_prolog.StartInfo.FileName))
+        {
+            // get exe from path
+            var path = Environment.GetEnvironmentVariable("PATH");
+
+            _prolog.StartInfo.FileName = path.Split(';')
+                .Select(split => Path.Combine(split, EXE))
+                .FirstOrDefault(File.Exists);
+        } // if not found in path get exe at default install dirs
+        else if (string.IsNullOrEmpty(_prolog.StartInfo.FileName))
+        {
+            if (File.Exists(@"C:\Program Files\swipl\bin\swipl.exe"))
+                _prolog.StartInfo.FileName = @"C:\Program Files\swipl\bin\swipl.exe";
+            else if (File.Exists(@"C:\Program Files (x86)\swipl\bin\swipl.exe"))
+                _prolog.StartInfo.FileName = @"C:\Program Files (x86)\swipl\bin\swipl.exe";
+        }
+        else // swipl.exe not found
+        {
+            Debug.Log("SWI-Prolog executable not found!");
+            return false;
+        }
+        return true;
     }
 
 
@@ -201,6 +228,7 @@ public class Job
     /// </summary>
     public void Kill()
     {
-        _prolog.Kill();
+        if(_prolog != null && !_prolog.HasExited)
+            _prolog.Kill();
     }
 }

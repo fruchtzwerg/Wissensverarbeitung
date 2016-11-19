@@ -18,7 +18,7 @@ public class PrologWrapper : MonoBehaviour
         if (UnityLogger == null)
             UnityLogger = GetComponent<UnityLogger>();
 
-        aStarTree = aStar.buildAStarTreeString();
+        aStarTree = aStar.BuildAStarTreeString();
 
         // create new backround worker
         var worker = new BackgroundWorker();
@@ -69,7 +69,8 @@ public class PrologWrapper : MonoBehaviour
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit()
     {
-        _prolog.Kill();
+        if(_prolog != null)
+            _prolog.Kill();
     }
 
 
