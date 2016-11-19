@@ -205,19 +205,8 @@ public class SplineWalker : MonoBehaviour
         for (var i = 0; i < waypoints.Length; i++)
         {
             sum += waypoints[i].Weight;
-            //var tmp = sum;
             weights[i] = sum;
         }
-
-        var sb = new StringBuilder();
-        sb.Append("[");
-        foreach (var weight in weights)
-        {
-            sb.Append(weight + ", ");
-        }
-        sb.Append("]");
-        sb.Replace(", ]", "]");
-        print(sb.ToString());
 
         // get random index of waypoint
         var rand = _rng.Next(1, sum + 1);
@@ -228,6 +217,6 @@ public class SplineWalker : MonoBehaviour
                 return waypoints[i];
         }
 
-        return waypoints[rand];
+        return waypoints[0];
     }
 }
