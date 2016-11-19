@@ -9,24 +9,21 @@
 %Definition des Zieles
 goal(t).
 
-liste([arc(e,f,5,7),arc(s,e,2,6),arc(s,a,2,6),arc(a,b,2,5),arc(b,c,2,4),arc(c,d,3,4),arc(d,t,3,3),arc(f,g,2,4),arc(g,t,2,2),arc(t,g,2,0)]).
-
+%Das setzen eines neuen Graphen/Baumes von C# aus
 setNewGraph(List):-
               retractall(h(_,_))
               ,
               retractall(s(_,_,_))
               ,
               createGraph(List).
-                                    
+%Prädikat dient Modifizierung der Wissensbank, hierbei werden die von C#
+%übergebenen Arc Daten in zwei für den A* Algorithmus verwendbare Prädikate
+%aufgesplittet und in der Wissenbank hinterlegt.
+
+%Abbruchbedingung
 createGraph([]).
 createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
                                      assert(s(N,N1,Cost))
-                                     %,
-                                     %not(h(N,_))
-                                     %,
-                                     %assert(h(N,HeuristicValue))
-                                     %,
-                                     %createGraph(Tail).
                                      ,
                                      not(h(N,_)) ->
                                      assert(h(N,HeuristicValue))
@@ -35,39 +32,21 @@ createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
                                      ;
                                      createGraph(Tail).
 
-
+%Prädikat dient der Anfrage des besten Pfades, aus C# heraus.
+%Dabei sind Namen der Start und Zielknoten anzugeben.
+%Als Ergebnis erhält C# die Wegbeschreibung von Knoten Start zu Ziel.
 getPath(Start,Goal,Path):-
                       retract(goal(_))
                       ,
                       assert(goal(Goal))
                       ,
                       bestfirst(Start,Path).
-
+%Test
 updateNode(Node,Node1,NewCost):-
                       retract(s(Node,Node1,_))
                       ,
                       assert(s(Node,Node1,NewCost)).
-                                     
-%arcs
-%s(e,f,5).
-%s(s,e,2).
-%s(s,a,2).
-%s(a,b,2).
-%s(b,c,2).
-%s(c,d,3).
-%s(d,t,3).
-%s(f,g,2).
-%s(g,t,2).
 
-%Funktionswerte der Heuristik
-%h(e,7).
-%h(a,5).
-%h(b,4).
-%h(c,4).
-%h(f,4).
-%h(g,2).
-%h(d,3).
-%h(t,0).
 
 % bestfirst(Start, Solution): Solution is a path from Start to a goal
 bestfirst(Start, Solution):- expand([],l(Start,0/0),9999,_,yes,Solution),!.   %Assume 9999 is > any f-value
