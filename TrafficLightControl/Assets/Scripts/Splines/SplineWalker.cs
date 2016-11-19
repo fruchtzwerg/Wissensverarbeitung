@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using System.Text;
+using UnityEngine;
 using Random = System.Random;
 
 public class SplineWalker : MonoBehaviour
@@ -36,7 +38,7 @@ public class SplineWalker : MonoBehaviour
 
     public bool Move = true;
 
-    private readonly Random _rnd = new Random();
+    private readonly Random _rng = new Random();
 
 
     private void Update()
@@ -196,8 +198,35 @@ public class SplineWalker : MonoBehaviour
     {
         // get waypoints registered with this waypoint
         var waypoints = waypoint.GetComponents<SplineWaypoint>();
+        var weights = new int[waypoints.Length];
+        var sum = 0;
+
+        // get weights
+        for (var i = 0; i < waypoints.Length; i++)
+        {
+            sum += waypoints[i].Weight;
+            //var tmp = sum;
+            weights[i] = sum;
+        }
+
+        var sb = new StringBuilder();
+        sb.Append("[");
+        foreach (var weight in weights)
+        {
+            sb.Append(weight + ", ");
+        }
+        sb.Append("]");
+        sb.Replace(", ]", "]");
+        print(sb.ToString());
+
         // get random index of waypoint
-        var rand = _rnd.Next(0, waypoints.Length);
+        var rand = _rng.Next(1, sum + 1);
+
+        for (var i = 0; i < weights.Length; i++)
+        {
+            if (rand <= weights[i])
+                return waypoints[i];
+        }
 
         return waypoints[rand];
     }
