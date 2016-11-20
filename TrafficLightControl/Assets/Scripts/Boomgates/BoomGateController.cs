@@ -74,7 +74,7 @@ public class BoomGateController : BoomGate, IIntervalMultiplierUpdate {
         _audioSourceHolder.AddComponent<AudioSource>();
 
         try {
-            _clip1 = Resources.Load<AudioClip>("/Sound/train_crossing");
+            _clip1 = Resources.Load<AudioClip>("Sound/train_crossing") as AudioClip;
         }
         catch (Exception e) {
             print("ERROR: " + e);
