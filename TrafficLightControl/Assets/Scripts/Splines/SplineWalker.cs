@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
@@ -27,6 +26,7 @@ public class SplineWalker : MonoBehaviour
 
 
     public SplineWaypoint Waypoint;
+    public Stack<SplineWaypoint> Waypoints;
     public float HeightOffset = 0.5f;
     public float Duration = 3;
     public LookDirection LookAtDirection;
@@ -161,7 +161,14 @@ public class SplineWalker : MonoBehaviour
                 }
 
                 // get a the next waypoint randomly
-                Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
+                if (Waypoints == null)
+                {
+                    Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
+                }
+                else
+                {
+                    Waypoint = Waypoints.Pop();
+                }
 
                 _spline = Waypoint.Spline;
                 transform.parent = _spline.transform;

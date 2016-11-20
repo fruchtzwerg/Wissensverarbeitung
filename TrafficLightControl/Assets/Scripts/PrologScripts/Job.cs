@@ -166,7 +166,7 @@ public class Job
         if (waitingObject != null && waitingObject.Sender != null)
         {
             //send reply
-            waitingObject.Sender.ReciveDataFromProlog(message);
+            waitingObject.Sender.ReceiveDataFromProlog(message);
         }
 
         //if there a still other querys to prolog...

@@ -27,7 +27,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
     private Timer _phaseTimer;
     private float _multiplier = 1.0f;
-    private string _recivedDataWithOutVar;
+    private string _receivedDataWithOutVar;
 
     // Use this for initialization
     void Start()
@@ -57,23 +57,23 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     }
 
     /// <summary>
-    /// processing recived data
+    /// processing received data
     /// </summary>
-    /// <param name="recivedData"></param>
-    public void ReciveDataFromProlog(string recivedData)
+    /// <param name="receivedData"></param>
+    public void ReceiveDataFromProlog(string receivedData)
     {
-        //recivedData is emtry or empty list
-        if (IsValidData(recivedData))
+        //receivedData is emtry or empty list
+        if (IsValidData(receivedData))
             return;
 
 
         //\[\[.*\],.*,\d{1,3}\]
-        //print("R:" + recivedData);
+        //print("R:" + receivedData);
         try
         {
-            _recivedDataWithOutVar = recivedData.Replace(GREEN, "");
+            _receivedDataWithOutVar = receivedData.Replace(GREEN, "");
 
-            //print("Rwov:" + recivedData);
+            //print("Rwov:" + receivedData);
 
             // get string array from prolog return string
             var splits = ArrayFromData();
@@ -102,14 +102,14 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
 
     /// <summary>
-    /// Checks if recivedData is a valid response from prolog.
+    /// Checks if receivedData is a valid response from prolog.
     /// </summary>
-    /// <param name="recivedData"></param>
+    /// <param name="receivedData"></param>
     /// <returns>true: valid | false: invalid</returns>
-    private static bool IsValidData(string recivedData)
+    private static bool IsValidData(string receivedData)
     {
-        return string.IsNullOrEmpty(recivedData) || recivedData.Contains("G = [].") || recivedData.Equals("true") ||
-               recivedData.Equals("false") || recivedData.Equals("true.") || recivedData.Equals("false.");
+        return string.IsNullOrEmpty(receivedData) || receivedData.Contains("G = [].") || receivedData.Equals("true") ||
+               receivedData.Equals("false") || receivedData.Equals("true.") || receivedData.Equals("false.");
     }
 
 
@@ -120,8 +120,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <returns>prolog response as string[]</returns>
     private string[] ArrayFromData()
     {
-        var arrayStart = _recivedDataWithOutVar.LastIndexOf("[");
-        var arrayEnd = _recivedDataWithOutVar.IndexOf("]");
+        var arrayStart = _receivedDataWithOutVar.LastIndexOf("[");
+        var arrayEnd = _receivedDataWithOutVar.IndexOf("]");
         var arrayLength = arrayEnd - arrayStart;
 
         // if start, end or length is negative -> return
@@ -130,7 +130,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
         //print("S:"+ arrayStart + ", E:"+ arrayEnd + ", L:"+ arrayLength);
 
-        var greenTrafficLightsArray = _recivedDataWithOutVar.Substring(arrayStart, arrayLength);
+        var greenTrafficLightsArray = _receivedDataWithOutVar.Substring(arrayStart, arrayLength);
         greenTrafficLightsArray = greenTrafficLightsArray.Replace("[", "").Replace("]", "");
 
         var stringSeparators = new[] {","};
@@ -144,8 +144,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private void SetTimer()
     {
         //phase time from response
-        var phaseTimeStartIndex = _recivedDataWithOutVar.LastIndexOf(",");
-        var nextPhaseTimeString = _recivedDataWithOutVar.Substring(phaseTimeStartIndex)
+        var phaseTimeStartIndex = _receivedDataWithOutVar.LastIndexOf(",");
+        var nextPhaseTimeString = _receivedDataWithOutVar.Substring(phaseTimeStartIndex)
             .Replace("].", "")
             .Replace(",", "")
             .Trim();

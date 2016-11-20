@@ -41,9 +41,9 @@ public class AStar : MonoBehaviour
         var lanesParents = GameObject.FindGameObjectsWithTag(TAG_LANES);
         // get all waypoints marked as IsOrigin
         var origins = (from parent in lanesParents
-            from waypoint in parent.GetComponentsInChildren<SplineWaypoint>()
-            where waypoint.IsOrigin
-            select waypoint).ToArray();
+                       from waypoint in parent.GetComponentsInChildren<SplineWaypoint>()
+                       where waypoint.IsOrigin
+                       select waypoint).ToArray();
 
         // build an arc of the tree for each origin
         foreach (var origin in origins)
@@ -64,10 +64,11 @@ public class AStar : MonoBehaviour
         // for each of these waypoints...
         foreach (var origin in origins)
         {
+            var next = origin.NextWaypoint;
             // break condition:
             // done, if this is a destination or there is no next waypoint
-            if (origin.IsDestination || origin.NextWaypoint == null)
-                return;
+            if (origin.IsDestination || next == null)
+                next = origin;
 
             var sb = new StringBuilder();
 
@@ -76,16 +77,16 @@ public class AStar : MonoBehaviour
             // (origin.name,
             sb.Append(origin.name).Append(SEP);
             // (origin.name,next.name,
-            sb.Append(origin.NextWaypoint.name).Append(SEP);
+            sb.Append(next.name).Append(SEP);
 
             // calculate costs 
             //var numVehicles = origin.GetComponentsInChildren<SplineWalker>().Length;
             // constant costs
             // (origin.name,next.name,5,
-            sb.Append(5).Append(SEP);
+            sb.Append(1).Append(SEP);
 
             // (origin.name,next.name,5,distance
-            sb.Append(CalculteDistance(origin.transform, origin.NextWaypoint.transform));
+            sb.Append(CalculteDistance(origin.transform, next.transform));
             // (origin.name,next.name,5,distance),
             sb.Append(ARC_POST);
 
@@ -94,7 +95,8 @@ public class AStar : MonoBehaviour
                 _sb.Append(sb);
 
             // recursive call for next waypoint
-            BuildArc(origin.NextWaypoint);
+            if(origin != next)
+                BuildArc(next);
         }
     }
 

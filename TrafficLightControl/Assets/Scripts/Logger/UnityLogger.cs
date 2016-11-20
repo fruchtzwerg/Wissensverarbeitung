@@ -25,7 +25,9 @@ public class UnityLogger : MonoBehaviour {
     public void LogProlog(string message)
     {
         //ConsoleView.LogMessage(message);
-        UnityMainThreadDispatcher.Instance().Enqueue(ConsoleView.LogMessage(message));
+        var msg = message;
+        UnityThreadHelper.Dispatcher.Dispatch(() => ConsoleView.LogMessage(msg));
+        print(message);
 
         message = DateTime.Now + ": " + message;
 

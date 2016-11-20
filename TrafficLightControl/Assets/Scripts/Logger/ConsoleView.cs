@@ -90,9 +90,8 @@ public class ConsoleView : MonoBehaviour
         }
     }
 
-    public IEnumerator LogMessage(string message)
+    public void LogMessage(string message)
     {
         _console.Log(message);
-        yield return null;
     }
 }

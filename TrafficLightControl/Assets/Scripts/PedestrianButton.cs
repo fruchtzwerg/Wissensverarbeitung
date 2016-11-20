@@ -26,7 +26,6 @@ public class PedestrianButton : MonoBehaviour {
 	}
 
     void OnMouseDown() {
-        print("down");
         pushed();
 
         if(PartnerButton)

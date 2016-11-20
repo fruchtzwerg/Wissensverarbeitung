@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
-public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
+public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
 {
     // spwan chances in percentage per frame
     // 1f = 1% chance each frame
@@ -17,6 +19,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     public int MaxVehicles = 100;
     public static int Count;
     public Transform Lanes;
+    public PrologWrapper Wrapper;
 
     private float _carChance;
     private float _suvChance;
@@ -24,6 +27,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     private float _truckChance;
 
     private List<SplineWaypoint> originWaypoints = new List<SplineWaypoint>();
+    private List<SplineWaypoint> destinationWaypoints = new List<SplineWaypoint>();
 
     // 0   <car  <suv   <bus   <truck        <no spawn>       span
     // |-----|-----|------|-------|----------------------------|
@@ -37,7 +41,9 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     private GameObject busPrefab;
     private GameObject truckPrefab;
 
+    public Material SpecialMaterial;
     public Material[] BodyMaterials;
+
 
     private Random rnd = new Random();
 
@@ -58,13 +64,17 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
                 originWaypoints.Add(waypoint);
                 //print(waypoint.name);
             }
+            else if (waypoint.IsDestination)
+            {
+                destinationWaypoints.Add(waypoint);
+            }
         }
 
         // load prefabs from /Assets/Resources/<name>
-        carPrefab = Resources.Load("Vehicles/Car", typeof(GameObject)) as GameObject;
-        suvPrefab = Resources.Load("Vehicles/Suv", typeof(GameObject)) as GameObject;
-        busPrefab = Resources.Load("Vehicles/Bus", typeof(GameObject)) as GameObject;
-        truckPrefab = Resources.Load("Vehicles/Truck", typeof(GameObject)) as GameObject;
+        carPrefab = Resources.Load<GameObject>("Vehicles/Car");
+        suvPrefab = Resources.Load<GameObject>("Vehicles/Suv");
+        busPrefab = Resources.Load<GameObject>("Vehicles/Bus");
+        truckPrefab = Resources.Load<GameObject>("Vehicles/Truck");
 
         UpdateThresholds();
     }
@@ -120,9 +130,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
         Count++;
 
         // set color
-        var body = car.FindComponentInChildWithTag<Renderer>("Body");
-        if (body)
-            body.material = GetRandomMaterial();
+        Paint(car);
 
         // set the origin of the instance
         var walker = car.GetComponent<SplineWalker>();
@@ -130,6 +138,15 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
 
         // attatch to parent
         walker.transform.parent = walker.Waypoint.Spline.transform;
+    }
+
+    private void Paint(GameObject car, Material material = null)
+    {
+        var body = car.FindComponentInChildWithTag<Renderer>("Body");
+        material = material ?? GetRandomMaterial();
+
+        if (body)
+            body.material = material;
     }
 
 
@@ -166,6 +183,17 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     }
 
 
+    /// <summary>
+    /// Get a random destination point
+    /// </summary>
+    /// <returns></returns>
+    private SplineWaypoint GetRandomDestination()
+    {
+        var rand = rnd.Next(0, destinationWaypoints.Count);
+        return destinationWaypoints[rand];
+    }
+
+
     private Material GetRandomMaterial()
     {
         var rand = rnd.Next(0, BodyMaterials.Length);
@@ -187,5 +215,37 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate
     {
         multiplier = value;
         UpdateThresholds();
+    }
+
+    public void Spawn(string origin, string destination)
+    {
+        if (string.IsNullOrEmpty(origin))
+            origin = GetRandomOrigin().name.ToLower();
+
+        if (string.IsNullOrEmpty(destination))
+            destination = GetRandomDestination().name.ToLower();
+
+        var query = PrologWrapper.GetPath(origin, destination);
+        Wrapper.QueryProlog(query, this);
+    }
+
+    public void ReceiveDataFromProlog(string receivedData)
+    {
+        var task = UnityThreadHelper.Dispatcher.Dispatch(() => PrologWrapper.ParseArray(receivedData));
+        var result = task.Wait<SplineWaypoint[]>();
+        if(result == null)
+            return;
+
+        UnityThreadHelper.Dispatcher.Dispatch(() => SpawnPostProlog(new Stack<SplineWaypoint>(result)));
+    }
+
+    private void SpawnPostProlog(Stack<SplineWaypoint> waypoints)
+    {
+        var vehicle = Instantiate(carPrefab);
+        Paint(vehicle, SpecialMaterial);
+
+        var walker = vehicle.GetComponent<SplineWalker>();
+        walker.Waypoint = waypoints.Pop();
+        walker.Waypoints = waypoints;
     }
 }

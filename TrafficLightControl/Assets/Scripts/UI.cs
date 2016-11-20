@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
+using MoreLinq;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -34,8 +37,15 @@ public class UI : MonoBehaviour
     public GridLayoutGroup ButtonsBParent;
     private List<HorizontalLayoutGroup> _rowsB = new List<HorizontalLayoutGroup>();
 
+    public ToggleGroup OriginsParent;
+    public ToggleGroup DestinationsParent;
+
+    public Button SpawnButton;
+    public VehicleSpawner Spawner;
+
     private HorizontalLayoutGroup rowPrefab;
     private Button buttonPrefab;
+    private Toggle togglePrefab;
 
     public GameObject[] TimerMultiplier;
 
@@ -46,17 +56,21 @@ public class UI : MonoBehaviour
         buttonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(camPos2));
         buttonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(camPos3));
         buttonCamPos4.onClick.AddListener(() => Cam.SetCamPosition(camPos4));
-        
+        SpawnButton.onClick.AddListener(() => SpawnVehicle());
+
         paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
 
         rowPrefab = Resources.Load<HorizontalLayoutGroup>("UI/Row");
         buttonPrefab = Resources.Load<Button>("UI/Button");
+        togglePrefab = Resources.Load<Toggle>("UI/Toggle");
 
         InitRows(CrossroadControl_A.TrafficLights, _rowsA, RowsAParent);
         InitRows(CrossroadControl_B.TrafficLights, _rowsB, RowsBParent);
 
         InitButtons(CrossroadControl_A, ButtonsAParent);
         InitButtons(CrossroadControl_B, ButtonsBParent);
+
+        InitToggles();
     }
 
     void Start()
@@ -64,11 +78,40 @@ public class UI : MonoBehaviour
         SliderEvent();
     }
 
+
+    #region init
+    private void InitToggles()
+    {
+        var lanesParents = GameObject.FindGameObjectsWithTag("Lanes");
+        var waypoints = (from lane in lanesParents
+            from waypoint in lane.GetComponentsInChildren<SplineWaypoint>()
+            where waypoint.IsOrigin || waypoint.IsDestination
+            select waypoint).ToArray().DistinctBy(wp => wp.name);
+
+        foreach (var wp in waypoints)
+        {
+            var toggle = Instantiate(togglePrefab);
+            toggle.name = wp.name;
+
+            var text = toggle.GetComponentInChildren<Text>();
+            text.text = wp.name;
+
+            toggle.transform.SetParent(wp.IsOrigin
+                                       ? OriginsParent.transform
+                                       : DestinationsParent.transform);
+            toggle.group = wp.IsOrigin ? OriginsParent : DestinationsParent;
+        }
+
+        OriginsParent.GetComponentInChildren<Toggle>().isOn = true;
+        DestinationsParent.GetComponentInChildren<Toggle>().isOn = true;
+    }
+
     private void InitRows(IEnumerable<TrafficLight> lights, ICollection<HorizontalLayoutGroup> rows, Component parent)
     {
         foreach (var l in lights)
         {
             var row = Instantiate(rowPrefab);
+
             var name = row.GetComponentInChildren<Text>();
             var state = row.GetComponentInChildren<InputField>();
 
@@ -86,16 +129,17 @@ public class UI : MonoBehaviour
         foreach (var @event in events)
         {
             var button = Instantiate(buttonPrefab);
-            var text = button.GetComponentInChildren<Text>();
 
+            var text = button.GetComponentInChildren<Text>();
             text.text = @event.ToString();
             
             var e = @event; // necessary for lambda closure
-            button.onClick.AddListener(() => OnButtonClicked(e.ToString(), control));
+            button.onClick.AddListener(() => TriggerEvent(e.ToString(), control));
 
             button.transform.SetParent(parent.transform);
         }
     }
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -184,9 +228,23 @@ public class UI : MonoBehaviour
     }
 
 
-    //########################################## Events  ##########################################################
+    //##########################################  Events  ##########################################################
 
-    private void OnButtonClicked(string @event, TrafficLightControl control)
+    private void SpawnVehicle()
+    {
+        var origin = (from o in OriginsParent.GetComponentsInChildren<Toggle>()
+                     where o.isOn
+                     select o).FirstOrDefault();
+
+        var destination = (from d in DestinationsParent.GetComponentsInChildren<Toggle>()
+                          where d.isOn
+                          select d).FirstOrDefault();
+
+        Spawner.Spawn(origin.name, destination.name);
+    }
+
+
+    private void TriggerEvent(string @event, TrafficLightControl control)
     {
         control.EventWasTriggered(@event);
     }
