@@ -65,6 +65,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
 
     public States State { get; protected set; }
 
+    public InductionLoop[] inductionLoops;
+
     // Use this for initialization
     void Awake()
     {
@@ -227,6 +229,10 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
             Collider.center += offset;
         else
             Collider.center -= offset;
+
+        foreach(var tmp in inductionLoops) {
+            tmp.enableEventCollider(enable);
+        }
     }
 
     public void updateMultiplier(float value)

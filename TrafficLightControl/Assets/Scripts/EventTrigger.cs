@@ -25,8 +25,9 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
         k6,
         k8,
         k10,
-        k12
-        
+        k12,
+        keineAktion
+
     }
 
     // Use this for initialization
