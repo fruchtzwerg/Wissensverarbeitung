@@ -12,6 +12,8 @@ checkifzulaessig(a, _, Ausloeser, GG) :- facts:ausloeser(a, Ausloeser, GG),!.
 
 %Kreuzung B
 %nicht zulässige Übergänge
+checkifzulaessig(b, facts:phase2, keineAktion,[]):-!.
+checkifzulaessig(b, facts:phase3, keineAktion,[]):-!.
 checkifzulaessig(b, facts:phase3, fa1, []):-!.
 checkifzulaessig(b, facts:phase3, k8, []):-!.
 checkifzulaessig(b, facts:phase3, k6, []):-!.
