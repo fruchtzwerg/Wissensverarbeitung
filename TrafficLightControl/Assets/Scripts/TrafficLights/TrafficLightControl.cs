@@ -29,6 +29,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private float _multiplier = 1.0f;
     private string _receivedDataWithOutVar;
 
+    public int startInterval = 2000;
+
     // Use this for initialization
     void Start()
     {
@@ -36,7 +38,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
         _phaseTimer = new Timer
         {
-            Interval = 2000,
+            Interval = startInterval,
             AutoReset = true
         };
         _phaseTimer.Elapsed += NextState;

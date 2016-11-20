@@ -125,7 +125,7 @@ public class Job
         // consult the file
         string query = "consult('" + path + "').";
         _sw.WriteLine(query);
-        _sw.Flush();
+        //_sw.Flush();
 
         // log prolog input
         _unityLogger.LogProlog(DELIMITER_SEND + query);
@@ -162,6 +162,8 @@ public class Job
     {
         var waitingObject = _queue.Dequeue();
 
+        //Debug.Log("<=== " + message);
+
         //if sender is waiting for response
         if (waitingObject != null && waitingObject.Sender != null)
         {
@@ -176,7 +178,7 @@ public class Job
             var next = _queue.Peek();
 
             _sw.WriteLine(next.Query);
-            _sw.Flush();
+            //_sw.Flush();
 
             _unityLogger.LogProlog(DELIMITER_SEND + next.Query);
 
@@ -207,12 +209,19 @@ public class Job
         _queue.Enqueue(new WaitingObject(message, sender));
         //this.sender = sender;
 
+        /*
+        Debug.Log("IN QUEUE:");
+        foreach(var tmp in _queue) {
+            Debug.Log("===> "+ tmp.Query);
+        }*/
+        
+        
         //query prolog, if the is no other query
         if (_queue.Count == 1)
         {
             // write the query to prolog console and execute
             _sw.WriteLine(message);
-            _sw.Flush();
+            //_sw.Flush();
 
             _unityLogger.LogProlog(DELIMITER_SEND + message);
         }
@@ -220,11 +229,13 @@ public class Job
         Debug.Log("Queue Count: " + _queue.Count + ", Process Name: " + _prolog.ProcessName + ", IsRunning: " +
                   !_prolog.HasExited);
 
-        if (_queue.Count > 3)
+        if (_queue.Count > 4)
         {
             _sw.WriteLine(_queue.Peek().Query);
-            _sw.Flush();
+            //_sw.Flush();
         }
+
+       
     }
 
     /// <summary>
