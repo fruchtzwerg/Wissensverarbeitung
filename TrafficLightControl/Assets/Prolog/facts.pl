@@ -30,6 +30,7 @@ phase13(a,[[h5,fa11,fa10,k11,k10],phase13,20]).
 phase14(a,[[h5,fa11,fa10,k12],phase14,18]).
 
 %Regeln Kreuzung A
+ausloeser(a,keineAktion,GG):- phase11(a,GG).
 ausloeser(a,b3,GG):- phase12(a,GG).
 ausloeser(a,k10,GG):- phase13(a,GG).
 ausloeser(a,fa10,GG):- phase14(a,GG).
@@ -48,6 +49,7 @@ phase5(b,[[k4,k7,b1,k2,b2,boomgate],phase5,5]).
 phase6(b,[[h3,fg8,fg5,k7,b2,k1,k3,k2,fg3,h1],phase6,15]).
 
 %Regeln Kreuzung B
+ausloeser(b,keineAktion,GG):-phase1(b,GG).
 ausloeser(b,fa4,GG):-phase3(b,GG).
 ausloeser(b,fa1,GG):-phase2(b,GG).
 ausloeser(b,k8,GG):-phase2(b,GG).
