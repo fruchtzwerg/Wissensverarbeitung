@@ -32,7 +32,7 @@ phase14(a,[[h5,fa11,fa10,k12],phase14,18]).
 
 %Regeln Kreuzung A
 %Welcher Ausloeser führt zu welcher Phase
-%ausloeser(Kreuzung,Ausloeser,GG)
+%ausloeser(Kreuzung,Ausloeser,Liste der grünen Ampeln) führt zu phaseX(Kreuzung,Liste der grünen Ampeln)
 ausloeser(a,keineAktion,GG):- phase11(a,GG).
 ausloeser(a,b3,GG):- phase12(a,GG).
 ausloeser(a,k10,GG):- phase13(a,GG).
@@ -53,7 +53,7 @@ phase6(b,[[h3,fg8,fg5,k7,b2,k1,k3,k2,fg3,h1],phase6,15]).
 
 %Regeln Kreuzung B
 %Welcher Ausloeser führt zu welcher Phase
-%ausloeser(Kreuzung,Ausloeser,GG)
+%ausloeser(Kreuzung,Ausloeser,Liste der grünen Ampeln) führt zu phaseX(Kreuzung,Liste der grünen Ampeln)
 ausloeser(b,keineAktion,GG):-phase1(b,GG).
 ausloeser(b,fa4,GG):-phase3(b,GG).
 ausloeser(b,fa1,GG):-phase2(b,GG).

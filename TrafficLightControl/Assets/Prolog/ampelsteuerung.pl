@@ -43,7 +43,8 @@ laengeAlt(b,0).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                   neues Ereignis an Queue anfügen                            %
+% HAUPTPRÄDIKAT     neues Ereignis an Queue anfügen(von C# aufrufbar)          %
+% Ausloeser darf noch nicht in der Queue enthalten sein -> false               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 neuesEreignis(Ampelkreuzung,Ausloeser):-
                              queue(Ampelkreuzung,Q)
@@ -59,7 +60,7 @@ neuesEreignis(Ampelkreuzung,Ausloeser):-
                              assert(queue(Ampelkreuzung,L)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                   neues Ereignis auf Zulässigkeit prügen                     %
+%                   neues Ereignis auf Zulässigkeit prüfen                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 checkAusloeser(Kreuzung,Ausloeser,Wahrheitswert):-
                                               momentanePhase(Kreuzung,Phase)
@@ -67,77 +68,12 @@ checkAusloeser(Kreuzung,Ausloeser,Wahrheitswert):-
                                               phaseTransition:checkifzulaessig(Kreuzung,Phase,Ausloeser,Ergebnis)
                                               ,
                                               zulaessig(Ergebnis,Wahrheitswert).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% prüfen ob Auslöeser in der Queue zur gleichen Phasenänderung führen          %
-% ,wie der bereits akzeptierte                                                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-checkAlreadyAccepted(Kreuzung, _, []):-
-                                   queuetemp(Kreuzung, X)
-                                   ,
-                                   retract(queue(Kreuzung, _))
-                                   ,
-                                   assert(queue(Kreuzung, X))
-                                   ,
-                                   retract(queuetemp(_, _))
-                                   ,
-                                   assert(queuetemp(_,[])).
-
-checkAlreadyAccepted(Kreuzung,Phaseneu,[[Ausloeser,_]|T]):-
-                                           facts:ausloeser(Kreuzung, Ausloeser, [_, Phase|_])
-                                           ,
-                                           Phaseneu=Phase
-                                           ,
-                                           checkAlreadyAccepted(Kreuzung, Phaseneu, T).
-
-checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
-                                           [Ausloeser|_]=H
-                                           ,
-                                           facts:ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
-                                           ,
-                                           not(Phaseneu=Phase)
-                                           ,
-                                           queuetemp(Kreuzung,X)
-                                           ,
-                                           append(X,[H],L)
-                                           ,
-                                           retract(queuetemp(_,_))
-                                           ,
-                                           assert(queuetemp(Kreuzung,L))
-                                           ,
-                                           checkAlreadyAccepted(Kreuzung,Phaseneu,T).
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  alle Auslöser(bereits in der Queue)bei Phasenänderung erneut überprüfen     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-reCheckAusloeserInQueue(Kreuzung,[]):-
-                                   queuetemp(Kreuzung,X)
-                                   ,
-                                   retract(queue(Kreuzung,_))
-                                   ,
-                                   assert(queue(Kreuzung,X))
-                                   ,
-                                   retract(queuetemp(_,_))
-                                   ,
-                                   assert(queuetemp(_,[])).
-
-reCheckAusloeserInQueue(Kreuzung,[[Ausloeser,_]|T]):-
-                                   checkAusloeser(Kreuzung, Ausloeser, Zulaessig)
-                                   ,
-                                   queuetemp(Kreuzung, TQ)
-                                   ,
-                                   append(TQ, [[Ausloeser, Zulaessig]], L)
-                                   ,
-                                   retract(queuetemp(Kreuzung, _))
-                                   ,
-                                   assert(queuetemp(Kreuzung, L))
-                                   ,
-                                   reCheckAusloeserInQueue(Kreuzung, T).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                   Anfordern der nächsten Phase                               %
+% HAUPTPRÄDIKAT    Anfordern der nächsten Phase(von C# aufrufbar)              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%Fall 1 die Queue ist leer
 getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung,Q)
                                ,
@@ -153,6 +89,7 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                ,
                                !.
 
+%Fall 2 die Queue enthält nur Falsche Elemente
 getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung,Q)
                                ,
@@ -169,6 +106,8 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                reCheckAusloeserInQueue(Kreuzung, Q)
                                ,!.
 
+%Fall 3 es ist mindestens wahres Element enthalten in der Queue
+%Normale Abarbeitung der Queue
 getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung, Q)
                                ,
@@ -193,7 +132,11 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                assert(laengeAlt(Kreuzung,QneuLaenge))
                                ,
                                !.
-%der Übergang bei Kreuzung b von phase2 bzw phase3 zur phase1 ist nicht zulässig
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pruefen ob die Queue leer ist                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%der Uebergang bei Kreuzung b von phase2 bzw phase3 zur phase1 ist nicht zulaessig
 checkQueueIsEmpty(b,[],Phaseneu):-
                                momentanePhase(b,MomPhase)
                                ,
@@ -202,15 +145,39 @@ checkQueueIsEmpty(b,[],Phaseneu):-
                                Phaseneu=MomPhase
                                ,
                                !.
-                               
+
 checkQueueIsEmpty(Kreuzung,[],Phaseneu):-standardPhase(Kreuzung,Phaseneu).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pruefen ob die Queue ueberhaupt wahre Elemente(Ausloeser) enthält            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%bei Kreuzung B gibt es zwei Phasen, in denen man nicht in die Grundphase kommt,
+% in diesem Fall bleibe in der aktuellen Phase
+checkQueueComplete([],b,Phaseneu):-
+                               momentanePhase(b, MomPhase)
+                               ,
+                               (phase2 = MomPhase ; phase3 = MomPhase)
+                               ,
+                               Phaseneu=MomPhase
+                               ,
+                               !.
+%Wenn nur falsche Werte in der Queue sind gehe zur Grundphase zurueck
+checkQueueComplete([], b, phase1):-!.
+checkQueueComplete([], a, phase11):-!.
+
+%checkt ob alle Werte in der Queue falsch sind
+checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phaseneu):-
+                                         falsch=Zulaessig
+                                         ,
+                                         checkQueueComplete(T, Kreuzung, Phaseneu).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                        Queue Operationen                                     %
+%              Wiederholtes pruefen der Queue,durch Entnahme des Kopfes         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Abbruchbedingung für "While Schleife"
+%Abbruchbedingung für "While Schleife", bei erfolgreicher Entnahme eines Ausloesers
+%wird die Queue von der Laenge her kleiner -> Abbruch der Schleife
 doCheck(Q,Kreuzung,_):-
                     length(Q,NeueLaenge)
                     ,
@@ -218,7 +185,9 @@ doCheck(Q,Kreuzung,_):-
                     ,
                     NeueLaenge<AlteLaenge,!.
 
-
+%Vor Pruefung des QueueKopfes Queue Laenge feststellen und laengeAlt setzen
+%Dann immer wieder den QueueKopf entnehmen und prüfen
+%wenn falsch Suche nach wahrem Ausloeser fortsetzen->erneut aufrufen
 doCheck(Q,Kreuzung,Phaseneu):-
                            length(Q,X)
                            ,
@@ -232,9 +201,11 @@ doCheck(Q,Kreuzung,Phaseneu):-
                            ,
                            doCheck(Qneu,Kreuzung,Phaseneu).
 
-%Prüfung des Queue Kopfes bei falsch Element(Anforderungen) an Queue vorne entnehmen und
-%hinten wieder anhängen
-%bei richig ->nächster Zustand und Element(Anforderungen) aus Q entfernen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Prüfung des Queue Kopfes:                                                     %
+%bei falsch -> Ausloeser an Queue vorne entnehmen und hinten wieder anhaengen  %
+%bei richig -> naechster Zustand und Ausloser fuer den Zustand aus Q entfernen %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 checkQueueHead([[Ausloeser,Zulaessig]|T],Kreuzung,Phaseneu):-
                                    wahr=Zulaessig
                                    ,
@@ -259,23 +230,68 @@ checkQueueHead([H|T],Kreuzung,_):-
                                   ,
                                   assert(queue(Kreuzung,Q)).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  alle Auslöser(bereits in der Queue)bei Phasenänderung erneut überprüfen     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+reCheckAusloeserInQueue(Kreuzung,[]):-
+                                  queuetemp(Kreuzung,X)
+                                  ,
+                                  retract(queue(Kreuzung,_))
+                                  ,
+                                  assert(queue(Kreuzung,X))
+                                  ,
+                                  retract(queuetemp(_,_))
+                                  ,
+                                  assert(queuetemp(_,[])).
 
-%checken ob die Q überhaupt wahre Elemente(Anforderungen) enthält
-checkQueueComplete([],b,Phaseneu):-
-                               momentanePhase(b, MomPhase)
-                               ,
-                               (phase2 = MomPhase ; phase3 = MomPhase)
-                               ,
-                               Phaseneu=MomPhase
-                               ,
-                               !.
+reCheckAusloeserInQueue(Kreuzung,[[Ausloeser,_]|T]):-
+                                    checkAusloeser(Kreuzung, Ausloeser, Zulaessig)
+                                    ,
+                                    queuetemp(Kreuzung, TQ)
+                                    ,
+                                    append(TQ, [[Ausloeser, Zulaessig]], L)
+                                    ,
+                                    retract(queuetemp(Kreuzung, _))
+                                    ,
+                                    assert(queuetemp(Kreuzung, L))
+                                    ,
+                                    reCheckAusloeserInQueue(Kreuzung, T).
 
-checkQueueComplete([], b, phase1):-!.
-checkQueueComplete([], a, phase11):-!.
-checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phaseneu):-
-                                         falsch=Zulaessig
-                                         ,
-                                         checkQueueComplete(T, Kreuzung, Phaseneu).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% prüfen ob Auslöeser in der Queue zur gleichen Phasenänderung führen          %
+% ,wie der bereits akzeptierte                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+checkAlreadyAccepted(Kreuzung, _, []):-
+                                    queuetemp(Kreuzung, X)
+                                    ,
+                                    retract(queue(Kreuzung, _))
+                                    ,
+                                    assert(queue(Kreuzung, X))
+                                    ,
+                                    retract(queuetemp(_, _))
+                                    ,
+                                    assert(queuetemp(_,[])).
 
+checkAlreadyAccepted(Kreuzung,Phaseneu,[[Ausloeser,_]|T]):-
+                                            facts:ausloeser(Kreuzung, Ausloeser, [_, Phase|_])
+                                            ,
+                                            Phaseneu=Phase
+                                            ,
+                                            checkAlreadyAccepted(Kreuzung, Phaseneu, T).
 
-
+checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T]):-
+                                            [Ausloeser|_]=H
+                                            ,
+                                            facts:ausloeser(Kreuzung,Ausloeser,[_,Phase|_])
+                                            ,
+                                            not(Phaseneu=Phase)
+                                            ,
+                                            queuetemp(Kreuzung,X)
+                                            ,
+                                            append(X,[H],L)
+                                            ,
+                                            retract(queuetemp(_,_))
+                                            ,
+                                            assert(queuetemp(Kreuzung,L))
+                                            ,
+                                            checkAlreadyAccepted(Kreuzung,Phaseneu,T).
