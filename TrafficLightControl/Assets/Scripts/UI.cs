@@ -43,6 +43,8 @@ public class UI : MonoBehaviour
     public Button SpawnButton;
     public VehicleSpawner Spawner;
 
+    public InputField Cars;
+
     private HorizontalLayoutGroup rowPrefab;
     private Button buttonPrefab;
     private Toggle togglePrefab;
@@ -156,6 +158,8 @@ public class UI : MonoBehaviour
             Cam.SetCamPosition(camPos4);
         if (CrossPlatformInputManager.GetButton("Jump"))
             Cam.SetCamPosition(camPos1);
+
+        Cars.text = VehicleSpawner.Count.ToString();
     }
 
     //####################################################################################################
