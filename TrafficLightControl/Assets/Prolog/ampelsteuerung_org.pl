@@ -5,7 +5,7 @@
 :- style_check(-discontiguous).
 :- dynamic queue/2.
 :- dynamic momentanePhase/2.
-%:- dynamic laengeAlt/2.
+:- dynamic laengeAlt/2.
 :- dynamic queuetemp/2.
 
 :-set_prolog_flag(answer_write_options,
@@ -38,8 +38,8 @@ zulaessig([],falsch).
 zulaessig(_,wahr).
 
 %Alte Laengen der Queues zur Hilfename für die "while-Schleife"
-%laengeAlt(a,0).                              %weg
-%laengeAlt(b,0).                              %weg
+laengeAlt(a,0).
+laengeAlt(b,0).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,9 +111,7 @@ getnextPhase(Kreuzung,Gruenegesamt):-
 getnextPhase(Kreuzung,Gruenegesamt):-
                                queue(Kreuzung, Q)
                                ,
-                               length(Q,NeueLaenge)                                   %neu
-                               ,                                                      %neu
-                               doCheck(Q,Kreuzung, Phaseneu,NeueLaenge,NeueLaenge)    %neues Arg.
+                               doCheck(Q,Kreuzung, Phaseneu)
                                ,
                                retract(momentanePhase(Kreuzung,_))
                                ,
@@ -127,12 +125,12 @@ getnextPhase(Kreuzung,Gruenegesamt):-
                                ,
                                reCheckAusloeserInQueue(Kreuzung,Qneu)
                                ,
-                               %length(Qneu,QneuLaenge)                             %weg
-                               %,                                                   %weg
-                               %retract(laengeAlt(Kreuzung,_))                      %weg
-                               %,                                                   %weg
-                               %assert(laengeAlt(Kreuzung,QneuLaenge))              %weg
-                               %,                                                   %weg
+                               length(Qneu,QneuLaenge)
+                               ,
+                               retract(laengeAlt(Kreuzung,_))
+                               ,
+                               assert(laengeAlt(Kreuzung,QneuLaenge))
+                               ,
                                !.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pruefen ob die Queue leer ist                                                 %
@@ -164,44 +162,44 @@ checkQueueComplete([],b,Phaseneu):-
                                Phaseneu=MomPhase
                                ,
                                !.
-%Wenn nur ungueltige Werte in der Queue sind gehe zur Grundphase zurueck
+%Wenn nur falsche Werte in der Queue sind gehe zur Grundphase zurueck
 checkQueueComplete([], b, phase1):-!.
 checkQueueComplete([], a, phase11):-!.
 
-%checkt ob alle Werte in der Queue ungueltig sind
+%checkt ob alle Werte in der Queue falsch sind
 checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phaseneu):-
                                          falsch=Zulaessig
                                          ,
                                          checkQueueComplete(T, Kreuzung, Phaseneu).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%              Wiederholtes pruefen der Queue, durch Entnahme des Kopfes       %
+%              Wiederholtes pruefen der Queue,durch Entnahme des Kopfes         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Abbruchbedingung für "While Schleife", bei erfolgreicher Entnahme eines Ausloesers
 %wird die Queue von der Laenge her kleiner -> Abbruch der Schleife
-doCheck(Queue,Kreuzung,_,NeueLaenge,AlteLaenge):-
-                                  %length(Queue,NeueLaenge)
-                                  %,
-                                  %laengeAlt(Kreuzung,AlteLaenge)
-                                  %,
-                          NeueLaenge<AlteLaenge,!.
+doCheck(Q,Kreuzung,_):-
+                    length(Q,NeueLaenge)
+                    ,
+                    laengeAlt(Kreuzung,AlteLaenge)
+                    ,
+                    NeueLaenge<AlteLaenge,!.
 
 %Vor Pruefung des QueueKopfes Queue Laenge feststellen und laengeAlt setzen
 %Dann immer wieder den QueueKopf entnehmen und prüfen
 %wenn falsch Suche nach wahrem Ausloeser fortsetzen->erneut aufrufen
-doCheck(Queue,Kreuzung,Phaseneu,_,AlteLaenge):-                                             
-                                  %retract(laengeAlt(Kreuzung,_))
-                                  %,
-                                  %assert(laengeAlt(Kreuzung,X))
-                                  %,
-                           checkQueueHead(Queue,Kreuzung,Phaseneu)
+doCheck(Q,Kreuzung,Phaseneu):-
+                           length(Q,X)
                            ,
-                           queue(Kreuzung,QueueNew)
+                           retract(laengeAlt(Kreuzung,_))
                            ,
-                           length(QueueNew,X)                               %nach unten
+                           assert(laengeAlt(Kreuzung,X))
                            ,
-                           doCheck(QueueNew,Kreuzung,Phaseneu,X,AlteLaenge).
+                           checkQueueHead(Q,Kreuzung,Phaseneu)
+                           ,
+                           queue(Kreuzung,Qneu)
+                           ,
+                           doCheck(Qneu,Kreuzung,Phaseneu).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Prüfung des Queue Kopfes:                                                     %
