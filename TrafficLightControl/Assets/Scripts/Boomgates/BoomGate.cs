@@ -66,11 +66,6 @@ public class BoomGate : TrafficLight {
                     EnableCollider();
             }
         }
-        //else if (State == States.Open && !open)
-        //{
-        //    pivot.transform.Rotate(-1, 0, 0);
-        //    State = States.Closing;
-        //}
     }
 
     public new void updateMultiplier(float value) {
