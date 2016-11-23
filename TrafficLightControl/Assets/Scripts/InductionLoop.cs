@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class InductionLoop : MonoBehaviour {
 
     private BoxCollider _collider;
 
-    public TrafficLightControl trafficLightControl;
-    public EventTrigger.Events triggerEvent;
+    public TrafficLightControl TrafficLightControl;
+    public EventTrigger.Events TriggerEvent;
 
-    private Vector3 offset = new Vector3(0, -100, 0);
+    private Vector3 _offset = new Vector3(0, -100, 0);
+    private bool _wasTriggeredOnce = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,16 +20,22 @@ public class InductionLoop : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collider other) {
-        trafficLightControl.EventWasTriggered(triggerEvent.ToString());
+    void OnTriggerEnter(Collider other)
+    {
+        if (_wasTriggeredOnce)
+            return;
+
+        _wasTriggeredOnce = TrafficLightControl.EventWasTriggered(TriggerEvent);
+
     }
 
-    public void enableEventCollider(bool enable) {
-        var offset = new Vector3(0, 100, 0);
-
+    public void EnableEventCollider(bool enable) {
         if (enable)
-            _collider.center += offset;
+        {
+            _wasTriggeredOnce = false;
+            _collider.center += _offset;
+        }
         else
-            _collider.center -= offset;
+            _collider.center -= _offset;
     }
 }

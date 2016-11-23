@@ -31,7 +31,7 @@ public class PedestrianButton : MonoBehaviour {
         if(PartnerButton)
             PartnerButton.partnerButtonPushed();
 
-        TrafficLightControl.EventWasTriggered(Event.ToString());
+        TrafficLightControl.EventWasTriggered(Event);
     }
 
     private void pushed() {

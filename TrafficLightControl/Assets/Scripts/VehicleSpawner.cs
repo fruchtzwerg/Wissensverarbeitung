@@ -113,7 +113,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
     void Update()
     {
         // NO MORE, PLS NO MORE!!!
-        if(Count == MaxVehicles)
+        if(Count >= MaxVehicles)
             return;
 
         // get the prefab
@@ -194,6 +194,10 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
     }
 
 
+    /// <summary>
+    /// Gets a random material from specified array.
+    /// </summary>
+    /// <returns></returns>
     private Material GetRandomMaterial()
     {
         var rand = rnd.Next(0, BodyMaterials.Length);
@@ -211,12 +215,26 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
         return (int) Math.Round(_float);
     }
 
+
+    /// <summary>
+    /// Interface callback to update the multiplier.
+    /// (Used by pace slider)
+    /// </summary>
+    /// <param name="value"></param>
     public void updateMultiplier(float value)
     {
         multiplier = value;
         UpdateThresholds();
     }
 
+
+    /// <summary>
+    /// Spawns a vehicle at specified origin and destination.
+    /// If no origin is specified -> fallback to random.
+    /// If no destination is specified -> fallback to random.
+    /// </summary>
+    /// <param name="origin">origin wayopint as string</param>
+    /// <param name="destination">destination waypoint as string</param>
     public void Spawn(string origin, string destination)
     {
         if (string.IsNullOrEmpty(origin))
@@ -229,9 +247,15 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
         Wrapper.QueryProlog(query, this);
     }
 
-    public void ReceiveDataFromProlog(string receivedData)
+
+    /// <summary>
+    /// Callback from IProlog Interface.
+    /// Gets called when data is received from prolog.
+    /// </summary>
+    /// <param name="data"></param>
+    public void ReceiveDataFromProlog(string data)
     {
-        var task = UnityThreadHelper.Dispatcher.Dispatch(() => PrologWrapper.ParseArray(receivedData));
+        var task = UnityThreadHelper.Dispatcher.Dispatch(() => PrologWrapper.ParseAstarWaypoints(data));
         var result = task.Wait<SplineWaypoint[]>();
         if(result == null)
             return;
@@ -239,6 +263,12 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
         UnityThreadHelper.Dispatcher.Dispatch(() => SpawnPostProlog(new Stack<SplineWaypoint>(result)));
     }
 
+
+    /// <summary>
+    /// Spawns a vehicle after the received data from prolog has been parsed
+    /// and evaluated.
+    /// </summary>
+    /// <param name="waypoints"></param>
     private void SpawnPostProlog(Stack<SplineWaypoint> waypoints)
     {
         var vehicle = Instantiate(carPrefab);

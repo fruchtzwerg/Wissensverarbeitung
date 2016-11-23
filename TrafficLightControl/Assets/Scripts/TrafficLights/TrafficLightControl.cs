@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate
@@ -16,10 +17,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
     public PrologWrapper PrologInterface;
 
-    private const string GREEN = "G = ";
-    private const string LIGHT_PREFIX = "ampel";
-    private const string NEXT_PHASE_PREFIX = "getnextPhase(";
-    private const string NEW_EVENT_PREFIX = "neuesEreignis(";
+    //private const string GREEN = "G = ";
+    //private const string LIGHT_PREFIX = "ampel";
+    //private const string NEXT_PHASE_PREFIX = "getnextPhase(";
+    //private const string NEW_EVENT_PREFIX = "neuesEreignis(";
 
     public Crossroads Crossroad = Crossroads.a;
 
@@ -29,7 +30,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private float _multiplier = 1.0f;
     private string _receivedDataWithOutVar;
 
-    public int startInterval = 2000;
+    public int StartInterval = 2000;
+    private PhaseInfo.JunctionPhase _currentPhase;
 
     // Use this for initialization
     void Start()
@@ -38,7 +40,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
         _phaseTimer = new Timer
         {
-            Interval = startInterval,
+            Interval = StartInterval,
             AutoReset = true
         };
         _phaseTimer.Elapsed += NextState;
@@ -61,34 +63,24 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <summary>
     /// processing received data
     /// </summary>
-    /// <param name="receivedData"></param>
-    public void ReceiveDataFromProlog(string receivedData)
+    /// <param name="data"></param>
+    public void ReceiveDataFromProlog(string data)
     {
-        //receivedData is emtry or empty list
-        if (IsValidData(receivedData))
+        //receivedData is empty or empty list
+        if (IsValidData(data))
             return;
 
-
-        //\[\[.*\],.*,\d{1,3}\]
-        //print("R:" + receivedData);
         try
         {
-            _receivedDataWithOutVar = receivedData.Replace(GREEN, "");
-
-            //print("Rwov:" + receivedData);
-
-            // get string array from prolog return string
-            var splits = ArrayFromData();
-            if (splits == null) return;
-
-            // put green lights in list
-            RebuildLightsList(splits);
+            // Parse data from prolog and set new state
+            var state = PrologWrapper.ParsePhaseInfo(data);
+            _currentPhase = state.Phase;
 
             //change states
-            ChangeStates();
+            ChangeStates(state.GreenLightes);
 
             // reset the timer for the next phase
-            SetTimer();
+            SetTimer(state.Duration);
         }
         catch (Exception ex)
         {
@@ -143,19 +135,10 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <summary>
     /// Sets the phase-timer accoarding to prolog response.
     /// </summary>
-    private void SetTimer()
+    private void SetTimer(int duration)
     {
-        //phase time from response
-        var phaseTimeStartIndex = _receivedDataWithOutVar.LastIndexOf(",");
-        var nextPhaseTimeString = _receivedDataWithOutVar.Substring(phaseTimeStartIndex)
-            .Replace("].", "")
-            .Replace(",", "")
-            .Trim();
-
-
-        var nextPhaseTime = Convert.ToInt32(nextPhaseTimeString);
-
-        _phaseTimer.Interval = (long) (nextPhaseTime*1000*_multiplier);
+        // reset timer
+        _phaseTimer.Interval = (long) (duration*_multiplier);
         // wait because asych
         Thread.Sleep(100);
         _phaseTimer.Start();
@@ -188,14 +171,14 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <summary>
     /// Advances states of all lights in TrafficLights
     /// </summary>
-    private void ChangeStates()
+    private void ChangeStates(TrafficLight.Lights[] greenLights)
     {
         foreach (var l in TrafficLights)
         {
             //entry trafficlight in green trafficlight list?
-            var name = l.Name.ToString().ToLower();
+            //var name = l.Name.ToString().ToLower();
 
-            if (_greenTrafficLights.Contains(name))
+            if (greenLights.Any(x => x == l.Name))
                 l.SwitchToGreen();
             else
                 l.SwitchToRed();
@@ -218,7 +201,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// </summary>
     private void NextState(object sender = null, EventArgs e = null)
     {
-        var query = NEXT_PHASE_PREFIX + Crossroad + ", G).";
+        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.NextPhase, Crossroad, _currentPhase, "G");
         PrologInterface.QueryProlog(query, this);
     }
 
@@ -227,13 +210,12 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// Call prolog, that a new event was triggered at this crossroad
     /// </summary>
     /// <param name="trigger"></param>
-    public void EventWasTriggered(string trigger)
+    public bool EventWasTriggered(EventTrigger.Events trigger)
     {
-        var query = NEW_EVENT_PREFIX + Crossroad + ", " + trigger + ").";
+        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.Event, Crossroad, _currentPhase, trigger.ToString());
         PrologInterface.QueryProlog(query);
 
-        if (!_phaseTimer.Enabled)
-            print(">>>>>>>>>>>>>>>>>>>>>>>>> TIMER IS NOT RUNNING <<<<<<<<<<<<<<<<<<<<<<<<<");
+        return true;
     }
 
 

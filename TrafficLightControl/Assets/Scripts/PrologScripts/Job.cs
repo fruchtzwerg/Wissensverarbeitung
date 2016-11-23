@@ -209,11 +209,11 @@ public class Job
         _queue.Enqueue(new WaitingObject(message, sender));
         //this.sender = sender;
 
-        /*
-        Debug.Log("IN QUEUE:");
-        foreach(var tmp in _queue) {
-            Debug.Log("===> "+ tmp.Query);
-        }*/
+        
+        //Debug.Log("IN QUEUE:");
+        //foreach(var tmp in _queue) {
+        //    Debug.Log("===> "+ tmp.Query);
+        //}
         
         
         //query prolog, if the is no other query

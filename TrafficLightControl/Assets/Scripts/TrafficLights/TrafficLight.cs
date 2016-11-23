@@ -40,7 +40,8 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         k12,
         k13,
         k14,
-        boomgate
+        boomgate,
+        b2
     }
 
     public Lights Name;
@@ -230,8 +231,10 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         else
             Collider.center -= offset;
 
-        foreach(var tmp in inductionLoops) {
-            tmp.enableEventCollider(enable);
+        foreach(var tmp in inductionLoops)
+        {
+            if (tmp != null && tmp.gameObject.activeSelf)
+                tmp.EnableEventCollider(enable);
         }
     }
 

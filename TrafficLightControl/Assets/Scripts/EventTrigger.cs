@@ -73,7 +73,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
             if (value <= probabilities[i] && TrafficLightControl != null)
             {
-                TrafficLightControl.EventWasTriggered(events[i].ToString());
+                TrafficLightControl.EventWasTriggered(events[i]);
             }
         }
     }

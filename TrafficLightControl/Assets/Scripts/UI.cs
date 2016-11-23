@@ -136,7 +136,7 @@ public class UI : MonoBehaviour
             text.text = @event.ToString();
             
             var e = @event; // necessary for lambda closure
-            button.onClick.AddListener(() => TriggerEvent(e.ToString(), control));
+            button.onClick.AddListener(() => TriggerEvent(e, control));
 
             button.transform.SetParent(parent.transform);
         }
@@ -248,7 +248,7 @@ public class UI : MonoBehaviour
     }
 
 
-    private void TriggerEvent(string @event, TrafficLightControl control)
+    private void TriggerEvent(EventTrigger.Events @event, TrafficLightControl control)
     {
         control.EventWasTriggered(@event);
     }

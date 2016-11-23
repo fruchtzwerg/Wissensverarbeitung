@@ -78,8 +78,8 @@ public class SplineWalker : MonoBehaviour
 
     private void Destroy()
     {
-        Destroy(gameObject);
         VehicleSpawner.Count--;
+        Destroy(gameObject);
     }
 
 
