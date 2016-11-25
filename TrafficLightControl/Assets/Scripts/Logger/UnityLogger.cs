@@ -14,7 +14,12 @@ public class UnityLogger : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _prologQueue = new Queue<string>();
-        _swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
+
+        if (Directory.Exists(@".\Assets\Prolog"))
+            _swProlog = new StreamWriter(@".\Assets\Prolog\prolog.log", true);
+        else
+            _swProlog = new StreamWriter(@".\Prolog\prolog.log", true);
+
     }
 
     void OnApplicationQuit()

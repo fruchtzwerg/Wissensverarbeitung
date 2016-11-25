@@ -73,6 +73,10 @@ public class Job
     private bool FindSwiExe()
     {
         // if file not exists in current folder
+        if (File.Exists(@".\swipl_exe\swipl.exe")) {            
+            _prolog.StartInfo.FileName = @".\swipl_exe\swipl.exe";
+        }
+
         if (!File.Exists(_prolog.StartInfo.FileName))
         {
             // get exe from path
@@ -82,7 +86,7 @@ public class Job
                 .Select(split => Path.Combine(split, EXE))
                 .FirstOrDefault(File.Exists);
         } 
-        
+
         // if not found in path get exe at default install dirs
         if (string.IsNullOrEmpty(_prolog.StartInfo.FileName))
         {
@@ -106,20 +110,23 @@ public class Job
     /// consult prolog knowledgebase file
     /// </summary>
     /// <param name="path"></param>
-    public void ConsultFile(string path)
-    {
+    public void ConsultFile(string path) {
         // exit if process not running
-        if (_prolog == null)
-        {
+        if (_prolog == null) {
             Debug.Log("Prolog-Process not running! Exiting now.");
             return;
         }
-        
+
         // exit if .pl file does not exist
-        if (!File.Exists(path))
-        {
-            Debug.Log(string.Format("File at {0} does not exist! Exiting now.", path));
-            return;
+        if (!File.Exists(path)) {
+            //is this the buildexe? yes -> change path and try it again
+            path = Path.GetFullPath(Path.Combine(Path.Combine(Environment.CurrentDirectory, "Prolog"), Path.GetFileName(path)));
+
+            path = path.Replace(Path.DirectorySeparatorChar.ToString(), Path.DirectorySeparatorChar.ToString() + Path.DirectorySeparatorChar);
+            if (!File.Exists(path)) {
+                Debug.Log(string.Format("File at {0} does not exist! Exiting now.", path));
+                return;
+            }
         }
 
         // consult the file
