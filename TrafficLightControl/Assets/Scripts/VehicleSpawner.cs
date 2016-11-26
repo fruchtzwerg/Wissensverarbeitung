@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
@@ -113,7 +111,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
     void Update()
     {
         // NO MORE, PLS NO MORE!!!
-        if(Count >= MaxVehicles)
+        if (Count >= MaxVehicles)
             return;
 
         // get the prefab

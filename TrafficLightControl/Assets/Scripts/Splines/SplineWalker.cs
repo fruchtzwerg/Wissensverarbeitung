@@ -38,6 +38,8 @@ public class SplineWalker : MonoBehaviour
 
     public bool Move = true;
 
+    public bool IsTrain;
+
     private readonly Random _rng = new Random();
 
 
@@ -78,6 +80,8 @@ public class SplineWalker : MonoBehaviour
 
     private void Destroy()
     {
+        if (IsTrain) return;
+
         VehicleSpawner.Count--;
         Destroy(gameObject);
     }
