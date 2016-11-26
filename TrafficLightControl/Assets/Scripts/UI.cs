@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -41,7 +42,7 @@ public class UI : MonoBehaviour
     public Button SpawnButton;
     public VehicleSpawner Spawner;
 
-    public InputField Cars;
+    public InputField CarsInput;
 
     private HorizontalLayoutGroup rowPrefab;
     private Button buttonPrefab;
@@ -140,6 +141,7 @@ public class UI : MonoBehaviour
         }
     }
     #endregion
+    
 
     // Update is called once per frame
     void Update()
@@ -157,7 +159,10 @@ public class UI : MonoBehaviour
         if (CrossPlatformInputManager.GetButton("Jump"))
             Cam.SetCamPosition(camPos1);
 
-        Cars.text = VehicleSpawner.Count.ToString();
+        if (!CarsInput.isFocused)
+        {
+            CarsInput.text = VehicleSpawner.Count.ToString();
+        }
     }
 
     //####################################################################################################
@@ -279,8 +284,13 @@ public class UI : MonoBehaviour
     }
 
 
-    public void EndEditText(string text)
+    public void EndEditTextPace(string text)
     {
         paceSlider.value = (float) Convert.ToDouble(text);
+    }
+
+    public void EndEditTextCount(string text)
+    {
+        Spawner.MaxVehicles = int.Parse(text);
     }
 }

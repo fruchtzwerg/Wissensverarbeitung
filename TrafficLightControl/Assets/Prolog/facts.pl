@@ -44,12 +44,12 @@ ausloeser(a,fa11,_):-!,
 
 %Phasen Ampelkreuzung B
 %phaseX(Kreuzung,[[Liste der grünen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
-phase1(b,[[fg8,fg6,k7,b2,k1,k5,k14,k2,k3,fg3,boomgate],phase1,35]).
+phase1(b,[[fg8,fg6,k7,b1,k1,k5,k14,k2,k3,fg3,boomgate],phase1,35]).
 phase2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5,boomgate],phase2,10]).
-phase3(b,[[fa7,fg5,fg8,fa1,fa2,k6,fa5,fa4,boomgate],phase3,9]).
-phase4(b,[[fg8,k4,k7,b2,k1,k2,boomgate],phase4,5]).
-phase5(b,[[k4,k7,b1,k2,b2,boomgate],phase5,5]).
-phase6(b,[[fg8,fg5,k7,b2,k1,k3,k2,fg3],phase6,15]).
+phase3(b,[[fa7,fg8,fa1,fa2,k6,fa5,fa4,boomgate],phase3,9]).
+phase4(b,[[fg8,k4,k7,b1,k1,k2,boomgate],phase4,5]).
+phase5(b,[[k4,k7,b1,k2,boomgate],phase5,5]).
+phase6(b,[[fg8,k7,b1,k1,k3,k2,fg3],phase6,15]).
 
 %Regeln Kreuzung B
 %Welcher Ausloeser führt zu welcher Phase

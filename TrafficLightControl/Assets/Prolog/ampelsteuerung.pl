@@ -75,9 +75,13 @@ getnextPhase(Kreuzung,Gruenegesamt,Phase):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %der Uebergang bei Kreuzung b von phase2 bzw phase3 zur phase1 ist nicht zulaessig
+%laut Spetzifikation muss auf phase2/3 entweder phase4 oder 5 fologen.
+%da der Standard keine weiteren Angaben macht, haben wir uns entschieden
+%phase4 zu triggern, sofern kein gegensätzliches Ereignis (b1) aufgetreten ist,
+%da bei phase4 mehr Ampeln auf grün stehen.
 checkQueueComplete([],b, Phase, Phaseneu):-
                                (phase2 = Phase ; phase3 = Phase),
-                               Phaseneu=Phase,
+                               Phaseneu=phase4,
                                !.
 
 checkQueueComplete([], Kreuzung, _, Phaseneu):-standardPhase(Kreuzung,Phaseneu).

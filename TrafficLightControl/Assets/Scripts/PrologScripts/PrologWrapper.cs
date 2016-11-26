@@ -129,7 +129,9 @@ public class PrologWrapper : MonoBehaviour, IProlog
     {
         var index = data.IndexOf('[');
         if (index < 0)
-            throw new ArgumentOutOfRangeException();
+        {
+            throw new ArgumentOutOfRangeException("index", data);
+        }
 
         var info = new PhaseInfo();
 

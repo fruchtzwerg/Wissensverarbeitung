@@ -41,7 +41,7 @@ public class TrafficLight : MonoBehaviour, IIntervalMultiplierUpdate
         k13,
         k14,
         boomgate,
-        b2
+        b1
     }
 
     public Lights Name;
