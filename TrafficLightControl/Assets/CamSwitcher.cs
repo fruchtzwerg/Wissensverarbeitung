@@ -20,7 +20,7 @@ public class CamSwitcher : MonoBehaviour
 
     private void NextCamera()
     {
-        print(index);
+        //print(index);
         // disable currently active camera
         Cameras[index].SetActive(false);
 
@@ -28,7 +28,7 @@ public class CamSwitcher : MonoBehaviour
         if (++index >= Cameras.Length)
             index = 0;
 
-        print(index);
+        //print(index);
         // enable next camera
         Cameras[index].SetActive(true);
     }

@@ -15,7 +15,17 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
     public float TruckSpawnChancePercentage = .5f;
 
     public int MaxVehicles = 100;
-    public static int Count;
+
+    private static int _count;
+    public static int Count
+    {
+        get { return _count; }
+        set
+        {
+            _count = Math.Max(0, value);
+        }
+    }
+
     public Transform Lanes;
     public PrologWrapper Wrapper;
 
