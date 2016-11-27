@@ -1,4 +1,4 @@
-﻿% Autoren: Tilo Zuelske und Hannes Boers und Laurens Gross und Benjamin Montazer
+% Autoren: Tilo Zuelske und Hannes Boers und Laurens Gross und Benjamin Montazer
 % Datum: 27.10.2016
 
 %Configuration der Wissensbank
@@ -28,7 +28,7 @@ queue(b,[]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HAUPTPRÄDIKAT     neues Ereignis an Queue anfügen(von C# aufrufbar)          %
+% HAUPTPRÄDIKAT     neues Ereignis an Queue anfügen(von C# (:heart:)aufrufbar)          %
 % Ausloeser darf noch nicht in der Queue enthalten sein -> false               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 neuesEreignis(Junction,Trigger,Phase):-
@@ -65,8 +65,7 @@ getnextPhase(Kreuzung, Gruenegesamt, Phase):-
 %Normale Abarbeitung der Queue
 getnextPhase(Kreuzung,Gruenegesamt,Phase):-
                                queue(Kreuzung, Queue),
-                               length(Queue, QneuLaenge),
-                               doCheck(Queue, Kreuzung, Phaseneu, QneuLaenge, QneuLaenge),
+                               doCheck(Queue, Kreuzung, Phaseneu),
                                Y=..[Phaseneu,Kreuzung,Gruenegesamt],
                                call(Y),
                                !.
@@ -80,7 +79,7 @@ getnextPhase(Kreuzung,Gruenegesamt,Phase):-
 %phase4 zu triggern, sofern kein gegensätzliches Ereignis (b1) aufgetreten ist,
 %da bei phase4 mehr Ampeln auf grün stehen.
 checkQueueComplete([],b, Phase, Phaseneu):-
-                               (phase2 = Phase ; phase3 = Phase),
+                               (phase2 == Phase ; phase3 == Phase),
                                Phaseneu=phase4,
                                !.
 
@@ -92,40 +91,38 @@ checkQueueComplete([], Kreuzung, _, Phaseneu):-standardPhase(Kreuzung,Phaseneu).
 
 %checkt ob alle Werte in der Queue falsch sind
 checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phase, Phaseneu):-
-                                         0=Zulaessig,
+                                         0==Zulaessig,
                                          checkQueueComplete(T, Kreuzung, Phase, Phaseneu).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              Wiederholtes pruefen der Queue,durch Entnahme des Kopfes         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Abbruchbedingung für "While Schleife", bei erfolgreicher Entnahme eines Ausloesers
-%wird die Queue von der Laenge her kleiner -> Abbruch der Schleife
-doCheck(_,_,_, NeueLaenge, AlteLaenge):-
-                     NeueLaenge<AlteLaenge,!.
-
 %Vor Pruefung des QueueKopfes Queue Laenge feststellen und laengeAlt setzen
 %Dann immer wieder den QueueKopf entnehmen und prüfen
 %wenn falsch Suche nach wahrem Ausloeser fortsetzen->erneut aufrufen
-doCheck(Q,Kreuzung,Phaseneu,_, AlteLaenge):-
-                           checkQueueHead(Q,Kreuzung,Phaseneu, Qneu),
-                           length(Qneu,X),
-                           doCheck(Qneu,Kreuzung,Phaseneu, X,AlteLaenge).
-
+doCheck(Queue,Kreuzung,Phaseneu):-
+                           checkQueueHead(Queue,Kreuzung,Phaseneu, Qneu),  
+                           var(Phaseneu),
+                           doCheck(Qneu,Kreuzung,Phaseneu)
+                           ;
+                           checkQueueHead(Queue,Kreuzung,Phaseneu, Qneu),
+                           !.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Prüfung des Queue Kopfes:                                                     %
 %bei falsch -> Ausloeser an Queue vorne entnehmen und hinten wieder anhaengen  %
 %bei richig -> naechster Zustand und Ausloser fuer den Zustand aus Q entfernen %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-checkQueueHead([[Trigger, Zulaessig]|T], Kreuzung, Phaseneu, QueueNeu):-
-                                   1=Zulaessig,
+checkQueueHead([Head|T], Kreuzung, Phaseneu, _):-
+                                   [Trigger,Zulaessig] = Head,
+                                   1==Zulaessig,
                                    facts:ausloeser(Kreuzung,Trigger,[_,Phaseneu|_]),
                                    checkAlreadyAccepted(Kreuzung,Phaseneu,T, []),
                                    !.
 
 checkQueueHead([Head|T], Kreuzung, _, Queue):-
-                                  [_,Zulaessig|_]=Head,
-                                  0=Zulaessig,
+                                  [_,Zulaessig]=Head,
+                                  0==Zulaessig,                                   
                                   append(T,[Head],Queue).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -138,10 +135,10 @@ checkAlreadyAccepted(Kreuzung, _, [], TmpList):-
 
 checkAlreadyAccepted(Kreuzung,Phaseneu,[H|T], TmpList):-
                                     [Trigger|_]=H,
-                                    checkAusloeser(Kreuzung, Trigger, Zulaessig, Phaseneu),
                                     facts:ausloeser(Kreuzung,Trigger,[_,Phase|_]),
                                     not(Phaseneu=Phase) ->
                                     (
+                                        checkAusloeser(Kreuzung, Trigger, Zulaessig, Phaseneu),
                                         append(TmpList,[[Trigger,Zulaessig]],L),
                                         checkAlreadyAccepted(Kreuzung,Phaseneu,T,L)
                                     )
