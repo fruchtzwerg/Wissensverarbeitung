@@ -44,7 +44,7 @@ public class SplineWalker : MonoBehaviour
     private bool destroy;
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         // due to collider mechanics we have to move
         // objects to trigger OnTriggerExit() before
@@ -60,7 +60,7 @@ public class SplineWalker : MonoBehaviour
         // move
         if (_isGoingForward)
         {
-            if (MoveForward()) return;
+            MoveForward();
         }
         else
         {
@@ -129,17 +129,17 @@ public class SplineWalker : MonoBehaviour
     /// Move model in forward direction.
     /// </summary>
     /// <returns>true: model was destroyed or stoped, else false</returns>
-    private bool MoveForward()
+    private void MoveForward()
     {
         //StopMoving();
         // stop movement if neccesary
-        if (!Move) return true;
+        if (!Move) return;
 
         // move
         _progress += (Time.deltaTime/Duration)*_spline.Speed;
 
         // not at the end of a node -> done
-        if (_progress < 1f) return false;
+        if (_progress < 1f) return;
 
         // account for the selected mode
         switch (Mode)
@@ -163,7 +163,7 @@ public class SplineWalker : MonoBehaviour
                     // then destroy it.
                     transform.Translate(Vector3.down * 1000);
                     destroy = true;
-                    return true;
+                    return;
                 }
 
                 // get a the next waypoint randomly
@@ -185,7 +185,7 @@ public class SplineWalker : MonoBehaviour
                 _isGoingForward = false;
                 break;
         }
-        return false;
+        return;
     }
 
 

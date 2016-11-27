@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -19,6 +18,10 @@ public class UI : MonoBehaviour
     public Button buttonCamPos2;
     public Button buttonCamPos3;
     public Button buttonCamPos4;
+
+    public Button TabAButton;
+    public Button TabBButton;
+    public Button TabSpawnButton;
 
     public TrafficLightControl CrossroadControl_A;
     public TrafficLightControl CrossroadControl_B;
@@ -292,5 +295,33 @@ public class UI : MonoBehaviour
     public void EndEditTextCount(string text)
     {
         Spawner.MaxVehicles = int.Parse(text);
+    }
+
+    public void HighlightTabA()
+    {
+        HighlightTab(true, false, false);
+    }
+
+    public void HighlightTabB()
+    {
+        HighlightTab(tabA: false, tabB: true, tabSpawn: false);
+    }
+
+    public void HighlightTabSpawn()
+    {
+        HighlightTab(tabA: false, tabB: false, tabSpawn: true);
+    }
+
+    private void HighlightTab(bool tabA, bool tabB, bool tabSpawn)
+    {
+
+        TabAButton.ChangeAlpha(tabA ? 0xC0 : 0x80);
+        TabAButton.GetComponentInChildren<Text>().ChangeAlpha(tabA ? 0xFF : 0xC0);
+
+        TabBButton.ChangeAlpha(tabB ? 0xC0 : 0x80);
+        TabBButton.GetComponentInChildren<Text>().ChangeAlpha(tabB ? 0xFF : 0xC0);
+
+        TabSpawnButton.ChangeAlpha(tabSpawn ? 0xC0 : 0x80);
+        TabSpawnButton.GetComponentInChildren<Text>().ChangeAlpha(tabSpawn ? 0xFF : 0xC0);
     }
 }

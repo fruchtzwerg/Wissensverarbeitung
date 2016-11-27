@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityThreading;
+﻿using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
 {
@@ -13,29 +10,28 @@ public class CollisionDetection : MonoBehaviour
     
     private SplineWalker _walker;
 
+
+
     private void Start()
     {
         _walker = GetComponentInParent<SplineWalker>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        // front collision with light
-        if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_LIGHT))
-        {
-            _walker.Move = false;
-            return;
-        }
-
-        // front collision with rear of ohter
-        if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_COL_REAR))
-        {
-            _walker.Move = false;
-        }
+        _walker.Move = true;
     }
+
+
 
     private void OnTriggerStay(Collider other)
     {
+        // halt if this front collider intersects either another rear or light collider
+        if (CompareTag(TAG_COL_FRONT) && (other.CompareTag(TAG_COL_REAR) || other.CompareTag(TAG_LIGHT)))
+        {
+            _walker.Move = false;
+        }
+
         var waypoint = other.GetComponent<SplineWaypoint>();
         if (waypoint == null)
             return;
@@ -43,21 +39,10 @@ public class CollisionDetection : MonoBehaviour
         waypoint.IsOccupied = true;
     }
 
+
+
     private void OnTriggerExit(Collider other)
     {
-        // front collision with light
-        if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_LIGHT))
-        {
-            _walker.Move = true;
-            return;
-        }
-
-        // front collision with rear of other
-        if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_COL_REAR))
-        {
-            _walker.Move = true;
-            return;
-        }
 
         // rear collider exits spawn area
         if (CompareTag(TAG_COL_REAR))
