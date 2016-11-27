@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -124,30 +125,16 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
         if (Count >= MaxVehicles)
             return;
 
-        // get the prefab
-        var prefab = GetRandomVehicle();
-        if (prefab == null)
-            return;
-
-        // instanciate the prefab (spawn the vehicle)
-        var car = Instantiate(prefab, transform) as GameObject;
-        if(car == null)
-            return;
-
-        // one more vehicle...
-        Count++;
-
-        // set color
-        Paint(car);
-
-        // set the origin of the instance
-        var walker = car.GetComponent<SplineWalker>();
-        walker.Waypoint = GetRandomOrigin();
-
-        // attatch to parent
-        walker.transform.parent = walker.Waypoint.Spline.transform;
+        Spawn();
     }
 
+
+    /// <summary>
+    /// Assigns a specified material to a car object.
+    /// If no material is specified, a random one is chosen.
+    /// </summary>
+    /// <param name="car"></param>
+    /// <param name="material"></param>
     private void Paint(GameObject car, Material material = null)
     {
         var body = car.FindComponentInChildWithTag<Renderer>("Body");
@@ -181,13 +168,28 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
 
 
     /// <summary>
-    /// Get a random origin spawn point
+    /// Get a random origin spawn point.
+    /// If the spawn point is already occupied with a vehicle,
+    /// tries and gets a nother spawn point randomely.
+    /// After three (3) unsuccessfull tries, null is returned.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>SplineWayoint origin, null after 3 tries</returns>
     private SplineWaypoint GetRandomOrigin()
     {
-        var rand = rnd.Next(0, originWaypoints.Count);
-        return originWaypoints[rand];
+        for (var @try = 0; @try < 3; @try++)
+        {
+            // get random index
+            var rand = rnd.Next(0, originWaypoints.Count);
+            // get waypoint via index
+            var origin = originWaypoints[rand];
+
+            // if origin spawn point is NOT occupied
+            // -> return valid spawn pont
+            if (origin.GetComponents<SplineWaypoint>().All(o => !o.IsOccupied)) return origin;
+        }
+
+        // after 3rd try return null
+        return null;
     }
 
 
@@ -235,6 +237,36 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
         UpdateThresholds();
     }
 
+
+    private void Spawn()
+    {
+        // get the prefab
+        var prefab = GetRandomVehicle();
+        if (prefab == null)
+            return;
+
+        var origin = GetRandomOrigin();
+        if(origin == null)
+            return;
+
+        // instanciate the prefab (spawn the vehicle)
+        var car = Instantiate(prefab, transform) as GameObject;
+        if (car == null)
+            return;
+
+        // set color
+        Paint(car);
+
+        // set the origin of the instance
+        var walker = car.GetComponent<SplineWalker>();
+        walker.Waypoint = origin;
+
+        // attatch to parent
+        walker.transform.parent = walker.Waypoint.Spline.transform;
+
+        // one more vehicle...
+        Count++;
+    }
 
     /// <summary>
     /// Spawns a vehicle at specified origin and destination.

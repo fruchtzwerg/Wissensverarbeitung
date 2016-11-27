@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public static class Helper
 {
@@ -6,12 +7,6 @@ public static class Helper
     {
         var children = parent.GetComponentsInChildren<T>();
 
-        foreach (var child in children)
-        {
-            if (child.CompareTag(tag))
-                return child;
-        }
-
-        return null;
+        return children.FirstOrDefault(child => child.CompareTag(tag));
     }
 }

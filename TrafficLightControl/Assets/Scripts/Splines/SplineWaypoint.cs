@@ -13,6 +13,7 @@ public class SplineWaypoint : MonoBehaviour
 
     public bool IsDestination;
     public bool IsOrigin;
+    public bool IsOccupied { get; set; }
 
     private void CreateSpline()
     {
