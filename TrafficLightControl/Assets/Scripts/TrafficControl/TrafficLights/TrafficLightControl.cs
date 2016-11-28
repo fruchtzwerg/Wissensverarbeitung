@@ -26,6 +26,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
 
     public int StartInterval = 2000;
     private PhaseInfo.JunctionPhase _currentPhase;
+    private int duration;
 
     // Use this for initialization
     void Start()
@@ -72,17 +73,20 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             ChangeStates(state.GreenLightes);
 
             // reset the timer for the next phase
-            SetTimer(state.Duration);
+            duration = state.Duration;
         }
         catch (Exception ex)
         {
-            _phaseTimer.Interval = 15000*_multiplier;
-            Thread.Sleep(100);
-            _phaseTimer.Start();
+            duration = 15000;
 
             print("#######################################################################");
             print(ex);
             print("#######################################################################");
+        }
+        finally
+        {
+            print(duration);
+            SetTimer(duration);
         }
     }
 
@@ -107,8 +111,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     {
         // reset timer
         _phaseTimer.Interval = (long) (duration*_multiplier);
-        // wait because asych
-        Thread.Sleep(100);
+        // wait because asynch
+        Thread.Sleep(1000);
         _phaseTimer.Start();
     }
 

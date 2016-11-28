@@ -42,7 +42,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
             Interval = TimerInterval,
             AutoReset = true
         };
-        timer.Elapsed += timerElapsed;
+        timer.Elapsed += TimerElapsed;
         timer.Start();
         //print("remaining=" + timer.Remaining);
 
@@ -64,12 +64,12 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
             timer.Stop();
     }
 
-    private void timerElapsed(object source, System.EventArgs e)
+    private void TimerElapsed(object source, System.EventArgs e)
     {
-        for (int i = 0; i < events.Length; i++)
+        for (var i = 0; i < events.Length; i++)
         {
 
-            float value = (float)rand.NextDouble();
+            var value = (float)rand.NextDouble();
 
             if (value <= probabilities[i] && TrafficLightControl != null)
             {
