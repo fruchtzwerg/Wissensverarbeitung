@@ -31,6 +31,7 @@ public class Job
                 FileName = EXE,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
                 Arguments = "-q"
@@ -61,6 +62,7 @@ public class Job
 
         // start listening on STDOUT
         _prolog.BeginOutputReadLine();
+        _prolog.BeginErrorReadLine();
     }
 
     /// <summary>
@@ -185,7 +187,7 @@ public class Job
             var next = _queue.Peek();
 
             _sw.WriteLine(next.Query);
-            //_sw.Flush();
+//            _sw.Flush();
 
             _unityLogger.LogProlog(DELIMITER_SEND + next.Query);
 

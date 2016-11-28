@@ -52,6 +52,17 @@ public class CamMoving : MonoBehaviour {
     }
 
 
+    private void Exit()
+    {
+        var escape = CrossPlatformInputManager.GetButtonUp("Exit");
+
+        if (escape)
+        {
+            print("escape");
+            Application.Quit();
+        }
+    }
+
 
     /// <summary>
     /// set the postion of the camera

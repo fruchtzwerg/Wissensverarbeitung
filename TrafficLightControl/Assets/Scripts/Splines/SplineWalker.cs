@@ -41,7 +41,7 @@ public class SplineWalker : MonoBehaviour
     public bool IsTrain;
 
     private readonly Random _rng = new Random();
-    private bool destroy;
+    public bool DestroyOnNextUpdate;
 
 
     private void FixedUpdate()
@@ -50,7 +50,7 @@ public class SplineWalker : MonoBehaviour
         // objects to trigger OnTriggerExit() before
         // destroying them.
         // any object below y=-50 should be destroyed.
-        if (destroy)
+        if (DestroyOnNextUpdate)
             Destroy();
 
         // get the spline to walk on
@@ -160,9 +160,9 @@ public class SplineWalker : MonoBehaviour
                     // stuck because OnTriggerExit() is never fired.
                     // because of this we move the vehicle below y = -50 and check
                     // in the update if this vehicle is below that threshold,
-                    // then destroy it.
+                    // then DestroyOnNextUpdate it.
                     transform.Translate(Vector3.down * 1000);
-                    destroy = true;
+                    DestroyOnNextUpdate = true;
                     return;
                 }
 
