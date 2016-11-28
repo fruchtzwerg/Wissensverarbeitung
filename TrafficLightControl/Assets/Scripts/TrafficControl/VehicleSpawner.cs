@@ -295,6 +295,7 @@ public class VehicleSpawner : MonoBehaviour, IIntervalMultiplierUpdate, IProlog
     /// <param name="data"></param>
     public void ReceiveDataFromProlog(string data)
     {
+        Wrapper.Log(UnityLogger.DELIMITER_RECEIVE + data);
         var task = UnityThreadHelper.Dispatcher.Dispatch(() => PrologWrapper.ParseAstarWaypoints(data));
         var result = task.Wait<SplineWaypoint[]>();
         if(result == null)

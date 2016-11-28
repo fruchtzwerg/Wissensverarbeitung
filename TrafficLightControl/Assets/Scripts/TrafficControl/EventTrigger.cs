@@ -26,7 +26,7 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
         k8,
         k10,
         k12,
-        keineAktion
+        noAction
 
     }
 
@@ -80,7 +80,6 @@ public class EventTrigger : MonoBehaviour, IIntervalMultiplierUpdate
 
     public void updateMultiplier(float value)
     {
-        //print("neues Intervall: " + (long)(TimerInterval * value));
         if(timer != null)
             timer.Interval = (long)(TimerInterval * value);
     }

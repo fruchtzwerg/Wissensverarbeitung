@@ -2,11 +2,7 @@
 /// Handles parsing and execution of console commands, as well as collecting log output.
 /// Copyright (c) 2014-2015 Eliot Lash
 /// </summary>
-using UnityEngine;
-
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 public delegate void CommandHandler(string[] args);
 
@@ -21,6 +17,12 @@ public class ConsoleController
     public delegate void VisibilityChangedHandler(bool visible);
     public event VisibilityChangedHandler VisibilityChanged;
     #endregion
+
+    public ConsoleController(int lineCount)
+    {
+        ScrollbackSize = lineCount;
+        _scrollback = new Queue<string>(lineCount);
+    }
 
     /// <summary>
     /// Object to hold information about each command
@@ -41,9 +43,9 @@ public class ConsoleController
     /// How many log lines should be retained?
     /// Note that strings submitted to appendLogLine with embedded newlines will be counted as a single line.
     /// </summary>
-    const int ScrollbackSize = 20;
+    int ScrollbackSize = 20;
 
-    Queue<string> _scrollback = new Queue<string>(ScrollbackSize);
+    Queue<string> _scrollback;
     List<string> _commandHistory = new List<string>();
 
     public string[] ScrollbackAry { get; private set; } //Copy of scrollback as an array for easier use by ConsoleView

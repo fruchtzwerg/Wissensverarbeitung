@@ -32,15 +32,15 @@ public class CollisionDetection : MonoBehaviour
             _walker.Move = false;
         }
 
-        if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_COL_FRONT))
-        {
-            var splineWalker = other.transform.parent.GetComponent<SplineWalker>();
-            if (splineWalker != null)
-            {
-                splineWalker.DestroyOnNextUpdate = true;
-                print(string.Format("{0} was destroyed because of frontal collision", other.transform.parent.name));
-            }
-        }
+        //if (CompareTag(TAG_COL_FRONT) && other.CompareTag(TAG_COL_FRONT))
+        //{
+        //    var splineWalker = other.transform.parent.GetComponent<SplineWalker>();
+        //    if (splineWalker != null)
+        //    {
+        //        splineWalker.DestroyOnNextUpdate = true;
+        //        print(string.Format("{0} was destroyed because of frontal collision", other.transform.parent.name));
+        //    }
+        //}
 
         var waypoint = other.GetComponent<SplineWaypoint>();
         if (waypoint == null)

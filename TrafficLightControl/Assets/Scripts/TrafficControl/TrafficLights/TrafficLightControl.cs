@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using UnityStandardAssets.ImageEffects;
 
 public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate
 {
@@ -25,8 +26,9 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     private float _multiplier = 1.0f;
 
     public int StartInterval = 2000;
-    private PhaseInfo.JunctionPhase _currentPhase;
+    private SequenceInfo.JunctionSequence _currentSequence;
     private int duration;
+    private int _count;
 
     // Use this for initialization
     void Start()
@@ -36,7 +38,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             Interval = StartInterval,
             AutoReset = true
         };
-        _phaseTimer.Elapsed += NextState;
+        _phaseTimer.Elapsed += NextSequence;
         _phaseTimer.Start();
     }
 
@@ -59,6 +61,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <param name="data"></param>
     public void ReceiveDataFromProlog(string data)
     {
+        PrologInterface.Log(UnityLogger.DELIMITER_RECEIVE + data, Crossroad.ToString());
+
         //receivedData is empty or empty list
         if (IsValidData(data))
             return;
@@ -66,8 +70,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         try
         {
             // Parse data from prolog and set new state
-            var state = PrologWrapper.ParsePhaseInfo(data);
-            _currentPhase = state.Phase;
+            var state = PrologWrapper.ParseSequenceInfo(data);
+            _currentSequence = state.Sequence;
 
             //change states
             ChangeStates(state.GreenLightes);
@@ -85,7 +89,7 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
         }
         finally
         {
-            print(duration);
+            //print(duration);
             SetTimer(duration);
         }
     }
@@ -137,10 +141,11 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <summary>
     /// Call this function to got to the next state
     /// </summary>
-    private void NextState(object sender = null, EventArgs e = null)
+    private void NextSequence(object sender = null, EventArgs e = null)
     {
-        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.NextPhase, Crossroad, _currentPhase, "G");
-        PrologInterface.QueryProlog(query, this);
+        var result = "G" + Crossroad + _count++;
+        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.NextSequence, Crossroad, _currentSequence, result);
+        PrologInterface.QueryProlog(query, this, Crossroad.ToString());
     }
 
 
@@ -150,8 +155,8 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <param name="trigger"></param>
     public bool EventWasTriggered(EventTrigger.Events trigger)
     {
-        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.Event, Crossroad, _currentPhase, trigger.ToString());
-        PrologInterface.QueryProlog(query);
+        var query = PrologWrapper.BuildQuery(PrologWrapper.QueryType.Event, Crossroad, _currentSequence, trigger.ToString());
+        PrologInterface.QueryProlog(query, this, Crossroad.ToString());
 
         return true;
     }

@@ -12,16 +12,14 @@ public class Job
     private Process _prolog;
     private StreamWriter _sw;
     private const string EXE = "swipl.exe";
-    public const string DELIMITER_SEND = "?- ";
-    public const string DELIMITER_RECIVE = "    ";
 
     private Queue<WaitingObject> _queue;
 
-    private UnityLogger _unityLogger;
+    //private UnityLogger _unityLogger;
 
-    public Job(UnityLogger logger)
+    public Job(UnityLogger logger = null)
     {
-        _unityLogger = logger;
+        //_unityLogger = logger;
         _queue = new Queue<WaitingObject>();
 
         _prolog = new Process
@@ -31,7 +29,7 @@ public class Job
                 FileName = EXE,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true,
+                //RedirectStandardError = true,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
                 Arguments = "-q"
@@ -62,7 +60,7 @@ public class Job
 
         // start listening on STDOUT
         _prolog.BeginOutputReadLine();
-        _prolog.BeginErrorReadLine();
+        //_prolog.BeginErrorReadLine();
     }
 
     /// <summary>
@@ -137,7 +135,7 @@ public class Job
         //_sw.Flush();
 
         // log prolog input
-        _unityLogger.LogProlog(DELIMITER_SEND + query);
+        //_unityLogger.LogProlog(DELIMITER_SEND + query);
     }
 
     /// <summary>
@@ -153,7 +151,7 @@ public class Job
         // print to console and use delimiter
         //print(DELIMITER_RECIVE + message);
 
-        _unityLogger.LogProlog(DELIMITER_RECIVE + message);
+        //_unityLogger.LogProlog(DELIMITER_RECIVE + message);
 
 
         if (_queue.Count > 0)
@@ -189,9 +187,9 @@ public class Job
             _sw.WriteLine(next.Query);
 //            _sw.Flush();
 
-            _unityLogger.LogProlog(DELIMITER_SEND + next.Query);
+            //_unityLogger.LogProlog(DELIMITER_SEND + next.Query);
 
-            Debug.Log("Process Name: " + _prolog.ProcessName + ", Exit: " + _prolog.HasExited);
+            //Debug.Log("Process Name: " + _prolog.ProcessName + ", Exit: " + _prolog.HasExited);
         }
 
         //print("Queue Count 2: " + waitingObjects.Count);
@@ -232,7 +230,7 @@ public class Job
             _sw.WriteLine(message);
             //_sw.Flush();
 
-            _unityLogger.LogProlog(DELIMITER_SEND + message);
+            //_unityLogger.LogProlog(DELIMITER_SEND + message);
         }
 
         Debug.Log("Queue Count: " + _queue.Count + ", Process Name: " + _prolog.ProcessName + ", IsRunning: " +

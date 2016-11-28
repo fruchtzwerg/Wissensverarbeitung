@@ -1,80 +1,156 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityThreading;
 
-public class PrologWrapper : MonoBehaviour, IProlog
+public class PrologWrapper : MonoBehaviour
 {
 
     public string[] PrologFiles;
-    private Job _prolog;
+    public string AStarPl;
+    private Job _jobA;
+    private Job _jobB;
+    private Job _jobSpawn;
 
-    public UnityLogger UnityLogger;
+    public UnityLogger LoggerA;
+    public ConsoleView ConsoleView_A;
+    public ConsoleView ConsoleView_B;
+    public ConsoleView ConsoleView_Spawn;
     public AStar aStar;
 
     private string aStarTree;
-    private ActionThread thread;
+    private ActionThread threadA;
+    private ActionThread threadB;
+    private ActionThread threadSpawn;
+    private UnityLogger LoggerB;
+    private UnityLogger LoggerSpawn;
 
-    public static PhaseInfo.JunctionPhase PhaseA;
-    public static PhaseInfo.JunctionPhase PhaseB;
 
     //Use this for initialization
     void Start()
     {
-        if (UnityLogger == null)
-            UnityLogger = GetComponent<UnityLogger>();
+        if (LoggerA == null)
+            LoggerA = new UnityLogger(ConsoleView_A);
+        if (LoggerB == null)
+            LoggerB = new UnityLogger(ConsoleView_B);
+        if (LoggerSpawn == null)
+            LoggerSpawn = new UnityLogger(ConsoleView_Spawn);
 
         aStarTree = aStar.BuildAStarTreeString();
 
-        thread = UnityThreadHelper.CreateThread(() => DoWork());
-    }
-
-
-    /// <summary>
-    /// Executed on Main-Thread when worker is done.
-    /// </summary>
-    private void RunWorkerInitCompleted( )
-    {
-        // swi-prolog is running
-        print("SWI-Prolog is running...");
-
-        _prolog.Query("protocol('prolog.log').");
-
-        //consult all given prolog knowledge base files
-        foreach (var pl in PrologFiles)
-            _prolog.ConsultFile(pl);
-
-        var query = "setNewGraph(" + aStarTree + ").";
-        _prolog.Query(query);
-
-        
+        threadA = UnityThreadHelper.CreateThread(() => DoWorkA());
+        threadB = UnityThreadHelper.CreateThread(() => DoWorkB());
+        threadSpawn = UnityThreadHelper.CreateThread(() => DoWorkSpawn());
     }
 
 
     /// <summary>
     /// Executed asynchronously during run of worker.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void DoWork( /*object sender, DoWorkEventArgs args*/)
+    private void DoWorkA()
     {
-        print("Launching SWI-Prolog...");
+        print("Launching SWI-Prolog A...");
 
         // start create job object
-        _prolog = new Job(UnityLogger);
-        RunWorkerInitCompleted();
+        _jobA = new Job(LoggerA);
+        JobStartedA();
+    }
+    /// <summary>
+    /// Executed asynchronously during run of worker.
+    /// </summary>
+    private void DoWorkB()
+    {
+        print("Launching SWI-Prolog B...");
+
+        // start create job object
+        _jobB = new Job(LoggerB);
+        JobStartedB();
+    }
+    /// <summary>
+    /// Executed asynchronously during run of worker.
+    /// </summary>
+    private void DoWorkSpawn()
+    {
+        print("Launching SWI-Prolog Spawn...");
+
+        // start create job object
+        _jobSpawn = new Job(LoggerSpawn);
+        JobStartedSpawn();
+    }
+
+
+    /// <summary>
+    /// Executed on Main-Thread when worker is done.
+    /// </summary>
+    private void JobStartedA( )
+    {
+        // swi-prolog is running
+        print("SWI-Prolog A is running...");
+
+        //_prolog.Query("protocol('prolog.log').");
+
+        //consult all given prolog knowledge base files
+        foreach (var pl in PrologFiles)
+        {
+            _jobA.ConsultFile(pl);
+        }
+    }
+
+
+    /// <summary>
+    /// Executed on Main-Thread when worker is done.
+    /// </summary>
+    private void JobStartedB()
+    {
+        // swi-prolog is running
+        print("SWI-Prolog B is running...");
+
+        //_prolog.Query("protocol('prolog.log').");
+
+        //consult all given prolog knowledge base files
+        foreach (var pl in PrologFiles)
+        {
+            _jobB.ConsultFile(pl);
+        }
+    }
+
+
+    /// <summary>
+    /// Executed on Main-Thread when worker is done.
+    /// </summary>
+    private void JobStartedSpawn()
+    {
+        // swi-prolog is running
+        print("SWI-Prolog Spawn is running...");
+
+        //_prolog.Query("protocol('prolog.log').");
+
+        //consult all given prolog knowledge base files
+        _jobSpawn.ConsultFile(AStarPl);
+
+        var query = "setNewGraph(" + aStarTree + ").";
+        _jobSpawn.Query(query);
     }
 
 
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit()
     {
-        _prolog.Query("noprotocol.");
-        thread.Exit();
-        if (_prolog != null)
-            _prolog.Kill();
+        //_prolog.Query("noprotocol.");
+        threadA.Exit();
+        if (_jobA != null)
+            _jobA.Kill();
+        threadB.Exit();
+        if (_jobB != null)
+            _jobB.Kill();
+        threadSpawn.Exit();
+        if (_jobSpawn != null)
+            _jobSpawn.Kill();
+
+        LoggerA.Timer.Dispose();
+        LoggerB.Timer.Dispose();
+        LoggerSpawn.Timer.Dispose();
     }
 
 
@@ -83,28 +159,49 @@ public class PrologWrapper : MonoBehaviour, IProlog
     /// </summary>
     /// <param name="query">Query string</param>
     /// <param name="sender">Sender Object</param>
-    public void QueryProlog(string query, IProlog sender = null)
+    /// <param name="xRoad">Crossroad</param>
+    public void QueryProlog(string query, IProlog sender = null, string xRoad = "")
     {
-        if (string.IsNullOrEmpty(query)) return;
-        _prolog.Query(query, sender);
-    }
+        Job job;
 
-    public void ReceiveDataFromProlog(string data)
-    {
-        var phase = data.Split('=')[0].Trim();
-        var value = data.Split('=')[1].Trim();
-
-        switch (phase)
+        switch (xRoad)
         {
-            case "PhaseA":
-                PhaseA = ParseEnum<PhaseInfo.JunctionPhase>(value);
+            case "a":
+                job = _jobA;
                 break;
-            case "PhaseB":
-                PhaseB = ParseEnum<PhaseInfo.JunctionPhase>(value);
+            case "b":
+                job = _jobB;
+                break;
+            default:
+                job = _jobSpawn;
                 break;
         }
 
-        print("phase=" + phase + ", PhaseA=" + PhaseA + "PhaseB=" + PhaseB);
+        if (string.IsNullOrEmpty(query)) return;
+        job.Query(query, sender);
+        Log(UnityLogger.DELIMITER_SEND + query, xRoad);
+    }
+
+
+
+    public void Log(string message, string xRoad = "")
+    {
+        UnityLogger logger;
+
+        switch (xRoad)
+        {
+            case "a":
+                logger = LoggerA;
+                break;
+            case "b":
+                logger = LoggerB;
+                break;
+            default:
+                logger = LoggerSpawn;
+                break;
+        }
+
+        logger.Log(message);
     }
 
 
@@ -113,22 +210,22 @@ public class PrologWrapper : MonoBehaviour, IProlog
     //################################################################\\
 
     /// <summary>
-    /// Parses a prolog string into a PhaseInfo object.
-    /// PhaseInfo contains: array of Lights
-    ///                     current phase
+    /// Parses a prolog string into a SequenceInfo object.
+    /// SequenceInfo contains: array of Lights
+    ///                     current sequence
     ///                     duration of timer
     /// </summary>
     /// <param name="data">prolog string</param>
     /// <returns></returns>
-    public static PhaseInfo ParsePhaseInfo(string data)
+    public static SequenceInfo ParseSequenceInfo(string data)
     {
         var index = data.IndexOf('[');
         if (index < 0)
         {
-            throw new ArgumentOutOfRangeException("index", data);
+            throw new ArgumentOutOfRangeException("prolog answer", data);
         }
 
-        var info = new PhaseInfo();
+        var info = new SequenceInfo();
 
         var tmp = data.Substring(index);
         var regex = new Regex(@"([^\,\s\[\]\.]+)");
@@ -141,7 +238,7 @@ public class PrologWrapper : MonoBehaviour, IProlog
             info.GreenLightes[i] = ParseEnum<TrafficLight.Lights>(matches[i].Groups[0].Value);
         }
 
-        info.Phase = ParseEnum<PhaseInfo.JunctionPhase>(matches[matches.Count - 2].Groups[0].Value);
+        info.Sequence = ParseEnum<SequenceInfo.JunctionSequence>(matches[matches.Count - 2].Groups[0].Value);
         info.Duration = int.Parse(matches[matches.Count - 1].Groups[0].Value);
 
         return info;
@@ -212,7 +309,7 @@ public class PrologWrapper : MonoBehaviour, IProlog
     /// </summary>
     public enum QueryType
     {
-        NextPhase,
+        NextSequence,
         Event
     }
 
@@ -222,27 +319,27 @@ public class PrologWrapper : MonoBehaviour, IProlog
     /// </summary>
     /// <param name="type">type of query</param>
     /// <param name="xRoad">crossroad</param>
-    /// <param name="phase">currentphase</param>
+    /// <param name="sequence">current sequence</param>
     /// <param name="args">argument (return value)</param>
     /// <returns></returns>
     public static string BuildQuery(QueryType type,
         TrafficLightControl.Crossroads xRoad,
-        PhaseInfo.JunctionPhase phase,
+        SequenceInfo.JunctionSequence sequence,
         params string[] args
         )
     {
         switch (type)
         {
-            case QueryType.NextPhase:
+            case QueryType.NextSequence:
                 if (args.Length < 1)
                     return null;
 
-                return "getnextPhase(" + xRoad + ", " + args[0] + ", " + phase + ").";
+                return "nextSequence(" + xRoad + ", " + args[0] + ", " + sequence + ").";
             case QueryType.Event:
                 if (args.Length < 1)
                     return null;
 
-                return "neuesEreignis(" + xRoad + ", " + args[0] + ", " + phase + ").";
+                return "event(" + xRoad + ", " + args[0] + ", " + sequence + ").";
             default:
                 throw new ArgumentOutOfRangeException("type", type, null);
         }

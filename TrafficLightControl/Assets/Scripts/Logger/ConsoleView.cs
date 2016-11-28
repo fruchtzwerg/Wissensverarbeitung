@@ -3,23 +3,24 @@
 /// Copyright (c) 2014-2015 Eliot Lash
 /// </summary>
 
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ConsoleView : MonoBehaviour
 {
-    ConsoleController _console = new ConsoleController();
+    private ConsoleController _console;
 
     bool _didShow = false;
 
     public GameObject ViewContainer; //Container for console view, should be a child of this GameObject
     public Text LogTextArea;
+    public int LineCount = 20;
 
 
     void Start()
     {
+        _console = new ConsoleController(LineCount);
+
         if (_console != null)
         {
             _console.VisibilityChanged += OnVisibilityChanged;
