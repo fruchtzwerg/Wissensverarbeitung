@@ -49,15 +49,16 @@ public class CamMoving : MonoBehaviour {
 
         var dir = new Vector3(hor, vert, (lat + latJoy)*ZoomSpeed);
         transform.Translate(dir * speed);
+
+        Exit();
     }
 
 
     private void Exit()
     {
-        var escape = CrossPlatformInputManager.GetButtonUp("Exit");
+        var escape = CrossPlatformInputManager.GetButton("Exit");
 
-        if (escape)
-        {
+        if (escape){
             print("escape");
             Application.Quit();
         }
