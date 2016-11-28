@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -27,15 +28,6 @@ public class PrologWrapper : MonoBehaviour, IProlog
 
         aStarTree = aStar.BuildAStarTreeString();
 
-        //// create new backround worker
-        //var worker = new BackgroundWorker();
-        //// register listeners
-        //worker.DoWork += DoWork;
-        //worker.RunWorkerCompleted += RunWorkerInitCompleted;
-
-        //// execute worker asynchronously
-        //worker.RunWorkerAsync();
-
         thread = UnityThreadHelper.CreateThread(() => DoWork());
     }
 
@@ -43,12 +35,12 @@ public class PrologWrapper : MonoBehaviour, IProlog
     /// <summary>
     /// Executed on Main-Thread when worker is done.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void RunWorkerInitCompleted( /*object sender, RunWorkerCompletedEventArgs args*/)
+    private void RunWorkerInitCompleted( )
     {
         // swi-prolog is running
         print("SWI-Prolog is running...");
+
+        _prolog.Query("protocol('prolog.log').");
 
         //consult all given prolog knowledge base files
         foreach (var pl in PrologFiles)
@@ -56,6 +48,8 @@ public class PrologWrapper : MonoBehaviour, IProlog
 
         var query = "setNewGraph(" + aStarTree + ").";
         _prolog.Query(query);
+
+        
     }
 
 
@@ -77,6 +71,7 @@ public class PrologWrapper : MonoBehaviour, IProlog
     // Kill swi-prolog.exe when unity quits.
     void OnApplicationQuit()
     {
+        _prolog.Query("noprotocol.");
         thread.Exit();
         if (_prolog != null)
             _prolog.Kill();

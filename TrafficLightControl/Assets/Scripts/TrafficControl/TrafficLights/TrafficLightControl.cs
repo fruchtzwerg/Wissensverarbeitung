@@ -94,8 +94,9 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
     /// <returns>true: valid | false: invalid</returns>
     private static bool IsValidData(string receivedData)
     {
-        return string.IsNullOrEmpty(receivedData) || receivedData.Contains("G = [].") || receivedData.Equals("true") ||
-               receivedData.Equals("false") || receivedData.Equals("true.") || receivedData.Equals("false.");
+        var data = receivedData.Trim();
+        return string.IsNullOrEmpty(data) || data.Contains("G = [].") || data.Equals("true") ||
+               data.Equals("false") || data.Equals("true.") || data.Equals("false.");
     }
 
 
@@ -127,17 +128,6 @@ public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUp
             else
                 l.SwitchToRed();
         }
-    }
-
-
-    /// <summary>
-    /// Replaces useless delimiters with empty strings.
-    /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    private static string Trim(string s)
-    {
-        return s.Replace(")", "").Replace(".", "").Replace(",", "").Trim();
     }
 
     /// <summary>
