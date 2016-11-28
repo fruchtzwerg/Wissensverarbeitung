@@ -1,14 +1,14 @@
-% Autor: Hannes Boers ,Tilo Zuelske nach Buchvorlage von Ivan Bratko
+﻿% Autor: Hannes Boers ,Tilo Zuelske nach Buchvorlage von Ivan Bratko
 % Datum: 14.11.2016
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Konfiguration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%dynamische Pr�dikate
+%dynamische Praedikate
 :-dynamic h/2.
 :-dynamic s/3.
 :-dynamic goal/1.
 
-%Ausgabe der Listen ohne ... Abk�rzung
+%Ausgabe der Listen ohne "..." Abkuerzung
 :-set_prolog_flag(answer_write_options,
                    [ quoted(true),
                      portray(true),
@@ -22,6 +22,8 @@ goal(N).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Das setzen eines neuen Graphen/Baumes von C# aus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%bevor das geschieht, wird die Heuristik und die Graphendefinitionen erstmal geloescht
+%setNewGraph(Liste der Graphen und Heuristiken)
 setNewGraph(List):-
               retractall(heuristicFunction(_,_))
               ,
@@ -29,9 +31,10 @@ setNewGraph(List):-
               ,
               createGraph(List).
 
-%Pr�dikat dient Modifizierung der Wissensbank, hierbei werden die von C#
-%�bergebenen Arc Daten in zwei f�r den A* Algorithmus verwendbare Pr�dikate
+%Praedikat dient Modifizierung der Wissensbank, hierbei werden die von C#
+%Uebergebenen Arc Daten in zwei fuer den A* Algorithmus verwendbare Praedikate
 %aufgesplittet und in der Wissenbank hinterlegt.
+%createGraph([arc(Node1,Node2,Kosten zwischen den Node,Heuristischer Wert von Node1)|Tail])
 %Abbruchbedingung
 createGraph([]).
 createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
@@ -44,9 +47,10 @@ createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
                                      ;
                                      createGraph(Tail).
 
-%Pr�dikat dient der Anfrage des besten Pfades, aus C# heraus.
+%Praedikat dient der Anfrage des besten Pfades, aus C# heraus.
 %Dabei sind Namen der Start und Zielknoten anzugeben.
-%Als Ergebnis erh�lt C# die Wegbeschreibung von Knoten Start zu Ziel.
+%Als Ergebnis erhaelt C# die Wegbeschreibung von Knoten Start zu Ziel.
+%getPath(Start,Ziel,Weg zum Start vom Ziel)
 getPath(Start,Goal,Path):-
                       retractall(goal(_))
                       ,
@@ -54,6 +58,9 @@ getPath(Start,Goal,Path):-
                       ,
                       bestfirst(Start,Path).
 %Test
+%falls sich die Heuristen werte aendern oder ein Knoten hinzu kommt,
+%kann man diese jetzt updaten
+%updateNode(Node1,Node2,neueKosten zwischen Node1 und Node2)
 updateNode(Node,Node1,NewCost):-
                       retract(defineNodeAndArc(Node,Node1,_))
                       ,
