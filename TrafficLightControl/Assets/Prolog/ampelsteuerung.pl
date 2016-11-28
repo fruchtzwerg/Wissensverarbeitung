@@ -16,21 +16,22 @@
 :- use_module(phaseTransition).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                         Attribute zur Überwachung                            %
+%                         Attribute zur Ueberwachung                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 standardPhase(a, phase11).
 standardPhase(b, phase1).
 
-%zwei queues für die Berechnung der nächsten Ampelphase
+%zwei queues fuer die Berechnung der nächsten Ampelphase
 queue(a,[]).
 queue(b,[]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HAUPTPRÄDIKAT     neues Ereignis an Queue anfügen(von C# (:heart:)aufrufbar)          %
+% HAUPTPRAEDIKAT    neues Ereignis an Queue anfuegen(von C# (:heart:)aufrufbar)%
 % Ausloeser darf noch nicht in der Queue enthalten sein -> false               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%neuesEreignis(Kreuzung,Ausloeser,aktuellePhase)
 neuesEreignis(Junction,Trigger,Phase):-
                              queue(Junction,Queue),
                              not(member([Trigger,_],Queue)),
@@ -40,19 +41,22 @@ neuesEreignis(Junction,Trigger,Phase):-
                              assert(queue(Junction,L)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                   neues Ereignis auf Zulässigkeit prüfen                     %
+%                   neues Ereignis auf Zulaessigkeit pruefen                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Wahrheitswert wird 1 wenn zulaessig
+%Wahrheitswert wird 0 wenn NICHT zulaessig
+%checkAusloeser(Kreuzung,Ausloeser,wahrheitswert,aktuellePhase)
 checkAusloeser(Kreuzung,Trigger,Wahrheitswert,Phase):-
                                               phaseTransition:checkifzulaessig(Kreuzung,Phase,Trigger,Ergebnis) -> Wahrheitswert = 1
                                               ;
                                               Wahrheitswert = 0.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HAUPTPRÄDIKAT    Anfordern der nächsten Phase(von C# aufrufbar)              %
+% HAUPTPRAEDIKAT    Anfordern der naechsten Phase(von C# aufrufbar)             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%Fall 1 die Queue enthält nur Falsche Elemente
+%getnextPhase(Kreuzung, Gruenegesamt, aktuellePhase)
+%Fall 1 die Queue enthaelt nur Falsche Elemente
 getnextPhase(Kreuzung, Gruenegesamt, Phase):-
                                queue(Kreuzung,Queue),
                                checkQueueComplete(Queue, Kreuzung, Phase, Phaseneu),
@@ -74,10 +78,11 @@ getnextPhase(Kreuzung,Gruenegesamt,Phase):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %der Uebergang bei Kreuzung b von phase2 bzw phase3 zur phase1 ist nicht zulaessig
-%laut Spetzifikation muss auf phase2/3 entweder phase4 oder 5 fologen.
+%laut Spetzifikation muss auf phase2/3 entweder phase4 oder 5 folgen.
 %da der Standard keine weiteren Angaben macht, haben wir uns entschieden
 %phase4 zu triggern, sofern kein gegensätzliches Ereignis (b1) aufgetreten ist,
 %da bei phase4 mehr Ampeln auf grün stehen.
+%checkQueueComplete([],b, aktuellePhase, neuePhase)
 checkQueueComplete([],b, Phase, Phaseneu):-
                                (phase2 == Phase ; phase3 == Phase),
                                Phaseneu=phase4,
@@ -90,17 +95,20 @@ checkQueueComplete([], Kreuzung, _, Phaseneu):-standardPhase(Kreuzung,Phaseneu).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %checkt ob alle Werte in der Queue falsch sind
+%checkQueueComplete([[Kreuzung, Zulaessig]|T], Kreuzung, aktuellePhase, neuePhase)
 checkQueueComplete([[_, Zulaessig]|T], Kreuzung, Phase, Phaseneu):-
                                          0==Zulaessig,
                                          checkQueueComplete(T, Kreuzung, Phase, Phaseneu).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%              Wiederholtes pruefen der Queue,durch Entnahme des Kopfes         %
+%              Wiederholtes pruefen der Queue,durch Entnahme des Kopfes        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Vor Pruefung des QueueKopfes Queue Laenge feststellen und laengeAlt setzen
 %Dann immer wieder den QueueKopf entnehmen und prüfen
 %wenn falsch Suche nach wahrem Ausloeser fortsetzen->erneut aufrufen
+%var = true wenn die variable frei ist
+%doCheck(aktuelleQueue,Kreuzung,neuePhase)
 doCheck(Queue,Kreuzung,Phaseneu):-
                            checkQueueHead(Queue,Kreuzung,Phaseneu, Qneu),  
                            var(Phaseneu),
@@ -109,10 +117,11 @@ doCheck(Queue,Kreuzung,Phaseneu):-
                            checkQueueHead(Queue,Kreuzung,Phaseneu, Qneu),
                            !.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Prüfung des Queue Kopfes:                                                     %
+%Pruefung des Queue Kopfes:                                                    %
 %bei falsch -> Ausloeser an Queue vorne entnehmen und hinten wieder anhaengen  %
 %bei richig -> naechster Zustand und Ausloser fuer den Zustand aus Q entfernen %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%checkQueueHead([Head|T], Kreuzung, neuePhase, aktuelleQueue)
 checkQueueHead([Head|T], Kreuzung, Phaseneu, _):-
                                    [Trigger,Zulaessig] = Head,
                                    1==Zulaessig,
@@ -126,9 +135,10 @@ checkQueueHead([Head|T], Kreuzung, _, Queue):-
                                   append(T,[Head],Queue).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% prüfen ob Auslöeser in der Queue zur gleichen Phasenänderung führen          %
+% pruefen ob Ausloeeser in der Queue zur gleichen Phasenaenderung fuehren      %
 % ,wie der bereits akzeptierte                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%checkAlreadyAccepted(Kreuzung, neuePhase, aktuelleQueue, TmpList)
 checkAlreadyAccepted(Kreuzung, _, [], TmpList):-
                                     retract(queue(Kreuzung, _)),
                                     assert(queue(Kreuzung, TmpList)).

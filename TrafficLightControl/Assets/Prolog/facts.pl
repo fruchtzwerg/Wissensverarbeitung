@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Autoren: Tilo Zuelske, Hannes Boers und Laurens Gross
 */
 
@@ -19,11 +19,11 @@
 
 
 %Ampel Logik
-% Gültige Zustände der Kreuzung nach STVO, für jede AmpelAnlage definierbar
+% Gueltige Zustaende der Kreuzung nach STVO, für jede AmpelAnlage definierbar
 
 %Phasen Ampelkreuzung A
-%Aus Grunde dem heraus, dass die Originalen Phasen mit einer zusätzlichen 1 zur Unterscheidung notiert wurden,
-%übernehmen auch wir diese Konvention
+%Aus Grunde dem heraus, dass die Originalen Phasen mit einer zusaetzlichen 1 zur Unterscheidung notiert wurden,
+%uebernehmen auch wir diese Konvention
 %phaseX(Kreuzung,[[Liste der grünen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
 phase11(a,[[k9,k13,b3,fg9],phase11,35]).
 phase12(a,[[b3,k9,fg9],phase12,10]).
@@ -32,18 +32,15 @@ phase14(a,[[fa11,fa10,k12],phase14,18]).
 
 %Regeln Kreuzung A
 %Welcher Ausloeser führt zu welcher Phase
-%ausloeser(Kreuzung,Ausloeser,Liste der grünen Ampeln) führt zu phaseX(Kreuzung,Liste der grünen Ampeln)
+%ausloeser(Kreuzung,Ausloeser,Liste der grünen Ampeln) fuehrt zu phaseX(Kreuzung,Liste der gruenen Ampeln)
 ausloeser(a,keineAktion,GG):- phase11(a,GG).
 ausloeser(a,b3,GG):- phase12(a,GG).
 ausloeser(a,k10,GG):- phase13(a,GG).
 ausloeser(a,fa10,GG):- phase14(a,GG).
 ausloeser(a,k12,GG):- phase14(a,GG).
-ausloeser(a,fa11,_):-!,
-                     write('use fa10 instead'),
-                     fail.
 
 %Phasen Ampelkreuzung B
-%phaseX(Kreuzung,[[Liste der grünen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
+%phaseX(Kreuzung,[[Liste der gruenen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
 phase1(b,[[fg8,fg6,k7,b1,k1,k5,k14,k2,k3,fg3,boomgate],phase1,35]).
 phase2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5,boomgate],phase2,10]).
 phase3(b,[[fa7,fg8,fa1,fa2,k6,fa5,fa4,boomgate],phase3,9]).
@@ -52,7 +49,7 @@ phase5(b,[[k4,k7,b1,k2,boomgate],phase5,5]).
 phase6(b,[[fg8,k7,b1,k1,k3,k2,fg3],phase6,15]).
 
 %Regeln Kreuzung B
-%Welcher Ausloeser führt zu welcher Phase
+%Welcher Ausloeser fuehrt zu welcher Phase
 %ausloeser(Kreuzung,Ausloeser,Liste der grünen Ampeln) führt zu phaseX(Kreuzung,Liste der grünen Ampeln)
 ausloeser(b,keineAktion,GG):-phase1(b,GG).
 ausloeser(b,fa4,GG):-phase3(b,GG).
