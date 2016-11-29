@@ -3,7 +3,7 @@
 */
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                 Zulaessige und nicht Zulaessige Phasenuebergaenge            %
+%                 Zulaessige und nicht Zulaessige Sequenceuebergaenge            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 :- module('sequenceTransition', [validTrigger/4]).
 :- use_module(facts).
