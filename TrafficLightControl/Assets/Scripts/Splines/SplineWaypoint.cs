@@ -10,6 +10,8 @@ public class SplineWaypoint : MonoBehaviour
     public SplineWaypoint NextWaypoint;
     public BezierSpline Spline;
     public int Weight = 1;
+    public int AStarCost = 1;
+    public bool IsBusLane;
 
     public bool IsDestination;
     public bool IsOrigin;

@@ -262,7 +262,7 @@ public class PrologWrapper : MonoBehaviour
     //TODO: move into BuildQuery()
     public static string GetPath(string origin, string destination)
     {
-        var q = "getPath(" + origin.ToLower() + "," + destination.ToLower() + ",Path).";
+        var q = "path(" + origin.ToLower() + "," + destination.ToLower() + ",Path).";
         return q;
     }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Text;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class AStar : MonoBehaviour
@@ -12,6 +13,7 @@ public class AStar : MonoBehaviour
     private const string TAG_LANES = "Lanes";
     private readonly StringBuilder _sb = new StringBuilder();
     public int DistanceMultiplier = 10;
+    private List<SplineWaypoint> testedWaypoints = new List<SplineWaypoint>();
 
     public string BuildAStarTreeString()
     {
@@ -64,6 +66,10 @@ public class AStar : MonoBehaviour
         // for each of these waypoints...
         foreach (var origin in origins)
         {
+            // if this waypoint was already added, return
+            if (testedWaypoints.Contains(origin))
+                return;
+
             var next = origin.NextWaypoint;
             // break condition:
             // done, if this is a destination or there is no next waypoint
@@ -83,16 +89,19 @@ public class AStar : MonoBehaviour
             //var numVehicles = origin.GetComponentsInChildren<SplineWalker>().Length;
             // constant costs
             // (origin.name,next.name,5,
-            sb.Append(1).Append(SEP);
+            sb.Append(next.AStarCost).Append(SEP);
 
             // (origin.name,next.name,5,distance
-            sb.Append(CalculteDistance(origin.transform, next.transform));
+            sb.Append(CalculteDistance(origin.transform, next.transform)/100);
             // (origin.name,next.name,5,distance),
             sb.Append(ARC_POST);
 
             // do not append duplicates to tree
             if (!_sb.ToString().Contains(sb.ToString()))
                 _sb.Append(sb);
+
+            // mark this waypoint as tested
+            testedWaypoints.Add(origin);
 
             // recursive call for next waypoint
             if(origin != next)

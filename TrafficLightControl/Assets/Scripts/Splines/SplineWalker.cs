@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -31,6 +32,7 @@ public class SplineWalker : MonoBehaviour
     public float Duration = 3;
     public LookDirection LookAtDirection;
     public SplineWalkerMode Mode = SplineWalkerMode.Connected;
+    public bool IsBus;
 
     private float _progress;
     private BezierSpline _spline;
@@ -59,13 +61,9 @@ public class SplineWalker : MonoBehaviour
 
         // move
         if (_isGoingForward)
-        {
             MoveForward();
-        }
         else
-        {
             MoveBackward();
-        }
 
         // actually move the model
         var position = _spline.GetPoint(_progress) + Vector3.up*HeightOffset;
@@ -161,20 +159,16 @@ public class SplineWalker : MonoBehaviour
                     // because of this we move the vehicle below y = -50 and check
                     // in the update if this vehicle is below that threshold,
                     // then DestroyOnNextUpdate it.
-                    transform.Translate(Vector3.down * 1000);
+                    transform.Translate(Vector3.down*1000);
                     DestroyOnNextUpdate = true;
                     return;
                 }
 
                 // get a the next waypoint randomly
                 if (Waypoints == null)
-                {
                     Waypoint = GetRandomWaypoint(Waypoint.NextWaypoint);
-                }
                 else
-                {
                     Waypoint = Waypoints.Pop();
-                }
 
                 _spline = Waypoint.Spline;
                 transform.parent = _spline.transform;
@@ -185,7 +179,6 @@ public class SplineWalker : MonoBehaviour
                 _isGoingForward = false;
                 break;
         }
-        return;
     }
 
 
@@ -207,10 +200,14 @@ public class SplineWalker : MonoBehaviour
     /// Get a random origin spawn point
     /// </summary>
     /// <returns></returns>
-    private SplineWaypoint GetRandomWaypoint(SplineWaypoint waypoint)
+    private SplineWaypoint GetRandomWaypoint(SplineWaypoint next)
     {
         // get waypoints registered with this waypoint
-        var waypoints = waypoint.GetComponents<SplineWaypoint>();
+        var waypoints = IsBus 
+            ? next.GetComponents<SplineWaypoint>() 
+            : next.GetComponents<SplineWaypoint>()
+                        .Where(wp => !wp.IsBusLane).ToArray();
+        
         var weights = new int[waypoints.Length];
         var sum = 0;
 
@@ -226,8 +223,8 @@ public class SplineWalker : MonoBehaviour
 
         for (var i = 0; i < weights.Length; i++)
         {
-            if (rand <= weights[i])
-                return waypoints[i];
+            if (rand > weights[i]) continue;
+            return waypoints[i];
         }
 
         return waypoints[0];
