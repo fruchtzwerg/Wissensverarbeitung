@@ -22,8 +22,8 @@
 % Gueltige Zustaende der Kreuzung nach STVO, für jede Ampelanlage definierbar
 
 %Sequencen Ampelkreuzung A
-%Aus Grunde dem heraus, dass die Originalen Sequencen mit einer zusaetzlichen 1 zur Unterscheidung notiert wurden,
-%uebernehmen auch wir diese Konvention
+%Aus diesem Grunde heraus, dass die Originalen Sequencen mit einer zusaetzlichen 1 zur Unterscheidung notiert wurden,
+%uebernehmen wir auch diese Konvention
 %sequenceX(Kreuzung,[[Liste der grünen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
 sequence11(a,[[k9,k13,b3,fg9],sequence11,35]).
 sequence12(a,[[b3,k9,fg9],sequence12,10]).
@@ -31,7 +31,7 @@ sequence13(a,[[fa11,fa10,k11,k10],sequence13,20]).
 sequence14(a,[[fa11,fa10,k12],sequence14,18]).
 
 %Regeln Kreuzung A
-%Welcher Trigger führt zu welcher Sequence
+%Welcher Trigger fuehrt zu welcher Sequence
 %trigger(Kreuzung,Trigger,Liste der grünen Ampeln) fuehrt zu sequenceX(Kreuzung,Liste der gruenen Ampeln)
 trigger(a,noAction,GG):- sequence11(a,GG).
 trigger(a,b3,GG):- sequence12(a,GG).
