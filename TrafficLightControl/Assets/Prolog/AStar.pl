@@ -25,10 +25,8 @@ goal(N).
 %bevor das geschieht, wird die Heuristik und die Graphendefinitionen erstmal geloescht
 %setNewGraph(Liste der Graphen und Heuristiken)
 setNewGraph(List):-
-              retractall(heuristicFunction(_,_))
-              ,
-              retractall(defineNodeAndArc(_,_,_))
-              ,
+              retractall(heuristicFunction(_,_)),
+              retractall(defineNodeAndArc(_,_,_)),
               createGraph(List).
 
 %Praedikat dient Modifizierung der Wissensbank, hierbei werden die von C#
@@ -38,11 +36,9 @@ setNewGraph(List):-
 %Abbruchbedingung
 createGraph([]).
 createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
-                                     assert(defineNodeAndArc(N,N1,Cost))
-                                     ,
+                                     assert(defineNodeAndArc(N,N1,Cost)),
                                      not(heuristicFunction(N,_)) ->
-                                     assert(heuristicFunction(N,HeuristicValue))
-                                     ,
+                                     assert(heuristicFunction(N,HeuristicValue)),
                                      createGraph(Tail)
                                      ;
                                      createGraph(Tail).
@@ -52,18 +48,15 @@ createGraph([arc(N,N1,Cost,HeuristicValue)|Tail]):-
 %Als Ergebnis erhaelt C# die Wegbeschreibung von Knoten Start zu Ziel.
 %getPath(Start,Ziel,Weg zum Start vom Ziel)
 getPath(Start,Goal,Path):-
-                      retractall(goal(_))
-                      ,
-                      assert(goal(Goal))
-                      ,
+                      retractall(goal(_)),
+                      assert(goal(Goal)),
                       bestfirst(Start,Path).
 %Test
 %falls sich die Heuristen werte aendern oder ein Knoten hinzu kommt,
 %kann man diese jetzt updaten
 %updateNode(Node1,Node2,neueKosten zwischen Node1 und Node2)
 updateNode(Node,Node1,NewCost):-
-                      retract(defineNodeAndArc(Node,Node1,_))
-                      ,
+                      retract(defineNodeAndArc(Node,Node1,_)),
                       assert(defineNodeAndArc(Node,Node1,NewCost)).
 
 
@@ -95,14 +88,10 @@ expand( P, leaf(N,F/G), Bound, Tree1, Solved, Sol)  :-
 %Expand the most promising subtree, depending on
 %results, procedure continue will decide how to proceed
 expand(P,tree(N,F/G,[T|Ts]),Bound,Tree1,Solved,Sol):-
-                                                F=<Bound
-                                                ,
-                                                bestf(Ts,BF)
-                                                ,
-                                                min(Bound,BF,Bound1) %Bound1 = min(Bound,BF)
-                                                ,
-                                                expand([N|P],T,Bound1,T1,Solved1,Sol)
-                                                ,
+                                                F=<Bound,
+                                                bestf(Ts,BF),
+                                                min(Bound,BF,Bound1), %Bound1 = min(Bound,BF),
+                                                expand([N|P],T,Bound1,T1,Solved1,Sol),
                                                 continue(P,tree(N,F/G,[T1|Ts]),Bound,Tree1,Solved1,Solved,Sol).
 
 %Case 4: non-leaf with empty subtrees
@@ -117,15 +106,12 @@ expand(_,Tree,Bound,Tree,no,_):-f(Tree,F),F>Bound.
 continue(_,_,_,_,yes,yes,Sol).
 
 continue(P,tree(N,F/G,[T1|Ts]),Bound,Tree1,no,Solved,Sol):-
-                                                 insert(T1,Ts,NTs)
-                                                 ,
-                                                 bestf(NTs,F1)
-                                                 ,
+                                                 insert(T1,Ts,NTs),
+                                                 bestf(NTs,F1),
                                                  expand(P,tree(N,F1/G,NTs),Bound,Tree1,Solved,Sol).
 
 continue(P,tree(N,F/G,[_|Ts]),Bound,Tree1,never,Solved,Sol):-
-                                                 bestf(Ts,F1)
-                                                 ,
+                                                 bestf(Ts,F1),
                                                  expand(P,tree(N,F1/G,Ts),Bound,Tree1,Solved,Sol).
 
 %succlist(G0,[Node1/Cost1,...],[l(BestNode,BestF/G),...]):
@@ -133,24 +119,17 @@ continue(P,tree(N,F/G,[_|Ts]),Bound,Tree1,never,Solved,Sol):-
 succlist(_,[],[]).
 
 succlist(G0,[N/C|NCs],Ts):-
-                         G is G0 + C
-                         ,
-                         heuristicFunction(N,H)  %Heuristic term h(N)
-                         ,
-                         F is G + H
-                         ,
-                         succlist(G0,NCs,Ts1)
-                         ,
+                         G is G0 + C,
+                         heuristicFunction(N,H),  %Heuristic term h(N),
+                         F is G + H,
+                         succlist(G0,NCs,Ts1),
                          insert(leaf(N,F/G),Ts1,Ts).
 
 % Insert T into list of trees Ts preserving oder with respect to f-values
 insert(T,Ts,[T|Ts]):-
-                   f(T,F)
-                   ,
-                   bestf(Ts,F1)
-                   ,
-                   F=<F1
-                   ,
+                   f(T,F),
+                   bestf(Ts,F1),
+                   F=<F1,
                    !.
 
 insert(T,[T1|Ts],[T1|Ts1]):-insert(T,Ts,Ts1).
