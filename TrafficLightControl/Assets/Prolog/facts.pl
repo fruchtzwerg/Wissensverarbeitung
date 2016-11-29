@@ -19,10 +19,10 @@
 
 
 %Ampel Logik
-% Gueltige Zustaende der Kreuzung nach STVO, für jede AmpelAnlage definierbar
+% Gueltige Zustaende der Kreuzung nach STVO, für jede Ampelanlage definierbar
 
-%Phasen Ampelkreuzung A
-%Aus Grunde dem heraus, dass die Originalen Phasen mit einer zusaetzlichen 1 zur Unterscheidung notiert wurden,
+%Sequencen Ampelkreuzung A
+%Aus Grunde dem heraus, dass die Originalen Sequencen mit einer zusaetzlichen 1 zur Unterscheidung notiert wurden,
 %uebernehmen auch wir diese Konvention
 %sequenceX(Kreuzung,[[Liste der grünen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
 sequence11(a,[[k9,k13,b3,fg9],sequence11,35]).
@@ -31,15 +31,15 @@ sequence13(a,[[fa11,fa10,k11,k10],sequence13,20]).
 sequence14(a,[[fa11,fa10,k12],sequence14,18]).
 
 %Regeln Kreuzung A
-%Welcher Ausloeser führt zu welcher Phase
-%trigger(Kreuzung,Ausloeser,Liste der grünen Ampeln) fuehrt zu sequenceX(Kreuzung,Liste der gruenen Ampeln)
+%Welcher Trigger führt zu welcher Sequence
+%trigger(Kreuzung,Trigger,Liste der grünen Ampeln) fuehrt zu sequenceX(Kreuzung,Liste der gruenen Ampeln)
 trigger(a,noAction,GG):- sequence11(a,GG).
 trigger(a,b3,GG):- sequence12(a,GG).
 trigger(a,k10,GG):- sequence13(a,GG).
 trigger(a,fa10,GG):- sequence14(a,GG).
 trigger(a,k12,GG):- sequence14(a,GG).
 
-%Phasen Ampelkreuzung B
+%Sequencen Ampelkreuzung B
 %sequenceX(Kreuzung,[[Liste der gruenen Ampeln],Phase,Zeitraum der Fahrfreigabe in Sekunden])
 sequence1(b,[[fg8,fg6,k7,b1,k1,k5,k14,k2,k3,fg3,boomgate],sequence1,35]).
 sequence2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5,boomgate],sequence2,10]).
@@ -49,8 +49,8 @@ sequence5(b,[[k4,k7,b1,k2,boomgate],sequence5,5]).
 sequence6(b,[[fg8,k7,b1,k1,k3,k2,fg3],sequence6,15]).
 
 %Regeln Kreuzung B
-%Welcher Ausloeser fuehrt zu welcher Phase
-%trigger(Kreuzung,Ausloeser,Liste der grünen Ampeln) führt zu sequenceX(Kreuzung,Liste der grünen Ampeln)
+%Welcher Trigger fuehrt zu welcher Phase
+%trigger(Kreuzung,Trigger,Liste der grünen Ampeln) führt zu sequenceX(Kreuzung,Liste der grünen Ampeln)
 trigger(b,noAction,GG):-sequence1(b,GG).
 trigger(b,fa4,GG):-sequence3(b,GG).
 trigger(b,fa1,GG):-sequence2(b,GG).

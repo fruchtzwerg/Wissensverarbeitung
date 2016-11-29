@@ -18,18 +18,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         Attribute zur Ueberwachung                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%Standardsequence fuer die Kreuzungen A und B
 defaultSequence(a, sequence11).
 defaultSequence(b, sequence1).
 
-%zwei queues fuer die Berechnung der nächsten Ampelphase
+%zwei queues fuer die Berechnung der naechsten Ampelsquence
 queue(a,[]).
 queue(b,[]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HAUPTPRAEDIKAT    neues Ereignis an Queue anfuegen(von C# (:heart:)aufrufbar)%
-% Ausloeser darf noch nicht in der Queue enthalten sein -> false               %
+% HAUPTPRAEDIKAT    neues Event an Queue anfuegen(von C# (:heart:)aufrufbar)%
+% Trigger darf noch nicht in der Queue enthalten sein sonst false               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 event(Junction,Trigger,Sequence):-
@@ -41,7 +41,7 @@ event(Junction,Trigger,Sequence):-
                              assert(queue(Junction,QueueNew)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                   neues Ereignis auf Zulaessigkeit pruefen                   %
+%                   neues Event auf Zulaessigkeit pruefen                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %IsValidTrigger wird 1 wenn zulaessig
 %IsValidTrigger wird 0 wenn NICHT zulaessig
@@ -51,7 +51,7 @@ checkTriggerIsValid(Junction,Trigger,IsValidTrigger,Sequence):-
                                               IsValidTrigger = 0.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HAUPTPRAEDIKAT    Anfordern der naechsten Phase(von C# aufrufbar)            %
+% HAUPTPRAEDIKAT    Anfordern der naechsten Sequence(von C# aufrufbar)            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 nextSequence(Junction,GreenLights,Sequence):-
                                queue(Junction, Queue),
@@ -77,8 +77,8 @@ nextSequenceFromQueue([], Junction, _, NextSequence):-defaultSequence(Junction,N
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Pruefung des Queue Kopfes:                                                    %
-%bei 0 -> Ausloeser an Queue vorne entnehmen und hinten wieder anhaengen  %
-%bei 1 -> naechster Zustand und Ausloser fuer den Zustand aus Q entfernen %
+%bei 0 -> Trigger an Queue vorne entnehmen und hinten wieder anhaengen  %
+%bei 1 -> naechster Zustand und Trigger fuer den Zustand aus Q entfernen %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Queue = [[Trigger,IsValid]|Tail]
 nextSequenceFromQueue(Queue, Junction, Sequence, NextSequence):-
@@ -98,7 +98,7 @@ nextSequenceFromQueue([Head|Tail], Junction, _, _):-
                                   nextSequenceFromQueue(QueueNew, Junction, _, _).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% pruefen ob Ausloeeser in der Queue zur gleichen Phasenaenderung fuehren      %
+% pruefen ob Trigger in der Queue zur gleichenSequenceaenderung fuehren      %
 % ,wie der bereits akzeptierte                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %validateAndRemoveDups(Junction, neuePhase, aktuelleQueue, TmpList)
