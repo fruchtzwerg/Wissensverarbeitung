@@ -73,8 +73,8 @@ public class Job
     private bool FindSwiExe()
     {
         // if file not exists in current folder
-        if (File.Exists(@".\swipl_exe\swipl.exe")) {            
-            _prolog.StartInfo.FileName = @".\swipl_exe\swipl.exe";
+        if (File.Exists(@".\swipl\bin\swipl.exe")) {            
+            _prolog.StartInfo.FileName = @".\swipl\bin\swipl.exe";
         }
 
         if (!File.Exists(_prolog.StartInfo.FileName))
@@ -121,6 +121,8 @@ public class Job
         if (!File.Exists(path)) {
             //is this the buildexe? yes -> change path and try it again
             path = Path.GetFullPath(Path.Combine(Path.Combine(Environment.CurrentDirectory, "Prolog"), Path.GetFileName(path)));
+
+            Debug.Log(path);
 
             path = path.Replace(Path.DirectorySeparatorChar.ToString(), Path.DirectorySeparatorChar.ToString() + Path.DirectorySeparatorChar);
             if (!File.Exists(path)) {
