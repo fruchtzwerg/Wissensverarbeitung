@@ -73,8 +73,8 @@ public class Job
     private bool FindSwiExe()
     {
         // if file not exists in current folder
-        if (File.Exists(@".\swipl\bin\swipl.exe")) {            
-            _prolog.StartInfo.FileName = @".\swipl\bin\swipl.exe";
+        if (File.Exists(@".\swipl~\bin\swipl.exe")) {            
+            _prolog.StartInfo.FileName = @".\swipl~\bin\swipl.exe";
         }
 
         if (!File.Exists(_prolog.StartInfo.FileName))
