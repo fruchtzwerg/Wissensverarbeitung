@@ -178,8 +178,9 @@ public class PrologWrapper : MonoBehaviour
         }
 
         if (string.IsNullOrEmpty(query)) return;
-        job.Query(query, sender);
+
         Log(UnityLogger.DELIMITER_SEND + query, xRoad);
+        job.Query(query, sender);
     }
 
 

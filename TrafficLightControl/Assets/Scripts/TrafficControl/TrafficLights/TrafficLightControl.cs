@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using UnityStandardAssets.ImageEffects;
 
 public class TrafficLightControl : MonoBehaviour, IProlog, IIntervalMultiplierUpdate
 {

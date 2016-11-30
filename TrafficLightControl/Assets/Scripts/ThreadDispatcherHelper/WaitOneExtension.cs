@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 #if !NO_UNITY
-using UnityEngine;
+
 #endif
 
 namespace UnityThreading

@@ -3,33 +3,34 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class UI : MonoBehaviour
 {
 
-    public Vector3 camPos1 = new Vector3(99.4f, 88.5f, 49.7f);
-    public Vector3 camPos2 = new Vector3(79.4f, 34.4f, 59.6f);
-    public Vector3 camPos3 = new Vector3(125.5f, 34.4f, 43.7f);
-    public Vector3 camPos4 = new Vector3(29.0f, 26.4f, 41.8f);
+    public Vector3 CamPos1 = new Vector3(99.4f, 88.5f, 49.7f);
+    public Vector3 CamPos2 = new Vector3(79.4f, 34.4f, 59.6f);
+    public Vector3 CamPos3 = new Vector3(125.5f, 34.4f, 43.7f);
+    public Vector3 CamPos4 = new Vector3(29.0f, 26.4f, 41.8f);
 
-    public Button buttonCamPos1;
-    public Button buttonCamPos2;
-    public Button buttonCamPos3;
-    public Button buttonCamPos4;
+    public Button ButtonCamPos1;
+    public Button ButtonCamPos2;
+    public Button ButtonCamPos3;
+    public Button ButtonCamPos4;
 
     public Button TabAButton;
     public Button TabBButton;
     public Button TabSpawnButton;
 
-    public TrafficLightControl CrossroadControl_A;
-    public TrafficLightControl CrossroadControl_B;
+    public TrafficLightControl CrossroadControlA;
+    public TrafficLightControl CrossroadControlB;
 
     public CamMoving Cam;    
 
-    public Slider paceSlider;
-    public InputField paceInput;
+    public Slider PaceSlider;
+    public InputField PaceInput;
     
     public VerticalLayoutGroup RowsAParent;
     public GridLayoutGroup ButtonsAParent;
@@ -47,32 +48,32 @@ public class UI : MonoBehaviour
 
     public InputField CarsInput;
 
-    private HorizontalLayoutGroup rowPrefab;
-    private Button buttonPrefab;
-    private Toggle togglePrefab;
+    private HorizontalLayoutGroup _rowPrefab;
+    private Button _buttonPrefab;
+    private Toggle _togglePrefab;
 
     public GameObject[] TimerMultiplier;
 
     // Use this for initialization
     void Awake()
     {
-        buttonCamPos1.onClick.AddListener(() => Cam.SetCamPosition(camPos1));
-        buttonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(camPos2));
-        buttonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(camPos3));
-        buttonCamPos4.onClick.AddListener(() => Cam.SetCamPosition(camPos4));
-        SpawnButton.onClick.AddListener(() => SpawnVehicle());
+        ButtonCamPos1.onClick.AddListener(() => Cam.SetCamPosition(CamPos1));
+        ButtonCamPos2.onClick.AddListener(() => Cam.SetCamPosition(CamPos2));
+        ButtonCamPos3.onClick.AddListener(() => Cam.SetCamPosition(CamPos3));
+        ButtonCamPos4.onClick.AddListener(() => Cam.SetCamPosition(CamPos4));
+        SpawnButton.onClick.AddListener(SpawnVehicle);
 
-        paceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
+        PaceSlider.onValueChanged.AddListener(delegate { SliderEvent(); });
 
-        rowPrefab = Resources.Load<HorizontalLayoutGroup>("UI/Row");
-        buttonPrefab = Resources.Load<Button>("UI/Button");
-        togglePrefab = Resources.Load<Toggle>("UI/Toggle");
+        _rowPrefab = Resources.Load<HorizontalLayoutGroup>("UI/Row");
+        _buttonPrefab = Resources.Load<Button>("UI/Button");
+        _togglePrefab = Resources.Load<Toggle>("UI/Toggle");
 
-        InitRows(CrossroadControl_A.TrafficLights, _rowsA, RowsAParent);
-        InitRows(CrossroadControl_B.TrafficLights, _rowsB, RowsBParent);
+        InitRows(CrossroadControlA.TrafficLights, _rowsA, RowsAParent);
+        InitRows(CrossroadControlB.TrafficLights, _rowsB, RowsBParent);
 
-        InitButtons(CrossroadControl_A, ButtonsAParent);
-        InitButtons(CrossroadControl_B, ButtonsBParent);
+        InitButtons(CrossroadControlA, ButtonsAParent);
+        InitButtons(CrossroadControlB, ButtonsBParent);
 
         InitToggles();
     }
@@ -94,7 +95,7 @@ public class UI : MonoBehaviour
 
         foreach (var wp in waypoints)
         {
-            var toggle = Instantiate(togglePrefab);
+            var toggle = Instantiate(_togglePrefab);
             toggle.name = wp.name;
 
             var text = toggle.GetComponentInChildren<Text>();
@@ -106,15 +107,27 @@ public class UI : MonoBehaviour
             toggle.group = wp.IsOrigin ? OriginsParent : DestinationsParent;
         }
 
-        OriginsParent.GetComponentInChildren<Toggle>().isOn = true;
-        DestinationsParent.GetComponentInChildren<Toggle>().isOn = true;
+        var origin = OriginsParent.GetComponentInChildren<Toggle>();
+        var destination = DestinationsParent.GetComponentInChildren<Toggle>();
+
+        origin.isOn = true;
+        destination.isOn = true;
+
+        var OriginMarkerParent = GameObject.Find("SpawnLocations");
+        var DestinationMarkerParent = GameObject.Find("DespawnLocations");
+
+        UIMouseOver.SelectedOrigin = OriginMarkerParent.transform.FindChild(origin.name).transform;
+        UIMouseOver.SelectedDestination = DestinationMarkerParent.transform.FindChild(destination.name).transform;
+
+        OriginMarkerParent.SetActive(false);
+        DestinationMarkerParent.SetActive(false);
     }
 
     private void InitRows(IEnumerable<TrafficLight> lights, ICollection<HorizontalLayoutGroup> rows, Component parent)
     {
         foreach (var l in lights)
         {
-            var row = Instantiate(rowPrefab);
+            var row = Instantiate(_rowPrefab);
 
             var name = row.GetComponentInChildren<Text>();
             var state = row.GetComponentInChildren<InputField>();
@@ -132,7 +145,7 @@ public class UI : MonoBehaviour
         var events = control.GetComponent<EventTrigger>().events;
         foreach (var @event in events)
         {
-            var button = Instantiate(buttonPrefab);
+            var button = Instantiate(_buttonPrefab);
 
             var text = button.GetComponentInChildren<Text>();
             text.text = @event.ToString();
@@ -149,18 +162,18 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetTextOfInputField(CrossroadControl_A.TrafficLights, _rowsA);
-        SetTextOfInputField(CrossroadControl_B.TrafficLights, _rowsB);
+        SetTextOfInputField(CrossroadControlA.TrafficLights, _rowsA);
+        SetTextOfInputField(CrossroadControlB.TrafficLights, _rowsB);
 
         // controller cam pos
         if(CrossPlatformInputManager.GetButton("Fire1"))
-            Cam.SetCamPosition(camPos2);
+            Cam.SetCamPosition(CamPos2);
         if (CrossPlatformInputManager.GetButton("Fire2"))
-            Cam.SetCamPosition(camPos3);
+            Cam.SetCamPosition(CamPos3);
         if (CrossPlatformInputManager.GetButton("Fire3"))
-            Cam.SetCamPosition(camPos4);
+            Cam.SetCamPosition(CamPos4);
         if (CrossPlatformInputManager.GetButton("Jump"))
-            Cam.SetCamPosition(camPos1);
+            Cam.SetCamPosition(CamPos1);
 
         if (!CarsInput.isFocused)
         {
@@ -226,7 +239,7 @@ public class UI : MonoBehaviour
     /// add options to dropdown
     /// </summary>
     /// <param name="dropdown"></param>
-    private void addOptionsToDropDown(Dropdown dropdown)
+    private void AddOptionsToDropDown(Dropdown dropdown)
     {
         dropdown.options.Clear();
 
@@ -262,8 +275,8 @@ public class UI : MonoBehaviour
 
     void SliderEvent()
     {
-        float value = paceSlider.value;
-        paceInput.text = value.ToString();
+        float value = PaceSlider.value;
+        PaceInput.text = value.ToString();
 
         float multiplier = 1f/value;
         // for each registered object
@@ -289,7 +302,7 @@ public class UI : MonoBehaviour
 
     public void EndEditTextPace(string text)
     {
-        paceSlider.value = (float) Convert.ToDouble(text);
+        PaceSlider.value = (float) Convert.ToDouble(text);
     }
 
     public void EndEditTextCount(string text)

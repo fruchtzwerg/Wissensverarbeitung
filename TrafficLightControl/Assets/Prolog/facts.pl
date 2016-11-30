@@ -44,7 +44,7 @@ trigger(a,k12,GG):- sequence14(a,GG).
 sequence1(b,[[fg8,fg6,k7,b1,k1,k5,k14,k2,k3,fg3,boomgate],sequence1,35]).
 sequence2(b,[[fa7,k8,fg6,fa1,fa2,k6,k5,boomgate],sequence2,10]).
 sequence3(b,[[fa7,fg8,fa1,fa2,k6,fa5,fa4,boomgate],sequence3,9]).
-sequence4(b,[[fg8,k4,k7,b1,k1,k2,boomgate],sequence4,5]).
+sequence4(b,[[fg8,k4,k7,b1,k1,k2,boomgate,b1],sequence4,5]).
 sequence5(b,[[k4,k7,b1,k2,boomgate],sequence5,5]).
 sequence6(b,[[fg8,k7,b1,k1,k3,k2,fg3],sequence6,15]).
 

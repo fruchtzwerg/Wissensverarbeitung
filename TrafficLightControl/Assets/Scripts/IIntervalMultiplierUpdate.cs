@@ -1,6 +1,3 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public interface IIntervalMultiplierUpdate{
+﻿public interface IIntervalMultiplierUpdate{
     void updateMultiplier(float value);	
 }
